@@ -1,4 +1,4 @@
-public abstract` class Command {
+public abstract class Command {
     private String commandName;
     private String description;
     public Command(String commandName, String description) {
@@ -17,5 +17,5 @@ public abstract` class Command {
     public String setCommandName(String commandName) {
         this.commandName = commandName;
     }
-    public abstract String execute();
+    public String execute();
 }
