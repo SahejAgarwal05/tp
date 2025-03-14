@@ -1,4 +1,4 @@
-public  class Command {
+public abstract class Command {
     private String commandName;
     private String description;
     public Command(String commandName, String description) {
@@ -14,10 +14,8 @@ public  class Command {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String setCommandName(String commandName) {
+    public void setCommandName(String commandName) {
         this.commandName = commandName;
     }
-    public String execute(){
-        return "Done";
-    }
+    abstract String execute();
 }
