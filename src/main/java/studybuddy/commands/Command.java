@@ -1,5 +1,4 @@
-package commands;
-
+package studybuddy.commands;
 
 public abstract class Command {
     private String commandName;
