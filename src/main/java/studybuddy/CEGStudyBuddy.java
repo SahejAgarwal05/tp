@@ -10,7 +10,7 @@ public class CEGStudyBuddy {
     public static void main(String[] args) {
         CourseList courseList = new CourseList();
 
-        // Add sample courses for testing
+        // Adding sample courses for testing
         courseList.addCourse(new Course("CS", "2040", "Data Structures", 4, true, false));
         courseList.addCourse(new Course("MA", "1101", "Linear Algebra", 4, false, true));
 
