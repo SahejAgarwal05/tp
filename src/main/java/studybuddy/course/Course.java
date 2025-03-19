@@ -6,7 +6,6 @@ package studybuddy.course;
  * Editable info: take(n) in semester, is cleared/taken
  */
 public class Course {
-    protected String department;
     protected String code;
     protected String title;
     protected int mc;
@@ -19,30 +18,24 @@ public class Course {
 
     /**
      * Constructor.
-     * @param department Department of the course, e.g. CG, CDE, DTK.
      * @param code Code number of the course, a number between 1000 and 5999 with an optional
      *             upper case letter, e.g. 1231, 2040C.
      * @param title Text title of the course, e.g. Programming Methodology.
      * @param mc Module credit of the course, e.g. 2, 4, 8.
-     * @param offerInSem1 If this course is offered in semester 1.
-     * @param offerInSem2 If this course is offered in semester 2.
+     * @param takeInSem The semester the course is being taken.
+     * @param takeInYear The year the course is being taken.
      */
-    public Course(String department, String code, String title, int mc,
-                  boolean offerInSem1, boolean offerInSem2) {
-        this.department = department;
+    public Course(String code, String title, int mc,
+                  int takeInSem, int takeInYear) {
         this.code = code;
         this.title = title;
         this.mc = mc;
-        this.offerInSem1 = offerInSem1;
-        this.offerInSem2 = offerInSem2;
+        this.takeInSem = takeInSem;
+        this.takeInYear = takeInYear;
 
-        this.takeInSem = 0;
-        this.takeInYear = 0;
+        this.offerInSem1 = takeInSem == 1;
+        this.offerInSem2 = takeInSem == 2;
         this.isCleared = false;
-    }
-
-    public String getDepartment() {
-        return department;
     }
 
     public String getCode() {
