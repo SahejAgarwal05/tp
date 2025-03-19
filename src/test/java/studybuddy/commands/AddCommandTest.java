@@ -3,7 +3,7 @@ package studybuddy.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import studybuddy.course.*;
+import studybuddy.course.Course;
 
 public class AddCommandTest {
     public static final String TEST_INPUT =

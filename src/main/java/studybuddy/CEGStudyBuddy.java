@@ -3,8 +3,10 @@ package studybuddy;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import studybuddy.commands.*;
-import studybuddy.course.*;
+import studybuddy.commands.Command;
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.InvalidCommand;
+import studybuddy.course.Course;
 
 public class CEGStudyBuddy {
     public static ArrayList<Course> courses = new ArrayList<>();
