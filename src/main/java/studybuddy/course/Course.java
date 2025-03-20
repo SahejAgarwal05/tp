@@ -17,27 +17,6 @@ public class Course {
     protected boolean isCleared;
 
     /**
-     * Constructor.
-     * @param code Code of the course, e.g. CS1231, CG1111As.
-     * @param title Text title of the course, e.g. Programming Methodology.
-     * @param mc Module credit of the course, e.g. 2, 4, 8.
-     * @param offerInSem1 If this course is offered in semester 1.
-     * @param offerInSem2 If this course is offered in semester 2.
-     */
-    public Course(String code, String title, int mc,
-                  boolean offerInSem1, boolean offerInSem2) {
-        this.code = code;
-        this.title = title;
-        this.mc = mc;
-        this.offerInSem1 = offerInSem1;
-        this.offerInSem2 = offerInSem2;
-
-        this.takeInSem = 0;
-        this.takeInYear = 0;
-        this.isCleared = false;
-    }
-
-    /**
      * Constructor for v1.0
      * @param code Code of the course, e.g. CS1231, CG1111As.
      * @param title Text title of the course, e.g. Programming Methodology.
