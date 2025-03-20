@@ -13,6 +13,7 @@ public class WorkloadCommand extends Command {
     }
 
     public String execute() {
+        assert (courses != null);
         int[] mcs_in_each_semester = new int[NUM_OF_SEMESTERS];
         String[] period = new String[NUM_OF_SEMESTERS];
         for (Course course : courses) {
