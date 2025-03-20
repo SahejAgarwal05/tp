@@ -1,33 +1,40 @@
 package studybuddy.commands;
 
-import studybuddy.course.CourseList;
+import studybuddy.CEGStudyBuddy;
+import studybuddy.course.Course;
 
 public class DeleteCourse extends Command {
-    private CourseList courseList; // Reference to CourseList
-
-    public DeleteCourse(CourseList courseList) {
-        super("delete");
-        this.courseList = courseList;
+    public DeleteCourse(String param) {
+        super(param); // Passes the command parameter
     }
 
     @Override
-    public String execute(String[] args) {
-        // Check if the format is correct and returns error if not correct
-        if (args.length < 2 || !args[0].equalsIgnoreCase("c")) {
-            return "Invalid format! Please use: delete c/CODE";
-        }
+    public String execute() {
+        try {
+            // Example input: c/CS2040
+            String[] parts = param.trim().split("c/", 2);
+            if (parts.length < 2) {
+                return "Invalid format! Please use: delete c/CODE";
+            }
+            String code = parts[1].trim().toUpperCase();
 
-        String code = args[1].trim().toUpperCase(); // Extract and format course code
-        boolean deleted = courseList.deleteCourseByCode(code);
+            boolean deleted = CEGStudyBuddy.courses.removeIf(course ->
+                    course.getCode().equalsIgnoreCase(code)
+            );
 
-        // Return message based on whether deletion was successful
-        if (deleted) {
-            return "Course with code " + code + " has been deleted.";
-        } else {
-            return "Course with code " + code + " not found.";
+            if (deleted) {
+                return "Course with code " + code + " has been deleted.";
+            } else {
+                return "Course with code " + code + " not found.";
+            }
+
+        } catch (Exception e) {
+            return "An error occurred while trying to delete the course.";
         }
     }
 }
+
+
 
 
 

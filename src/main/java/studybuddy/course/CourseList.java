@@ -3,9 +3,9 @@ package studybuddy.course;
 import java.util.ArrayList;
 
 public class CourseList {
-    private ArrayList<Course> courses;
+    private ArrayList<Course> courses; // List to store all courses
 
-    //Initializes the Course List
+    // Initializes the Course List
     public CourseList() {
         this.courses = new ArrayList<>();
     }
@@ -15,11 +15,11 @@ public class CourseList {
         courses.add(course);
     }
 
-    // Delete a course
+    // Delete a course by matching the full code (e.g., CS2040)
     public boolean deleteCourseByCode(String code) {
-        String formattedCode = code.trim().toUpperCase();
+        String formattedCode = code.trim().toUpperCase(); // Uniform formatting
         return courses.removeIf(course ->
-                (course.getDepartment() + course.getCode()).equalsIgnoreCase(formattedCode)
+                course.getCode().equalsIgnoreCase(formattedCode)
         );
     }
 
@@ -28,23 +28,24 @@ public class CourseList {
         return courses;
     }
 
-    // Return a formatted string listing all the courses
+    // Return a formatted string listing all courses
     public String listCourses() {
         if (courses.isEmpty()) {
-            return "No courses added yet!"; // If there are no courses
+            return "No courses added yet!"; // Display message if empty
         }
         StringBuilder sb = new StringBuilder();
-        int count = 1; // Numbering for each course
+        int count = 1; // Numbering each course
         for (Course course : courses) {
             sb.append(count).append(". ")
-                    .append(course.getDepartment()).append(course.getCode()) // Combines the department and code
+                    .append(course.getCode()) // Course code (e.g., CS2040)
                     .append(" - ").append(course.getTitle())
                     .append(" (").append(course.getMc()).append(" MCs)").append("\n");
             count++;
         }
-        return sb.toString().trim(); // Returns the formatted list
+        return sb.toString().trim(); // Return formatted string
     }
 }
+
 
 
 
