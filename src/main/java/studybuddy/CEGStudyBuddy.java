@@ -27,6 +27,7 @@ public class CEGStudyBuddy {
         switch (inputParts[0]) {
         case "add" -> c = new AddCommand(inputParts[1]);
         case "edit" -> c = new EditCommand(inputParts[1]);
+        case "workload" -> c = new WorkloadCommand("", courses);
         case "exit" -> exitProgram();
         case "total_work_load" -> c = new TotalWorkLoad(inputParts[1]);
         case "required_word_load"-> c = new RequiredWorkLoad(inputParts[1]);
