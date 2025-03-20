@@ -69,6 +69,10 @@ public class Course {
         return takeInSem;
     }
 
+    public int getTakeInYear() {
+        return takeInYear;
+    }
+
     public boolean isCleared() {
         return isCleared;
     }
