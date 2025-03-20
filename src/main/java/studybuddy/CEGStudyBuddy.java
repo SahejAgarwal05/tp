@@ -8,6 +8,7 @@ import studybuddy.commands.AddCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.WorkloadCommand;
 import studybuddy.commands.ListCommand;
 import studybuddy.course.Course;
 
@@ -52,7 +53,6 @@ public class CEGStudyBuddy {
             c = new InvalidCommand(inputParts.length > 1 ? inputParts[1] : "");
             break;
         }
-
         return c;
     }
 
