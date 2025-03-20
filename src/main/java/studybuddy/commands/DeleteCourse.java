@@ -1,7 +1,6 @@
 package studybuddy.commands;
 
 import studybuddy.CEGStudyBuddy;
-import studybuddy.course.Course;
 
 public class DeleteCourse extends Command {
     public DeleteCourse(String param) {
