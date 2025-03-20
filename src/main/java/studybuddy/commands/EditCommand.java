@@ -54,11 +54,11 @@ public class EditCommand extends Command {
         }
         // if no edit value, hold place with empty string
         return new String[]{
-                code,
-                title,
-                mc != null ? mc.toString() : "",
-                y != null ? y.toString() : "",
-                s != null ? s.toString() : ""
+            code,
+            title,
+            mc != null ? mc.toString() : "",
+            y != null ? y.toString() : "",
+            s != null ? s.toString() : ""
         };
     }
 

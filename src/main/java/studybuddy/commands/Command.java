@@ -12,4 +12,4 @@ public abstract class Command {
      * @return
      */
     public abstract String execute();
- }
+}
