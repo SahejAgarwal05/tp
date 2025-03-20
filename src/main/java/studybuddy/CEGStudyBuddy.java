@@ -8,8 +8,10 @@ import studybuddy.commands.AddCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.WorkloadCommand;
+import studybuddy.commands.TotalWorkLoad;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.RequiredWorkLoad;
+import studybuddy.commands.WorkloadCommand;
 import studybuddy.course.Course;
 
 public class CEGStudyBuddy {
@@ -34,28 +36,15 @@ public class CEGStudyBuddy {
     static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
         Command c = null;
         switch (inputParts[0]) {
-        case "add":
-            c = new AddCommand(inputParts[1]);
-            break;
-        case "edit":
-            c = new EditCommand(inputParts[1]);
-            break;
-        case "delete":
-            c = new DeleteCourse(inputParts[1]);
-            break;
-        case "list":
-            c = new ListCommand();
-            break;
-        case "exit":
-            exitProgram();
-            break;
-        case "workload":
-            c = new WorkloadCommand("", courses);
-            break;
-        default:
-            c = new InvalidCommand(inputParts.length > 1 ? inputParts[1] : "");
-            break;
-
+        case "add" -> c = new AddCommand(inputParts[1]);
+        case "edit" -> c = new EditCommand(inputParts[1]);
+        case "workload" -> c = new WorkloadCommand("", courses);
+        case "exit" -> exitProgram();
+        case "total_work_load" -> c = new TotalWorkLoad(inputParts[1]);
+        case "required_word_load"-> c = new RequiredWorkLoad(inputParts[1]);
+        case "delete" -> c = new DeleteCourse(inputParts[1]);
+        case "list" -> c = new ListCommand();
+        default -> c = new InvalidCommand(inputParts[1]);
         }
 
         return c;
@@ -69,8 +58,8 @@ public class CEGStudyBuddy {
             try {
                 Command c = parseCommand(userInput);
                 System.out.println(c.execute());
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Missing Parameters");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
