@@ -20,6 +20,8 @@ public class HelpCommand extends Command {
                 workload
                     Displays the total workload for each semester.
                 help
-                    Displays this command list.""";
+                    Displays this command list.
+                exit
+                    Exits the program.""";
     }
 }
