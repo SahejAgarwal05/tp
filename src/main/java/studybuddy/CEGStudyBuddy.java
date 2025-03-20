@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import studybuddy.commands.Command;
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.EditCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.course.Course;
@@ -39,6 +41,8 @@ public class CEGStudyBuddy {
     static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
         Command c = null;
         switch (inputParts[0]) {
+        case "add" -> c = new AddCommand(inputParts[1]);
+        case "edit" -> c = new EditCommand(inputParts[1]);
         case "help" -> c = new HelpCommand(inputParts[0]);
         case "exit" -> exitProgram();
         default -> c = new InvalidCommand(inputParts[0]);

@@ -2,7 +2,7 @@ package studybuddy.course;
 
 /**
  * Represents a course in NUS.
- * Pre-set info: department, code, title, module credit (mc), offered in semester 1/2, ...
+ * Pre-set info: code, title, module credit (mc), offered in semester 1/2, ...
  * Editable info: take(n) in semester, is cleared/taken
  */
 public class Course {
@@ -17,24 +17,22 @@ public class Course {
     protected boolean isCleared;
 
     /**
-     * Constructor.
-     * @param code Code number of the course, a number between 1000 and 5999 with an optional
-     *             upper case letter, e.g. 1231, 2040C.
+     * Constructor for v1.0
+     * @param code Code of the course, e.g. CS1231, CG1111As.
      * @param title Text title of the course, e.g. Programming Methodology.
      * @param mc Module credit of the course, e.g. 2, 4, 8.
-     * @param takeInSem The semester the course is being taken.
-     * @param takeInYear The year the course is being taken.
+     * @param takeInYear Take/Taken this course in which year, e.g. 1, 2, 3, 4.
+     * @param takeInSem Take/Taken this course in which semester, e.g. 1, 2.
      */
-    public Course(String code, String title, int mc,
-                  int takeInSem, int takeInYear) {
+    public Course(String code, String title, int mc, int takeInYear, int takeInSem) {
         this.code = code;
         this.title = title;
         this.mc = mc;
-        this.takeInSem = takeInSem;
         this.takeInYear = takeInYear;
+        this.takeInSem = takeInSem;
 
-        this.offerInSem1 = takeInSem == 1;
-        this.offerInSem2 = takeInSem == 2;
+        this.offerInSem1 = true;
+        this.offerInSem2 = true;
         this.isCleared = false;
     }
 
@@ -62,6 +60,10 @@ public class Course {
         return takeInSem;
     }
 
+    public int getTakeInYear() {
+        return takeInYear;
+    }
+
     public boolean isCleared() {
         return isCleared;
     }
@@ -72,5 +74,38 @@ public class Course {
 
     public void setCleared(boolean cleared) {
         isCleared = cleared;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMc(int mc) {
+        this.mc = mc;
+    }
+
+    public void setOfferInSem1(boolean offerInSem1) {
+        this.offerInSem1 = offerInSem1;
+    }
+
+    public void setOfferInSem2(boolean offerInSem2) {
+        this.offerInSem2 = offerInSem2;
+    }
+
+    public void setTakeInYear(int takeInYear) {
+        this.takeInYear = takeInYear;
+    }
+
+    @Override
+    public String toString() {
+        return "(c/" + getCode() + " " +
+                "t/" + getTitle() + " " +
+                "mc/" + getMc() + " " +
+                "y/" + getTakeInYear() + " " +
+                "s/" + getTakeInSem() + ")";
     }
 }
