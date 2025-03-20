@@ -12,10 +12,10 @@ public class TotalWorkLoadCommand extends Command {
     }
 
     @Override
-    public String execute(String[] args) throws CEGStudyBuddyException{
+    public String execute() throws CEGStudyBuddyException{
         int sem = 0;
         try {
-            sem = Integer.parseInt(args[0]);
+            sem = Integer.parseInt(param);
             assert sem >= 0;
         } catch (NumberFormatException e) {
             throwException(SEMERRORMESSAGE);

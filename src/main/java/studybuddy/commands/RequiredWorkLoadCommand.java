@@ -27,21 +27,20 @@ public class RequiredWorkLoadCommand extends Command{
         return maximum;
     }
     @Override
-    public String execute(String[] args) throws CEGStudyBuddyException{
-        TotalWorkLoadCommand workLoadCalc = new TotalWorkLoadCommand("Workload calculator for required workloads");
+    public String execute() throws CEGStudyBuddyException{
         Float[] workloads = new Float[]{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
         for (int i = 1; i < 9; i++) {
-            String[] arguments = new String[]{i + "",""};
+            TotalWorkLoadCommand workLoadCommand = new TotalWorkLoadCommand(i + " ");
             try {
-                workloads[i - 1] = Float.valueOf(workLoadCalc.execute(arguments));
+                workloads[i - 1] = Float.valueOf(workLoadCommand.execute());
             } catch(Exception e){
                 throwException(e.getMessage());
             }
         }
-        if(args[1].trim().equals("max")){
+        if(this.param.trim().equals("max")){
             return max(workloads) + "";
         }
-        if (args[1].trim().equals("min")){
+        if (param.trim().equals("min")){
             return min(workloads) + "";
         }
         throwException("Please use min or max");
