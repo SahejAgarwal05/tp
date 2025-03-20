@@ -1,30 +1,17 @@
 package studybuddy.commands;
 
 public abstract class Command {
-    private String commandName;
-    private String description;
-    public Command(String commandName) {
-        this.commandName = commandName;
-    }
-    public String getCommandName() {
-        return commandName;
-    }
-    public void setCommandName(String commandName) {
-        this.commandName = commandName;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
+    protected String param;
+
+    public Command(String param) {
+        this.param = param;
     }
 
     /**
      * Abstract method to execute the command
-     * @param args
      * @return
      */
-    public abstract String execute(String[] args);
+    public abstract String execute();
 
     /**
      * Throws CEGStudyBuddyException of the message
