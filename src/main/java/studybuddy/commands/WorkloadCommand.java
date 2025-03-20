@@ -8,7 +8,8 @@ public class WorkloadCommand extends Command {
     private static final int NUM_OF_SEMESTERS = 8;
     private final ArrayList<Course> courses;
 
-    public WorkloadCommand(ArrayList<Course> courses) {
+    public WorkloadCommand(String param, ArrayList<Course> courses) {
+        super(param);
         this.courses = courses;
     }
 
