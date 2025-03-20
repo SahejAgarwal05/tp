@@ -26,5 +26,4 @@ public class TotalWorkLoad extends Command {
         }
         return totalWorkLoad + "";
     }
-
 }
