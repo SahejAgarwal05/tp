@@ -120,4 +120,13 @@ public class Course {
     public void setTakeInYear(int takeInYear) {
         this.takeInYear = takeInYear;
     }
+
+    @Override
+    public String toString() {
+        return "(c/" + getCode() + " " +
+                "t/" + getTitle() + " " +
+                "mc/" + getMc() + " " +
+                "y/" + getTakeInYear() + " " +
+                "s/" + getTakeInSem() + ")";
+    }
 }

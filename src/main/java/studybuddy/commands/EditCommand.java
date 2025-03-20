@@ -20,36 +20,25 @@ public class EditCommand extends Command {
         Integer s = null;
 
         for (int i = 0; i < parts.length; i++) {
-            switch (parts[i]) {
-            case "c/":
-                i++;
-                code = parts[i];
-                break;
-            case "t/":
-                i++;
-                while (i < parts.length && !parts[i].matches("[a-z]+/.*")) {
-                    title += parts[i] + " ";
-                    i++;
+            if (parts[i].startsWith("c/")) {
+                code = parts[i].substring(2);
+            } else if (parts[i].startsWith("t/")) {
+                // title may consist of a few words
+                title = parts[i].substring(2);
+                i += 1;
+                // while i is in bound and parts[i] is not next identifier
+                while (i < parts.length && !hasIdentifier(parts[i])) {
+                    title += " " + parts[i];
+                    i += 1;
                 }
-                // remove " " at tail
-                title = title.trim();
-                // reverse i by 1 to go back to the index before where the while loop breaks
-                i--;
-                break;
-            case "mc/":
-                i++;
-                mc = Integer.parseInt(parts[i]);
-                break;
-            case "y/":
-                i++;
-                y = Integer.parseInt(parts[i]);
-                break;
-            case "s/":
-                i++;
-                s = Integer.parseInt(parts[i]);
-                break;
-            default:
-                break;
+                // reset i back to the ending element of title
+                i -= 1;
+            } else if (parts[i].startsWith("mc/")) {
+                mc = Integer.parseInt(parts[i].substring(3));
+            } else if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
             }
         }
         // if no edit value, hold place with empty string
@@ -62,17 +51,24 @@ public class EditCommand extends Command {
         };
     }
 
+    protected boolean hasIdentifier(String str) {
+        return str.startsWith("t/") || str.startsWith("c/") ||
+                str.startsWith("mc/") || str.startsWith("y/") ||
+                str.startsWith("s/");
+    }
+
     @Override
     public String execute() {
         String[] paramParts = parseEdit();
         boolean found = false;
         try {
             if (paramParts[0] == null) {
-                return "Error: Course code is missing.";
+                return "Course code is missing.";
             }
             for (Course course: CEGStudyBuddy.courses) {
-                if (course.getTitle().equals(paramParts[0])) {
+                if (course.getCode().equals(paramParts[0])) {
                     course = setEditedParams(paramParts, course);
+                    System.out.println(course);
                     found = true;
                     break;
                 }
@@ -80,7 +76,7 @@ public class EditCommand extends Command {
             if (found) {
                 return "Success";
             }
-            return "Error: Course not found.";
+            return "Course not found.";
         } catch (ArrayIndexOutOfBoundsException e) {
             // print proper error message
             return "Error";
