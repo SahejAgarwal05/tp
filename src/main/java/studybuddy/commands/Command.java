@@ -24,14 +24,5 @@ public abstract class Command {
      * @param args
      * @return
      */
-    public abstract String execute(String[] args);
-
-    /**
-     * Throws CEGStudyBuddyException of the message
-     * @param message
-     * @throws CEGStudyBuddyException
-     */
-    private void throwException (String message) throws CEGStudyBuddyException {
-        throw new CEGStudyBuddyException(message);
-    }
+    public abstract String execute(String[] args) throws CEGStudyBuddyException;
 }

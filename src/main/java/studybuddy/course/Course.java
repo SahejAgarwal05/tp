@@ -1,5 +1,7 @@
 package studybuddy.course;
 
+import java.util.ArrayList;
+
 /**
  * Represents a course in NUS.
  * Pre-set info: department, code, title, module credit (mc), offered in semester 1/2, ...
@@ -35,11 +37,11 @@ public class Course {
         this.mc = mc;
         this.offerInSem1 = offerInSem1;
         this.offerInSem2 = offerInSem2;
-
         this.takeInSem = 0;
         this.takeInYear = 0;
         this.isCleared = false;
     }
+
 
     public String getDepartment() {
         return department;
