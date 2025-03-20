@@ -49,10 +49,15 @@ public class CEGStudyBuddy {
         case "exit":
             exitProgram();
             break;
+        case "workload":
+            c = new WorkloadCommand("", courses);
+            break;
         default:
             c = new InvalidCommand(inputParts.length > 1 ? inputParts[1] : "");
             break;
+
         }
+
         return c;
     }
 
