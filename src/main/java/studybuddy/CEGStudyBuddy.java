@@ -6,17 +6,16 @@ import java.util.Scanner;
 import studybuddy.course.*;
 import studybuddy.commands.*;
 
+
 public class CEGStudyBuddy {
     public static ArrayList<Course> courses = new ArrayList<>();
     public static boolean isRunning = true;
     public static Scanner in = new Scanner(System.in);
-
     static void exitProgram() {
         System.out.println("Bye");
         isRunning = false;
         System.exit(0);
     }
-
     static String[] readInput() {
         String userInput = in.nextLine();
         return userInput.split(" ", 2);
@@ -25,8 +24,12 @@ public class CEGStudyBuddy {
     static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
         Command c = null;
         switch (inputParts[0]) {
-            case "wokload"-> c = new TotalWorkLoadCommand(inputParts[1]);
-            case "requiredworkload"-> c = new RequiredWorkLoadCommand(inputParts[1]);
+        case "wokload"-> c = new TotalWorkLoadCommand(inputParts[1]);
+        case "requiredworkload"-> c = new RequiredWorkLoadCommand(inputParts[1]);
+        case "add" -> c = new AddCommand(inputParts[1]);
+        case "edit" -> c = new EditCommand(inputParts[1]);
+        case "exit" -> exitProgram();
+        default -> c = new InvalidCommand(inputParts[1]);
         }
         return c;
     }
