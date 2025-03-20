@@ -33,13 +33,26 @@ public class CEGStudyBuddy {
     static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
         Command c = null;
         switch (inputParts[0]) {
-            case "add" -> c = new AddCommand(inputParts[1]);
-            case "edit" -> c = new EditCommand(inputParts[1]);
-            case "delete" -> c = new DeleteCourse(inputParts[1]);
-            case "list" -> c = new ListCommand();
-            case "exit" -> exitProgram();
-            default -> c = new InvalidCommand(inputParts.length > 1 ? inputParts[1] : "");
+        case "add":
+            c = new AddCommand(inputParts[1]);
+            break;
+        case "edit":
+            c = new EditCommand(inputParts[1]);
+            break;
+        case "delete":
+            c = new DeleteCourse(inputParts[1]);
+            break;
+        case "list":
+            c = new ListCommand();
+            break;
+        case "exit":
+            exitProgram();
+            break;
+        default:
+            c = new InvalidCommand(inputParts.length > 1 ? inputParts[1] : "");
+            break;
         }
+
         return c;
     }
 
