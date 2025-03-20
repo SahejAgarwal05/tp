@@ -4,7 +4,6 @@ public abstract class Command {
 
     /**
      * Abstract method to execute the command
-     * @param args
      * @return
      */
     public abstract String execute();
