@@ -7,6 +7,7 @@ import studybuddy.commands.Command;
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.WorkloadCommand;
 import studybuddy.course.Course;
 
 public class CEGStudyBuddy {
@@ -30,6 +31,7 @@ public class CEGStudyBuddy {
         switch (inputParts[0]) {
         case "add" -> c = new AddCommand(inputParts[1]);
         case "edit" -> c = new EditCommand(inputParts[1]);
+        case "workload" -> c = new WorkloadCommand("", courses);
         case "exit" -> exitProgram();
         default -> c = new InvalidCommand(inputParts[1]);
         }
