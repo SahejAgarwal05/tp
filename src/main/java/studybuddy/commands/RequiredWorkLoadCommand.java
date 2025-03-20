@@ -30,13 +30,12 @@ public class RequiredWorkLoadCommand extends Command{
     public String execute(String[] args) throws CEGStudyBuddyException{
         TotalWorkLoadCommand workLoadCalc = new TotalWorkLoadCommand("Workload calculator for required workloads");
         Float[] workloads = new Float[]{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-        System.out.println(workloads);
         for (int i = 1; i < 9; i++) {
             String[] arguments = new String[]{i + "",""};
             try {
                 workloads[i - 1] = Float.valueOf(workLoadCalc.execute(arguments));
             } catch(Exception e){
-                throw new CEGStudyBuddyException(e.getMessage());
+                throwException(e.getMessage());
             }
         }
         if(args[1].trim().equals("max")){
@@ -45,6 +44,7 @@ public class RequiredWorkLoadCommand extends Command{
         if (args[1].trim().equals("min")){
             return min(workloads) + "";
         }
-        throw new CEGStudyBuddyException("Please use max or min");
+        throwException("Please use min or max");
+        return "";
     }
 }

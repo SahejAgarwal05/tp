@@ -17,7 +17,7 @@ public class TotalWorkLoadCommand extends Command {
         try {
             sem = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException(SEMERRORMESSAGE);
+            throwException(SEMERRORMESSAGE);
         }
 
         int totalWorkLoad = 0;
