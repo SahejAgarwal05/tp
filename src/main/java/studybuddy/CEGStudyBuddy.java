@@ -3,10 +3,7 @@ package studybuddy;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import studybuddy.commands.Command;
-import studybuddy.commands.AddCommand;
-import studybuddy.commands.EditCommand;
-import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.*;
 import studybuddy.course.Course;
 
 public class CEGStudyBuddy {
@@ -31,6 +28,8 @@ public class CEGStudyBuddy {
         case "add" -> c = new AddCommand(inputParts[1]);
         case "edit" -> c = new EditCommand(inputParts[1]);
         case "exit" -> exitProgram();
+        case "total_work_load" -> c = new TotalWorkLoad(inputParts[1]);
+        case "required_word_load"-> c = new RequiredWorkLoad(inputParts[1]);
         default -> c = new InvalidCommand(inputParts[1]);
         }
         return c;
@@ -42,8 +41,8 @@ public class CEGStudyBuddy {
             try {
                 Command c = parseCommand(userInput);
                 System.out.println(c.execute());
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Missing Parameters");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }

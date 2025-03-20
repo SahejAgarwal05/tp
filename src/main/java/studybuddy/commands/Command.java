@@ -11,14 +11,14 @@ public abstract class Command {
      * Abstract method to execute the command
      * @return
      */
-    public abstract String execute();
+    public abstract String execute() throws CEGStudyBuddyException;
 
     /**
      * Throws CEGStudyBuddyException of the message
      * @param message
      * @throws CEGStudyBuddyException
      */
-    private void throwException (String message) throws CEGStudyBuddyException {
+    protected void throwException (String message) throws CEGStudyBuddyException {
         throw new CEGStudyBuddyException(message);
     }
 }
