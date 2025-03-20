@@ -20,39 +20,6 @@ public class CEGStudyBuddy {
     public static boolean isRunning = true;
     public static Scanner in = new Scanner(System.in);
 
-    // Exit the program
-    static void exitProgram() {
-        System.out.println("Bye");
-        isRunning = false;
-        System.exit(0);
-    }
-
-    // Read user input and split into command and param
-    static String[] readInput() {
-        String userInput = in.nextLine();
-        return userInput.split(" ", 2);
-    }
-
-    // Parse the command and create the correct Command object
-    static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
-        Command c = null;
-        switch (inputParts[0]) {
-        case "add" -> c = new AddCommand(inputParts[1]);
-        case "edit" -> c = new EditCommand(inputParts[1]);
-        case "workload" -> c = new WorkloadCommand("", courses);
-        case "help" -> c = new HelpCommand(inputParts[0]);
-        case "exit" -> exitProgram();
-        case "total_work_load" -> c = new TotalWorkLoad(inputParts[1]);
-        case "required_word_load"-> c = new RequiredWorkLoad(inputParts[1]);
-        case "delete" -> c = new DeleteCourse(inputParts[1]);
-        case "list" -> c = new ListCommand();
-        default -> c = new InvalidCommand(inputParts[0]);
-        }
-
-        return c;
-    }
-
-    // Main loop
     public static void main(String[] args) {
         System.out.println("Welcome to CEGStudyBuddy! Type a command:");
         while (isRunning) {
@@ -64,5 +31,49 @@ public class CEGStudyBuddy {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    /**
+     * Exits the program.
+     */
+    static void exitProgram() {
+        System.out.println("Bye");
+        isRunning = false;
+        System.exit(0);
+    }
+
+    /**
+     * Reads the input and parses it into a String array.
+     *
+     * @return The String array containing the command and parameters.
+     */
+    static String[] readInput() {
+        String userInput = in.nextLine();
+        return userInput.split(" ", 2);
+    }
+
+    /**
+     * Parses the input into a command and returns the Command object for the command.
+     *
+     * @param inputParts Input String array containing the command and parameters.
+     * @return The Command object corresponding to the input.
+     * @throws IndexOutOfBoundsException If parameters are not included (inputParts.len() = 1).
+     */
+    static Command parseCommand(String[] inputParts) throws IndexOutOfBoundsException {
+        Command c = null;
+        switch (inputParts[0]) {
+        case "add" -> c = new AddCommand(inputParts[1]);
+        case "edit" -> c = new EditCommand(inputParts[1]);
+        case "workload" -> c = new WorkloadCommand("", courses);
+        case "help" -> c = new HelpCommand();
+        case "exit" -> exitProgram();
+        case "total_workload" -> c = new TotalWorkLoad(inputParts[1]);
+        case "required_workload"-> c = new RequiredWorkLoad(inputParts[1]);
+        case "delete" -> c = new DeleteCourse(inputParts[1]);
+        case "list" -> c = new ListCommand();
+        default -> c = new InvalidCommand();
+        }
+
+        return c;
     }
 }

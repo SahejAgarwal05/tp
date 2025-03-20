@@ -1,8 +1,8 @@
 package studybuddy.commands;
 
 public class HelpCommand extends Command {
-    public HelpCommand(String param) {
-        super(param);
+    public HelpCommand() {
+        super(""); // no parameters needed
     }
 
     @Override
@@ -19,6 +19,10 @@ public class HelpCommand extends Command {
                     Edits a course with the given parameters.
                 workload
                     Displays the total workload for each semester.
+                total_workload
+                    Displays the total workload for the given semester.
+                required_workload
+                    Displays the minimum and maximum required workload for the given semester.
                 help
                     Displays this command list.
                 exit
