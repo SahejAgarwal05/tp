@@ -7,14 +7,14 @@ public class RequiredWorkLoad extends Command {
         super(param);
     }
     public String execute() throws CEGStudyBuddyException {
-        int[] MCs = new int[] {0,0,0,0,0,0,0,0};
+        int[] mCs = new int[] {0,0,0,0,0,0,0,0};
         for (Course course : CEGStudyBuddy.courses){
             int index = course.getTakeInYear() * 2 + course.getTakeInSem();
-            MCs[index] += course.getTakeInSem();
+            mCs[index] += course.getTakeInSem();
         }
         if(param.trim().equals("max")){
             int max = 0;
-            for(int i : MCs){
+            for(int i : mCs){
                 if(i > max){
                     max = i;
                 }
@@ -23,7 +23,7 @@ public class RequiredWorkLoad extends Command {
         }
         if (param.trim().equals("min")){
             int min = 0;
-            for(int i : MCs){
+            for(int i : mCs){
                 if(i < min){
                     min = i;
                 }
