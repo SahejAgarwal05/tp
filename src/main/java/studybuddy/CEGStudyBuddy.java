@@ -42,6 +42,8 @@ public class CEGStudyBuddy {
         case "exit" -> exitProgram();
         case "total_work_load" -> c = new TotalWorkLoad(inputParts[1]);
         case "required_word_load"-> c = new RequiredWorkLoad(inputParts[1]);
+        case "delete" -> c = new DeleteCourse(inputParts[1]);
+        case "list" -> c = new ListCommand();
         default -> c = new InvalidCommand(inputParts[1]);
         }
 
