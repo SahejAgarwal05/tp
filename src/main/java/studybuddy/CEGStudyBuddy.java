@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import studybuddy.commands.Command;
 import studybuddy.commands.AddCommand;
+import studybuddy.commands.EditCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.course.Course;
 
@@ -28,6 +29,7 @@ public class CEGStudyBuddy {
         Command c = null;
         switch (inputParts[0]) {
         case "add" -> c = new AddCommand(inputParts[1]);
+        case "edit" -> c = new EditCommand(inputParts[1]);
         case "exit" -> exitProgram();
         default -> c = new InvalidCommand(inputParts[1]);
         }
