@@ -10,7 +10,8 @@ import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.TotalWorkLoad;
 import studybuddy.commands.ListCommand;
-import studybudd.commands.RequiredWorkLoad;
+import studybuddy.commands.RequiredWorkLoad;
+import studybuddy.commands.WorkloadCommand;
 import studybuddy.course.Course;
 
 public class CEGStudyBuddy {
