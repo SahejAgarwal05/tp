@@ -16,10 +16,10 @@ public class TotalWorkLoadCommand extends Command {
         int sem = 0;
         try {
             sem = Integer.parseInt(args[0]);
+            assert sem >= 0;
         } catch (NumberFormatException e) {
             throwException(SEMERRORMESSAGE);
         }
-
         int totalWorkLoad = 0;
         for(Course course : CEGStudyBuddy.courses){
             if(course.getTakeInSem() == sem){
