@@ -24,8 +24,6 @@ public class AddCommand extends Command {
             int takeInYear = Integer.parseInt(paramParts[4]);
             int takeInSem = Integer.parseInt(paramParts[5]);
             CEGStudyBuddy.courses.add(new Course(code, title, mc, takeInSem, takeInYear));
-            // For debugging
-            System.out.println(CEGStudyBuddy.courses);
         } catch (ArrayIndexOutOfBoundsException e) {
             // print proper error message
             return "Error";
