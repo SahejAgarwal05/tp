@@ -35,6 +35,7 @@ public class AddCommand extends Command {
         } catch (NumberFormatException e) {
             return "You did not enter a proper number.";
         }
+        
         CEGStudyBuddy.courses.add(new Course(code, title, mc, takeInSem, takeInYear));
         return "Course added: " + code + " - " + title + " (" + mc + " MCs)";
     }
