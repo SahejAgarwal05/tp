@@ -14,7 +14,6 @@ public class TotalWorkLoad extends Command {
         try{
             sem = Integer.parseInt(splits[1].trim());
             year = Integer.parseInt(splits[0].substring(2).trim());
-            assert (sem == 1 || sem == 2) && (year > 0);
         } catch (Exception e){
             throwException("Invalid year and/or sem");
         }

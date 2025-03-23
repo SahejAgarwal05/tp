@@ -5,7 +5,7 @@ package studybuddy.course;
  * Pre-set info: code, title, module credit (mc), offered in semester 1/2, ...
  * Editable info: take(n) in semester, is cleared/taken
  */
-public class Course {
+public class aCourse {
     protected String code;
     protected String title;
     protected int mc;
