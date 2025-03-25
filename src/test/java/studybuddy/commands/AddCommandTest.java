@@ -1,15 +1,11 @@
 package studybuddy.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import studybuddy.CEGStudyBuddy;
-import studybuddy.course.Course;
 
 public class AddCommandTest {
     public static final String TEST_CODE = "CS2113";
