@@ -19,10 +19,10 @@ public class AddCommandTest {
     public static final String MISSING_INPUT_EXPECTED = "You missed an input.";
 
     public static final String TEST_INPUT = "c/" + TEST_CODE +
-            "t/" + TEST_TITLE +
-            "mc/" + TEST_MC +
-            "y/" + TEST_YEAR +
-            "s/" + TEST_SEM;
+            " t/" + TEST_TITLE +
+            " mc/" + TEST_MC +
+            " y/" + TEST_YEAR +
+            " s/" + TEST_SEM;
     public static final String TEST_MISSING_PARAM = "c/" + TEST_CODE;
 
     @BeforeEach
