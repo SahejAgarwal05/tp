@@ -17,12 +17,21 @@ public class WorkloadCommand extends Command {
         assert (courses != null);
         int[] mcsInEachSemester = new int[NUM_OF_SEMESTERS];
         String[] period = new String[NUM_OF_SEMESTERS];
+        int year = 1;
+        int semester = 1;
+        while (year <= 4) {
+            int sem = ((year - 1) * 2) + semester;
+            period[sem - 1] = "Year " + year + " Semester " + semester++;
+            if (semester == 3) {
+                semester = 1;
+                year++;
+            }
+        }
         for (Course course : courses) {
-            int year = course.getTakeInYear();
-            int semester = course.getTakeInSem();
+            year = course.getTakeInYear();
+            semester = course.getTakeInSem();
             int sem = ((year - 1) * 2) + semester;
             mcsInEachSemester[sem - 1] += course.getMc();
-            period[sem - 1] = "Year " + year + " Semester " + semester;
         }
 
         StringBuilder sb = new StringBuilder();
