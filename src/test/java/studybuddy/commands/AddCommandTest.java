@@ -29,7 +29,7 @@ public class AddCommandTest {
 
     @BeforeEach
     public void setup() {
-        CEGStudyBuddy.courses.clear();
+        CEGStudyBuddy.courses = new CourseList("test");
     }
 
     @Test
