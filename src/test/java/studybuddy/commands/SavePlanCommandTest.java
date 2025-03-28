@@ -19,12 +19,15 @@ public class SavePlanCommandTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        System.setOut(new PrintStream(outContent)); // Redirect System.out to capture output
-        storage = new StorageManager(TEST_DIR);
-        CEGStudyBuddy.storage = storage;
+        System.setOut(new PrintStream(outContent));
+        CEGStudyBuddy.storage = new StorageManager(TEST_DIR);;
         File dir = new File(TEST_DIR);
-        if (!dir.exists()) dir.mkdirs();
-        for (File file : dir.listFiles()) file.delete();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        for (File file : dir.listFiles()) {
+            file.delete();
+        }
         CEGStudyBuddy.courses = new CourseList("MyPlan");
     }
 
@@ -40,7 +43,6 @@ public class SavePlanCommandTest {
 
     @AfterEach
     public void tearDown() {
-        // Reset System.out after test
         System.setOut(originalOut);
     }
 }
