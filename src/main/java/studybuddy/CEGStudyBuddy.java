@@ -74,7 +74,6 @@ public class CEGStudyBuddy {
         } catch (Exception e) {
             throw new CEGStudyBuddyException(e.getMessage());
         }
-
         return c;
     }
 }

@@ -6,21 +6,46 @@ import studybuddy.course.CourseList;
 
 import java.io.*;
 
+/**
+ * Handles persistent storage operations for the CEGStudyBuddy application.
+ * It allows saving, loading, listing, and initializing study plans.
+ */
 public class StorageManager {
     private String directory;
 
+    /**
+     * Constructs a StorageManager with a specified directory for storing plans.
+     *
+     * @param directory The directory path where plans will be stored.
+     */
     public StorageManager(String directory) {
         this.directory = directory;
     }
 
+    /**
+     * Gets the current directory used for storing plans.
+     *
+     * @return The directory path.
+     */
     public String getDirectory() {
         return directory;
     }
 
+    /**
+     * Sets the directory path for storing plans.
+     *
+     * @param directory The new directory path.
+     */
     public void setDirectory(String directory) {
         this.directory = directory;
     }
 
+    /**
+     * Saves a new plan to storage. If a plan with the same name already exists, an exception is thrown.
+     *
+     * @param plan The name of the new plan.
+     * @throws CEGStudyBuddyException If a plan with the same name exists or if an error occurs during saving.
+     */
     public void saveNewPlan(String plan) throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
@@ -46,22 +71,33 @@ public class StorageManager {
         }
     }
 
+    /**
+     * Saves the currently loaded plan to storage.
+     *
+     * @throws CEGStudyBuddyException If an error occurs during saving.
+     */
     public void saveCurrentPlan() throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
-            dir.mkdirs(); // Create directory if it doesn't exist
+            dir.mkdirs();
         }
 
         String planFileName = CEGStudyBuddy.courses.getPlanName() + ".bin";
         File planFile = new File(dir, planFileName);
-
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
             oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Error in saving");
         }
+        System.out.println("Plan saved successfully.");
     }
 
+    /**
+     * Loads a saved plan by name and sets it as the current plan.
+     *
+     * @param planName The name of the plan to load.
+     * @throws CEGStudyBuddyException If the plan does not exist or the data is corrupted.
+     */
     public void loadPlan(String planName) throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
@@ -81,6 +117,12 @@ public class StorageManager {
         }
     }
 
+    /**
+     * Lists all saved plan names in the storage directory.
+     *
+     * @return An array of plan names without file extensions.
+     * @throws CEGStudyBuddyException If no plans are found.
+     */
     public String[] listPlans() throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
@@ -93,41 +135,43 @@ public class StorageManager {
             throw new CEGStudyBuddyException("You have no plans saved");
         }
 
-        // Remove the ".bin" extension from each plan name
+        // Remove ".bin" extension
         for (int i = 0; i < plans.length; i++) {
             plans[i] = plans[i].substring(0, plans[i].length() - 4);
         }
 
         return plans;
     }
+
     /**
-     * This function helps to create a new plan
+     * Prompts the user to create a new plan by entering a valid alphanumeric plan name.
      *
-     * @throws CEGStudyBuddyException
+     * @throws CEGStudyBuddyException If saving the new plan fails.
      */
-     public void newPlan() throws CEGStudyBuddyException {
+    public void newPlan() throws CEGStudyBuddyException {
         String planName = "";
         while (planName.equals("")) {
-            System.out.print("Please enter a plan name \nNo special charecters are allowed only alphanumeric input: ");
+            System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
             planName = CEGStudyBuddy.in.nextLine().trim();
-            if(!planName.matches("[a-zA-Z0-9]*")){
+            if (!planName.matches("[a-zA-Z0-9]*")) {
                 planName = "";
             }
         }
-        try{
+        try {
             this.saveNewPlan(planName);
             System.out.println("New plan has been created");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
-     * This function loads or creates a new plans as per user input accounting for error
+     * Initializes the plan selection process.
+     * If an error occurs, it prompts the user again.
      */
-    public  void initializePlan() {
+    public void initializePlan() {
         boolean initRun = true;
-        while (initRun){
+        while (initRun) {
             initRun = false;
             try {
                 selectPlan();
@@ -139,36 +183,39 @@ public class StorageManager {
     }
 
     /**
-     * This functions helps user select plan
+     * Allows the user to select an existing plan or create a new one.
      *
-     * @throws CEGStudyBuddyException
+     * @throws CEGStudyBuddyException If the selected plan number is invalid.
      */
-     public void selectPlan() throws CEGStudyBuddyException {
+    public void selectPlan() throws CEGStudyBuddyException {
         String[] plans;
         try {
             plans = this.listPlans();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("You have no previous plans");
             this.newPlan();
             return;
         }
-        for(int i = 0; i < plans.length; i ++){
-            System.out.println(i + 1 + ". " +plans[i]);
+
+        for (int i = 0; i < plans.length; i++) {
+            System.out.println((i + 1) + ". " + plans[i]);
         }
-        System.out.print("Please enter a plan number between 1 and " + plans.length + "or 0 to create a new plan: ");
+
+        System.out.print("Please enter a plan number between 1 and " + plans.length + " or 0 to create a new plan: ");
         String planNumber = CEGStudyBuddy.in.nextLine().trim();
-        if(planNumber.equals("0")){
+
+        if (planNumber.equals("0")) {
             this.newPlan();
             return;
         }
-        int planNo;
+
         try {
-            planNo = Integer.parseInt(planNumber);
+            int planNo = Integer.parseInt(planNumber);
             this.loadPlan(plans[planNo - 1]);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
+
         System.out.println("Plan loaded successfully");
     }
 }
-
