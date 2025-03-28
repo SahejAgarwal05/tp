@@ -9,7 +9,7 @@ public class EditCommand extends Command {
         super(param);
     }
 
-    public String[] parseEdit() {
+    public String[] parseEdit() throws ArrayIndexOutOfBoundsException, NumberFormatException {
         assert (!param.isEmpty());
 
         String[] parts = param.split(" ");
@@ -59,9 +59,9 @@ public class EditCommand extends Command {
 
     @Override
     public String execute() {
-        String[] paramParts = parseEdit();
-        boolean found = false;
         try {
+            String[] paramParts = parseEdit();
+            boolean found = false;
             if (paramParts[0] == null) {
                 return "Course code is missing.";
             }
@@ -86,8 +86,7 @@ public class EditCommand extends Command {
         }
     }
 
-    protected Course setEditedParams(String[] editedParams, Course course)
-            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+    protected Course setEditedParams(String[] editedParams, Course course) {
         if (editedParams.length != 5) {
             // throw an exception here
             return course;
