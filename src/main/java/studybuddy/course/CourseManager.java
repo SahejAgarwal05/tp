@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 
 public class CourseManager {
     public static void main(String[] args) {
-        String s = "{\"code\": \"CS1010\", \"title\": \"Programming Met\", \"mc\": 4, \"offerInSem1\": true, \"offerInSem2\": true, " +
+        String s = "{\"code\": \"CS1010\", \"title\": \"Programming Met\", \"mc\": 4, " +
+                "\"offerInSem1\": true, \"offerInSem2\": true, " +
                 "takeInSem\": 0, \"takeInYear\": 0, \"isCleared\": false}";
         Course c = jsonToCourse(s);
     }
