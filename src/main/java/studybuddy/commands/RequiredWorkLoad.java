@@ -8,7 +8,7 @@ public class RequiredWorkLoad extends Command {
     }
     public String execute() throws CEGStudyBuddyException {
         int[] mCs = new int[] {0,0,0,0,0,0,0,0};
-        for (Course course : CEGStudyBuddy.courses){
+        for (Course course : CEGStudyBuddy.courses.getCourses()){
             int index = course.getTakeInYear() * 2 + course.getTakeInSem();
             mCs[index] += course.getTakeInSem();
         }
