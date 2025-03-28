@@ -17,21 +17,26 @@ public class AddCommand extends Command {
     @Override
     public String execute() {
         String[] paramParts = parseAdd();
+
+        String code;
+        String title;
+        int mc;
+        int takeInYear;
+        int takeInSem;
+
         try {
-            String code = paramParts[1];
-            String title = paramParts[2];
-            int mc = Integer.parseInt(paramParts[3]);
-            int takeInYear = Integer.parseInt(paramParts[4]);
-            int takeInSem = Integer.parseInt(paramParts[5]);
-            CEGStudyBuddy.courses.add(new Course(code, title, mc, takeInSem, takeInYear));
+            code = paramParts[1];
+            title = paramParts[2];
+            mc = Integer.parseInt(paramParts[3]);
+            takeInYear = Integer.parseInt(paramParts[4]);
+            takeInSem = Integer.parseInt(paramParts[5]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            // print proper error message
-            return "Error";
+            return "You missed an input.";
         } catch (NumberFormatException e) {
-            // print proper error message
-            return "Int Error";
+            return "You did not enter a proper number.";
         }
-        // print proper success message
-        return "Success";
+        
+        CEGStudyBuddy.courses.add(new Course(code, title, mc, takeInSem, takeInYear));
+        return "Course added: " + code + " - " + title + " (" + mc + " MCs)";
     }
 }
