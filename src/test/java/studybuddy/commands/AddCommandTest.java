@@ -16,8 +16,11 @@ public class AddCommandTest {
 
     public static final String[] TEST_INVALID_PARAM = {"four", "1.5", "-2"};
     public static final String[] TEST_OOB_PARAM = {"0", "3", "6"};
-    public static final String[] TEST_MISSING_PARAM =
-            {"c/" + TEST_CODE, "t/" + TEST_TITLE, "mc/" + TEST_MC, "y/" + TEST_YEAR, "s/" + TEST_SEM,};
+    public static final String[] TEST_MISSING_PARAM = {"c/" + TEST_CODE,
+                                                       "t/" + TEST_TITLE,
+                                                       "mc/" + TEST_MC,
+                                                       "y/" + TEST_YEAR,
+                                                       "s/" + TEST_SEM,};
 
     public static final String ADD_COURSE_EXPECTED = "Course added: "
             + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
@@ -27,22 +30,6 @@ public class AddCommandTest {
     @BeforeEach
     public void setup() {
         CEGStudyBuddy.courses.clear();
-    }
-
-    public static String getTestInput(String c, String t, String mc, String sem, String year) {
-        return "c/" + c +
-                " t/" + t +
-                " mc/" + mc +
-                " y/" + year +
-                " s/" + sem;
-    }
-
-    public static String execute(AddCommand cmd) {
-        try {
-            return cmd.execute();
-        } catch (CEGStudyBuddyException e) {
-            return e.getMessage();
-        }
     }
 
     @Test
@@ -78,5 +65,21 @@ public class AddCommandTest {
         AddCommand addCourse = new AddCommand(testInput);
         String output = execute(addCourse);
         assertEquals(INVALID_INPUT_EXPECTED, output);
+    }
+
+    public static String getTestInput(String c, String t, String mc, String sem, String year) {
+        return "c/" + c +
+                " t/" + t +
+                " mc/" + mc +
+                " y/" + year +
+                " s/" + sem;
+    }
+
+    public static String execute(AddCommand cmd) {
+        try {
+            return cmd.execute();
+        } catch (CEGStudyBuddyException e) {
+            return e.getMessage();
+        }
     }
 }
