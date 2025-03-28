@@ -4,12 +4,6 @@ import studybuddy.CEGStudyBuddy;
 import studybuddy.commands.CEGStudyBuddyException;
 import studybuddy.course.CourseList;
 
-import java.io.*;
-
-/**
- * Handles persistent storage operations for the CEGStudyBuddy application.
- * It allows saving, loading, listing, and initializing study plans.
- */
 public class StorageManager {
     private String directory;
 
