@@ -79,10 +79,10 @@ public class EditCommand extends Command {
             return "Course not found.";
         } catch (ArrayIndexOutOfBoundsException e) {
             // print proper error message
-            return "Error";
+            return "Error: Array index out of bounds";
         } catch (NumberFormatException e) {
             // print proper error message
-            return "Int Error";
+            return "Error: Cannot convert to Integer";
         }
     }
 
