@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.junit.platform.commons.annotation.Testable;
 import studybuddy.CEGStudyBuddy;
 
 public class AddCommandTest {
@@ -34,9 +35,9 @@ public class AddCommandTest {
 
     @Test
     public void testAddCourse() {
-        String testInput = getTestInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_SEM, TEST_YEAR);
+        String testInput = getTestInput(TEST_MC, TEST_SEM, TEST_YEAR);
         AddCommand addCourse = new AddCommand(testInput);
-        String output = execute(addCourse);
+        String output = executeTest(addCourse);
         assertEquals(ADD_COURSE_EXPECTED, output);
     }
 
@@ -44,7 +45,7 @@ public class AddCommandTest {
     public void testMissingParam() {
         for (String param : TEST_MISSING_PARAM) {
             AddCommand addCourse = new AddCommand(param);
-            String output = execute(addCourse);
+            String output = executeTest(addCourse);
             assertEquals(MISSING_INPUT_EXPECTED, output);
         }
     }
@@ -52,30 +53,30 @@ public class AddCommandTest {
     @Test
     public void testInvalidParam() {
         for (String param : TEST_INVALID_PARAM) {
-            String testInput = getTestInput(TEST_CODE, TEST_TITLE, param, param, param);
+            String testInput = getTestInput(param, param, param);
             AddCommand addCourse = new AddCommand(testInput);
-            String output = execute(addCourse);
+            String output = executeTest(addCourse);
             assertEquals(INVALID_INPUT_EXPECTED, output);
         }
     }
 
     @Test
     public void testOutOfBoundsParam() {
-        String testInput = getTestInput(TEST_CODE, TEST_TITLE, TEST_OOB_PARAM[0], TEST_OOB_PARAM[1], TEST_OOB_PARAM[2]);
+        String testInput = getTestInput(TEST_OOB_PARAM[0], TEST_OOB_PARAM[1], TEST_OOB_PARAM[2]);
         AddCommand addCourse = new AddCommand(testInput);
-        String output = execute(addCourse);
+        String output = executeTest(addCourse);
         assertEquals(INVALID_INPUT_EXPECTED, output);
     }
 
-    public static String getTestInput(String c, String t, String mc, String sem, String year) {
-        return "c/" + c +
-                " t/" + t +
+    String getTestInput(String mc, String sem, String year) {
+        return "c/" + AddCommandTest.TEST_CODE +
+                " t/" + AddCommandTest.TEST_TITLE +
                 " mc/" + mc +
                 " y/" + year +
                 " s/" + sem;
     }
 
-    public static String execute(AddCommand cmd) {
+    String executeTest(AddCommand cmd) {
         try {
             return cmd.execute();
         } catch (CEGStudyBuddyException e) {
