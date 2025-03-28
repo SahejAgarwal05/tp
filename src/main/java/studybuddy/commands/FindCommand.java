@@ -24,7 +24,7 @@ public class FindCommand extends Command {
 
         String targetCode = parts[1].trim().toUpperCase();
 
-        for (Course course : CEGStudyBuddy.courses) {
+        for (Course course : CEGStudyBuddy.courses.getCourses()) {
             if (course.getCode().equalsIgnoreCase(targetCode)) {
                 return "Course Code: " + course.getCode() + "\n"
                         + "Course Title: " + course.getTitle() + "\n"
