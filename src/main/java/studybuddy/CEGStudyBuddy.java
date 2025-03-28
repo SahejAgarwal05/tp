@@ -1,9 +1,7 @@
 package studybuddy;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import studybuddy.StorageManager;
 import studybuddy.course.CourseList;
 import studybuddy.commands.CEGStudyBuddyException;
