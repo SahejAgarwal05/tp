@@ -1,18 +1,15 @@
 package studybuddy.commands;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import studybuddy.CEGStudyBuddy;
-import studybuddy.StorageManager;
-import studybuddy.course.CourseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import studybuddy.CEGStudyBuddy;
+import studybuddy.StorageManager;
+import studybuddy.course.CourseList;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SavePlanCommandTest {
     private static final String TEST_DIR = "./testdata/";
