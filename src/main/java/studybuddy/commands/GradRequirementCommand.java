@@ -14,7 +14,7 @@ public class GradRequirementCommand extends Command {
     public String execute() {
         int completedMCs = 0;
 
-        for (Course course : CEGStudyBuddy.courses) {
+        for (Course course : CEGStudyBuddy.courses.getCourses()) {
             completedMCs += course.getMc();
         }
 
