@@ -14,7 +14,10 @@ import studybuddy.commands.TotalWorkLoad;
 import studybuddy.commands.ListCommand;
 import studybuddy.commands.RequiredWorkLoad;
 import studybuddy.commands.WorkloadCommand;
+import studybuddy.commands.FindCommand;
+import studybuddy.commands.GradRequirementCommand;
 import studybuddy.course.Course;
+
 
 public class CEGStudyBuddy {
     public static ArrayList<Course> courses = new ArrayList<>(); // Global course list
@@ -74,6 +77,8 @@ public class CEGStudyBuddy {
             case "required_workload" -> c = new RequiredWorkLoad(inputParts[1]);
             case "delete" -> c = new DeleteCourse(inputParts[1]);
             case "list" -> c = new ListCommand();
+            case "find" -> c = new FindCommand(inputParts[1]);
+            case "gradreq" -> c = new GradRequirementCommand();
             default -> c = new InvalidCommand();
             }
         } catch (IndexOutOfBoundsException e) {
