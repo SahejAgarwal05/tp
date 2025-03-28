@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import studybuddy.CEGStudyBuddy;
 import studybuddy.commands.CEGStudyBuddyException;
 import studybuddy.course.CourseList;
 
