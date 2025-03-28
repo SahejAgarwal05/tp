@@ -1,8 +1,6 @@
 package studybuddy;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-import studybuddy.StorageManager;
 import studybuddy.course.CourseList;
 import studybuddy.commands.CEGStudyBuddyException;
 import studybuddy.commands.Command;
@@ -17,7 +15,6 @@ import studybuddy.commands.RequiredWorkLoad;
 import studybuddy.commands.WorkloadCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
-import studybuddy.course.Course;
 import studybuddy.commands.SwiitchPlanCommand;
 import studybuddy.commands.SavePlanCommand;
 
