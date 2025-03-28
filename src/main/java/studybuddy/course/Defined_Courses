@@ -1,0 +1,6 @@
+{"code": "CS1010", "title": "Programming Methodology", "mc": 4, "offerInSem1": true, "offerInSem2": false, "takeInSem": 1, "takeInYear": 1, "isCleared": true}
+{"code": "CS1231", "title": "Discrete Structures", "mc": 4, "offerInSem1": true, "offerInSem2": true, "takeInSem": 0, "takeInYear": 0, "isCleared": false}
+{"code": "CS2040C", "title": "Data Structures and Algorithms", "mc": 4, "offerInSem1": true, "offerInSem2": true, "takeInSem": 0, "takeInYear": 0, "isCleared": false}
+{"code": "CG1111A", "title": "Engineering Principles and Practice I", "mc": 4, "offerInSem1": true, "offerInSem2": false, "takeInSem": 0, "takeInYear": 0, "isCleared": false}
+{"code": "CG2111A", "title": "Engineering Principles and Practice II", "mc": 4, "offerInSem1": false, "offerInSem2": true, "takeInSem": 0, "takeInYear": 0, "isCleared": false}
+{"code": "CS2113", "title": "Software Engineering & Object-Oriented Programming", "mc": 4, "offerInSem1": true, "offerInSem2": true, "takeInSem": 0, "takeInYear": 0, "isCleared": false}

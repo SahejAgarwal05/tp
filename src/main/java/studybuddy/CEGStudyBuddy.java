@@ -3,10 +3,26 @@ package studybuddy;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import studybuddy.StorageManager;
-import studybuddy.commands.*;
-import studybuddy.course.Course;
 import studybuddy.course.CourseList;
+import studybuddy.commands.CEGStudyBuddyException;
+import studybuddy.commands.Command;
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.EditCommand;
+import studybuddy.commands.HelpCommand;
+import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.TotalWorkLoad;
+import studybuddy.commands.ListCommand;
+import studybuddy.commands.RequiredWorkLoad;
+import studybuddy.commands.WorkloadCommand;
+import studybuddy.commands.FindCommand;
+import studybuddy.commands.GradRequirementCommand;
+import studybuddy.course.Course;
+import studybuddy.commands.SwiitchPlanCommand;
+import studybuddy.commands.SavePlanCommand;
+
 public class CEGStudyBuddy {
     public static CourseList courses;// Global course list
     public static boolean isRunning = true;
@@ -58,18 +74,20 @@ public class CEGStudyBuddy {
         Command c = null;
         try {
             switch (inputParts[0]) {
-                case "add" -> c = new AddCommand(inputParts[1]);
-                case "edit" -> c = new EditCommand(inputParts[1]);
-                case "workload" -> c = new WorkloadCommand("", courses.getCourses());
-                case "help" -> c = new HelpCommand();
-                case "exit" -> exitProgram();
-                case "total_workload" -> c = new TotalWorkLoad(inputParts[1]);
-                case "required_workload" -> c = new RequiredWorkLoad(inputParts[1]);
-                case "delete" -> c = new DeleteCourse(inputParts[1]);
-                case "list" -> c = new ListCommand();
-                case "save" -> c = new SavePlanCommand();
-                case "switch_plan" -> c = new SwiitchPlanCommand();
-                default -> c = new InvalidCommand();
+            case "save" -> c = new SavePlanCommand();
+            case "switch_plan" -> c = new SwiitchPlanCommand();
+            case "add" -> c = new AddCommand(inputParts[1]);
+            case "edit" -> c = new EditCommand(inputParts[1]);
+            case "workload" -> c = new WorkloadCommand("", courses);
+            case "help" -> c = new HelpCommand();
+            case "exit" -> exitProgram();
+            case "total_workload" -> c = new TotalWorkLoad(inputParts[1]);
+            case "required_workload" -> c = new RequiredWorkLoad(inputParts[1]);
+            case "delete" -> c = new DeleteCourse(inputParts[1]);
+            case "list" -> c = new ListCommand();
+            case "find" -> c = new FindCommand(inputParts[1]);
+            case "gradreq" -> c = new GradRequirementCommand();
+            default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
             throw new CEGStudyBuddyException(e.getMessage());
