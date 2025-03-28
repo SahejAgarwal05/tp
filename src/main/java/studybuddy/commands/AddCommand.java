@@ -5,6 +5,10 @@ import studybuddy.course.Course;
 
 public class AddCommand extends Command {
 
+    public AddCommand(String param) {
+        super(param);
+    }
+
     public static boolean isValidMC(int mc) {
         return mc >= 1 && mc <= 12;
     }
@@ -15,10 +19,6 @@ public class AddCommand extends Command {
 
     public static boolean isValidSem(int sem) {
         return sem >= 1 && sem <= 2;
-    }
-
-    public AddCommand(String param) {
-        super(param);
     }
 
     public String[] parseAdd() {
