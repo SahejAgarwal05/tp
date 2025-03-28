@@ -78,7 +78,7 @@ public class CEGStudyBuddy {
             case "switch_plan" -> c = new SwiitchPlanCommand();
             case "add" -> c = new AddCommand(inputParts[1]);
             case "edit" -> c = new EditCommand(inputParts[1]);
-            case "workload" -> c = new WorkloadCommand("", courses);
+            case "workload" -> c = new WorkloadCommand("", courses.getCourses());
             case "help" -> c = new HelpCommand();
             case "exit" -> exitProgram();
             case "total_workload" -> c = new TotalWorkLoad(inputParts[1]);
