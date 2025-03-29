@@ -23,7 +23,7 @@ public class HelpCommand extends Command {
                     Displays the total workload for all semesters.
                 workload_for y/YEAR s/SEMESTER
                     Displays the courses and the total workload for the given semester.
-                required_workload
+                workload_balance
                     Displays the minimum and maximum semester workload for the course plan.
                 gradreq
                     Displays information about your graduation requirements based on your plan.

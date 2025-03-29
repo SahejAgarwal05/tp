@@ -11,7 +11,7 @@ import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.ListCommand;
-import studybuddy.commands.RequiredWorkloadCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
@@ -77,7 +77,7 @@ public class CEGStudyBuddy {
             case "help" -> c = new HelpCommand();
             case "exit" -> exitProgram();
             case "workload_for" -> c = new WorkloadForCommand(inputParts[1]);
-            case "required_workload" -> c = new RequiredWorkloadCommand(inputParts[1]);
+            case "workload_balance" -> c = new WorkloadBalanceCommand(inputParts[1]);
             case "delete" -> c = new DeleteCourse(inputParts[1]);
             case "list" -> c = new ListCommand();
             case "find" -> c = new FindCommand(inputParts[1]);

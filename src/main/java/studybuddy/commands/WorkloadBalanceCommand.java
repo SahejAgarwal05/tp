@@ -2,8 +2,8 @@ package studybuddy.commands;
 import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
-public class RequiredWorkloadCommand extends Command {
-    public RequiredWorkloadCommand(String param) {
+public class WorkloadBalanceCommand extends Command {
+    public WorkloadBalanceCommand(String param) {
         super(param);
     }
 
