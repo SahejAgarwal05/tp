@@ -9,13 +9,13 @@ import studybuddy.commands.EditCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.TotalWorkLoad;
+import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.ListCommand;
-import studybuddy.commands.RequiredWorkLoad;
-import studybuddy.commands.WorkloadCommand;
+import studybuddy.commands.RequiredWorkloadCommand;
+import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
-import studybuddy.commands.SwiitchPlanCommand;
+import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.SavePlanCommand;
 
 public class CEGStudyBuddy {
@@ -70,14 +70,14 @@ public class CEGStudyBuddy {
         try {
             switch (inputParts[0]) {
             case "save" -> c = new SavePlanCommand();
-            case "switch_plan" -> c = new SwiitchPlanCommand();
+            case "switch_plan" -> c = new SwitchPlanCommand();
             case "add" -> c = new AddCommand(inputParts[1]);
             case "edit" -> c = new EditCommand(inputParts[1]);
-            case "workload" -> c = new WorkloadCommand("", courses.getCourses());
+            case "workload_summary" -> c = new WorkloadSummaryCommand("", courses.getCourses());
             case "help" -> c = new HelpCommand();
             case "exit" -> exitProgram();
-            case "total_workload" -> c = new TotalWorkLoad(inputParts[1]);
-            case "required_workload" -> c = new RequiredWorkLoad(inputParts[1]);
+            case "workload_for" -> c = new WorkloadForCommand(inputParts[1]);
+            case "required_workload" -> c = new RequiredWorkloadCommand(inputParts[1]);
             case "delete" -> c = new DeleteCourse(inputParts[1]);
             case "list" -> c = new ListCommand();
             case "find" -> c = new FindCommand(inputParts[1]);

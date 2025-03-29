@@ -3,9 +3,10 @@ package studybuddy.commands;
 import studybuddy.CEGStudyBuddy;
 
 public class SavePlanCommand extends Command {
-    public SavePlanCommand(){
-        super("saveplan");
+    public SavePlanCommand() {
+        super("");
     }
+
     @Override
     public String execute() throws CEGStudyBuddyException {
         CEGStudyBuddy.storage.saveCurrentPlan();
