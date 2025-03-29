@@ -65,7 +65,7 @@ public class EditCommand extends Command {
             if (paramParts[0] == null) {
                 return "Course code is missing.";
             }
-            for (Course course: CEGStudyBuddy.courses) {
+            for (Course course: CEGStudyBuddy.courses.getCourses()) {
                 if (course.getCode().equals(paramParts[0])) {
                     course = setEditedParams(paramParts, course);
                     System.out.println(course);

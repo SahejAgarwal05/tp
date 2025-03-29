@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import studybuddy.course.CourseList;
 import studybuddy.CEGStudyBuddy;
 
 public class AddCommandTest {
@@ -29,7 +29,7 @@ public class AddCommandTest {
 
     @BeforeEach
     public void setup() {
-        CEGStudyBuddy.courses.clear();
+        CEGStudyBuddy.courses = new CourseList("test");
     }
 
     @Test

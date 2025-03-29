@@ -19,7 +19,7 @@ public class TotalWorkLoad extends Command {
             throwException("Invalid year and/or sem");
         }
         int totalWorkLoad = 0;
-        for(Course course : CEGStudyBuddy.courses){
+        for(Course course : CEGStudyBuddy.courses.getCourses()){
             if( course.getTakeInSem() == sem && course.getTakeInYear() == year){
                 totalWorkLoad += course.getMc();;
             }

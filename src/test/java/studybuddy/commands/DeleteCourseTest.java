@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
+import studybuddy.course.CourseList;
 
 public class DeleteCourseTest {
 
     @BeforeEach
     public void setup() {
-        // Adds a fresh test data before each test
+        CEGStudyBuddy.courses = new CourseList("test");
         CEGStudyBuddy.courses.clear();
         CEGStudyBuddy.courses.add(new Course("CS2113", "Software Engineering", 4, 2, 2));
         CEGStudyBuddy.courses.add(new Course("CS2040", "Data Structures", 4, 2, 1));
