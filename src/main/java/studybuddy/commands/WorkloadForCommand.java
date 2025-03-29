@@ -2,10 +2,11 @@ package studybuddy.commands;
 import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
-public class TotalWorkLoad extends Command {
-    public TotalWorkLoad(String params) {
+public class WorkloadForCommand extends Command {
+    public WorkloadForCommand(String params) {
         super(params);
     }
+
     @Override
     public String execute() throws CEGStudyBuddyException {
         String[] splits = param.trim().split("/s");

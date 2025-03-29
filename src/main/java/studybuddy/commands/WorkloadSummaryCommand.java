@@ -4,12 +4,25 @@ import java.util.ArrayList;
 
 import studybuddy.course.Course;
 
-public class WorkloadCommand extends Command {
+public class WorkloadSummaryCommand extends Command {
     private static final int NUM_OF_SEMESTERS = 8;
     private final ArrayList<Course> courses;
-    public WorkloadCommand(String param, ArrayList<Course> courses) {
+    public WorkloadSummaryCommand(String param, ArrayList<Course> courses) {
         super(param);
         this.courses = courses;
+    }
+
+    public static String checkWorkload(int mc, int sem) {
+        if (mc < 18) {
+            return "(Too low! Minimum workload: 18 MCs)";
+        }
+        if (sem == 1 && mc > 23) {
+            return "(Too high, please appeal for waiver! Maximum workload: 23 MCs)";
+        }
+        if (mc > 27) {
+            return "(Too high, please appeal for waiver! Maximum workload: 27 MCs)";
+        }
+        return "";
     }
 
     public String execute() {
@@ -35,7 +48,8 @@ public class WorkloadCommand extends Command {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < NUM_OF_SEMESTERS; i++) {
-            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs\n");
+            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
+            sb.append(checkWorkload(mcsInEachSemester[i], i) + "\n");
         }
         return sb.toString();
     }
