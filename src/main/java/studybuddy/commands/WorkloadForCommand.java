@@ -30,6 +30,6 @@ public class WorkloadForCommand extends Command {
             }
         }
         output = output + "\nTotal work load: " + totalWorkLoad;
-        return outputs;
+        return output;
     }
 }
