@@ -25,7 +25,7 @@ public class WorkloadForCommand extends Command {
         for(Course course : CEGStudyBuddy.courses.getCourses()){
             if( course.getTakeInSem() == sem && course.getTakeInYear() == year){
                 totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString());
+                output = output + "\n" + index + "." + course.toString();
                 index++;
             }
         }
