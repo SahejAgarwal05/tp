@@ -19,7 +19,7 @@ public class WorkloadForCommand extends Command {
         } catch (Exception e){
             throwException("Invalid year and/or sem");
         }
-        String output = "These are the courses you will be taking"
+        String output = "These are the courses you will be taking";
         int totalWorkLoad = 0;
         int index = 1;
         for(Course course : CEGStudyBuddy.courses.getCourses()){
