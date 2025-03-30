@@ -9,7 +9,7 @@ public class WorkloadForCommand extends Command {
 
     @Override
     public String execute() throws CEGStudyBuddyException {
-        String[] splits = param.trim().split("/s");
+        String[] splits = param.trim().split("s/");
         int sem = -1;
         int year = -1;
         try{
@@ -19,12 +19,17 @@ public class WorkloadForCommand extends Command {
         } catch (Exception e){
             throwException("Invalid year and/or sem");
         }
+        String output = "These are the courses you will be taking"
         int totalWorkLoad = 0;
+        int index = 1;
         for(Course course : CEGStudyBuddy.courses.getCourses()){
             if( course.getTakeInSem() == sem && course.getTakeInYear() == year){
-                totalWorkLoad += course.getMc();;
+                totalWorkLoad += course.getMc();
+                output = output + "\n" + index + "." + course.toString())
+                index++;
             }
         }
-        return totalWorkLoad + "";
+        output = output + "\nTotal work load: " + totalWorkLoad;
+        return outputs;
     }
 }
