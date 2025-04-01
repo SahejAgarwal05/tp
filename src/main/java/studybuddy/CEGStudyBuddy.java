@@ -17,10 +17,8 @@ import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.SavePlanCommand;
-import studybuddy.CommandNames;
-public class
-CEGStudyBuddy {
 
+public class CEGStudyBuddy {
     public static CourseList courses;// Global course list
     public static boolean isRunning = true;
     public static Scanner in = new Scanner(System.in);
