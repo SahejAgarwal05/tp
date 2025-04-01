@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SavePlanCommandTest {
     private static final String TEST_DIR = "./testdata/";
 
-    private CourseList courses;
+    private CourseList courses = new CourseList("MyPlan");
     private StorageManager storage;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -29,7 +29,6 @@ public class SavePlanCommandTest {
         for (File file : dir.listFiles()) {
             file.delete();
         }
-        courses = new CourseList("MyPlan");
     }
 
     @Test
