@@ -20,7 +20,7 @@
 
 Since there is a fixed group of courses which must be completed to fulfill graduation requirements, users can just search for the course codes and load/import these courses from the database (a .txt file) with accurate and complete information. This prevents users from defining these courses themselves using inaccurate information or making careless mistakes such as typos. It also improves user experience by simplifying user input.
 
-![img.png](img.png)
+\<insert image>\
 For the developers, this list is essential for other enhancement functions such as checking graduation requirements by comparing the users’ course plans with the list of core courses. To conveniently save and load from the list, Gson dependency is added to convert between courses and Json Strings.
 
 ## Implementation
