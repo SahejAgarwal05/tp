@@ -133,13 +133,11 @@ public class Parser {
             }
         }
         // if no edit value, hold place with empty string
-        return new String[]{
-                code,
-                title.toString(),
-                mc != null ? mc.toString() : "",
-                y != null ? y.toString() : "",
-                s != null ? s.toString() : ""
-        };
+        return new String[]{code,
+                            title.toString(),
+                            mc != null ? mc.toString() : "",
+                            y != null ? y.toString() : "",
+                            s != null ? s.toString() : ""};
     }
 
     public static String[] parseFind(String param) throws CEGStudyBuddyException {
