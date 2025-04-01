@@ -2,13 +2,14 @@ package studybuddy.commands;
 import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
-public class RequiredWorkLoad extends Command {
-    public RequiredWorkLoad(String param) {
+public class WorkloadBalanceCommand extends Command {
+    public WorkloadBalanceCommand(String param) {
         super(param);
     }
+
     public String execute() throws CEGStudyBuddyException {
         int[] mCs = new int[] {0,0,0,0,0,0,0,0};
-        for (Course course : CEGStudyBuddy.courses){
+        for (Course course : CEGStudyBuddy.courses.getCourses()){
             int index = course.getTakeInYear() * 2 + course.getTakeInSem();
             mCs[index] += course.getTakeInSem();
         }

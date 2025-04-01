@@ -17,7 +17,7 @@ public class DeleteCourse extends Command {
             }
             String code = parts[1].trim().toUpperCase();
 
-            boolean deleted = CEGStudyBuddy.courses.removeIf(course ->
+            boolean deleted = CEGStudyBuddy.courses.getCourses().removeIf(course ->
                     course.getCode().equalsIgnoreCase(code)
             );
 

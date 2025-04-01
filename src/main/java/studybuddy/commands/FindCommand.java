@@ -13,7 +13,7 @@ public class FindCommand extends Command {
     public String execute() throws CEGStudyBuddyException {
         // Ensure the command has proper format
         if (!param.trim().toLowerCase().startsWith("c/")) {
-            throwException("Invalid find format! Use: find c/COURSE_CODE");
+            throwException("Invalid find format! Use: find c/CODE");
         }
 
         // Extract course code
@@ -24,7 +24,7 @@ public class FindCommand extends Command {
 
         String targetCode = parts[1].trim().toUpperCase();
 
-        for (Course course : CEGStudyBuddy.courses) {
+        for (Course course : CEGStudyBuddy.courses.getCourses()) {
             if (course.getCode().equalsIgnoreCase(targetCode)) {
                 return "Course Code: " + course.getCode() + "\n"
                         + "Course Title: " + course.getTitle() + "\n"

@@ -1,13 +1,23 @@
 package studybuddy.course;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CourseList {
+public class CourseList implements Serializable {
     private ArrayList<Course> courses; // List to store all courses
-
+    private String planName;
     // Initializes the Course List
-    public CourseList() {
-        this.courses = new ArrayList<>();
+    public CourseList(String planName) {
+        this.courses = new ArrayList<Course>();
+        this.planName = planName;
+    }
+
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
     }
 
     // Add a course to the list
@@ -43,6 +53,15 @@ public class CourseList {
             count++;
         }
         return sb.toString().trim(); // Return formatted string
+    }
+    public boolean isEmpty() {
+        return courses.isEmpty();
+    }
+    public void add(Course course) {
+        courses.add(course);
+    }
+    public void clear(){
+        courses.clear();
     }
 }
 

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import studybuddy.course.CourseList;
 import studybuddy.CEGStudyBuddy;
 
 public class AddCommandTest {
@@ -14,33 +14,72 @@ public class AddCommandTest {
     public static final String TEST_SEM = "2";
     public static final String TEST_YEAR = "2";
 
+    public static final String[] TEST_INVALID_PARAM = {"four", "1.5", "-2"};
+    public static final String[] TEST_OOB_PARAM = {"0", "3", "6"};
+    public static final String[] TEST_MISSING_PARAM = {"c/" + TEST_CODE,
+                                                       "t/" + TEST_TITLE,
+                                                       "mc/" + TEST_MC,
+                                                       "y/" + TEST_YEAR,
+                                                       "s/" + TEST_SEM,};
+
     public static final String ADD_COURSE_EXPECTED = "Course added: "
             + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
     public static final String MISSING_INPUT_EXPECTED = "You missed an input.";
-
-    public static final String TEST_INPUT = "c/" + TEST_CODE +
-            " t/" + TEST_TITLE +
-            " mc/" + TEST_MC +
-            " y/" + TEST_YEAR +
-            " s/" + TEST_SEM;
-    public static final String TEST_MISSING_PARAM = "c/" + TEST_CODE;
+    public static final String INVALID_INPUT_EXPECTED = "You did not enter a valid number.";
 
     @BeforeEach
     public void setup() {
-        CEGStudyBuddy.courses.clear();
+        CEGStudyBuddy.courses = new CourseList("test");
     }
 
     @Test
     public void testAddCourse() {
-        AddCommand addCourse = new AddCommand(TEST_INPUT);
-        String output = addCourse.execute();
+        String testInput = getTestInput(TEST_MC, TEST_SEM, TEST_YEAR);
+        AddCommand addCourse = new AddCommand(testInput);
+        String output = executeTest(addCourse);
         assertEquals(ADD_COURSE_EXPECTED, output);
     }
 
     @Test
     public void testMissingParam() {
-        AddCommand addCourse = new AddCommand(TEST_MISSING_PARAM);
-        String output = addCourse.execute();
-        assertEquals(MISSING_INPUT_EXPECTED, output);
+        for (String param : TEST_MISSING_PARAM) {
+            AddCommand addCourse = new AddCommand(param);
+            String output = executeTest(addCourse);
+            assertEquals(MISSING_INPUT_EXPECTED, output);
+        }
+    }
+
+    @Test
+    public void testInvalidParam() {
+        for (String param : TEST_INVALID_PARAM) {
+            String testInput = getTestInput(param, param, param);
+            AddCommand addCourse = new AddCommand(testInput);
+            String output = executeTest(addCourse);
+            assertEquals(INVALID_INPUT_EXPECTED, output);
+        }
+    }
+
+    @Test
+    public void testOutOfBoundsParam() {
+        String testInput = getTestInput(TEST_OOB_PARAM[0], TEST_OOB_PARAM[1], TEST_OOB_PARAM[2]);
+        AddCommand addCourse = new AddCommand(testInput);
+        String output = executeTest(addCourse);
+        assertEquals(INVALID_INPUT_EXPECTED, output);
+    }
+
+    String getTestInput(String mc, String sem, String year) {
+        return "c/" + AddCommandTest.TEST_CODE +
+                " t/" + AddCommandTest.TEST_TITLE +
+                " mc/" + mc +
+                " y/" + year +
+                " s/" + sem;
+    }
+
+    String executeTest(AddCommand cmd) {
+        try {
+            return cmd.execute();
+        } catch (CEGStudyBuddyException e) {
+            return e.getMessage();
+        }
     }
 }
