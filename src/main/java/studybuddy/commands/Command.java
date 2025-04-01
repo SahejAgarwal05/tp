@@ -21,4 +21,8 @@ public abstract class Command {
     protected void throwException (String message) throws CEGStudyBuddyException {
         throw new CEGStudyBuddyException(message);
     }
+
+    public boolean isRunning() {
+        return true;
+    }
 }
