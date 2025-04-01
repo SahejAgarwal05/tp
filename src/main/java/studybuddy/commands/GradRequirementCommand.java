@@ -1,12 +1,14 @@
 package studybuddy.commands;
 
 import studybuddy.CEGStudyBuddy;
-import studybuddy.course.Course;
+import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.storage.StorageManager;
 
 public class GradRequirementCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
-    gradreq
-        Displays information about your graduation requirements based on your plan.""";
+            gradreq
+                Displays information about your graduation requirements based on your plan.""";
 
     private static final int GRADUATION_MCS = 160;
 
@@ -15,13 +17,14 @@ public class GradRequirementCommand extends Command {
     }
 
     @Override
-    public String execute() {
+    public String execute(CourseList courses, StorageManager storage) {
         int completedMCs = 0;
 
-        for (Course course : CEGStudyBuddy.courses.getCourses()) {
+        for (Course course : courses.getCourses()) {
             completedMCs += course.getMc();
         }
 
+        // whole thing can move to Ui
         int remaining = GRADUATION_MCS - completedMCs;
         StringBuilder sb = new StringBuilder();
 

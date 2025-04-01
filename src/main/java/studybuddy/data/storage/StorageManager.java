@@ -1,23 +1,27 @@
-package studybuddy;
+package studybuddy.data.storage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import studybuddy.commands.CEGStudyBuddyException;
-import studybuddy.course.CourseList;
+
+import studybuddy.CEGStudyBuddy;
+import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.course.CourseList;
 
 public class StorageManager {
     private String directory;
+    private CourseList courses;
 
     /**
      * Constructs a StorageManager with a specified directory for storing plans.
      *
      * @param directory The directory path where plans will be stored.
      */
-    public StorageManager(String directory) {
+    public StorageManager(String directory, CourseList courses) {
         this.directory = directory;
+        this.courses = courses;
     }
 
     /**
@@ -50,8 +54,8 @@ public class StorageManager {
             dir.mkdirs(); // Create directory if it doesn't exist
         }
 
-        if (CEGStudyBuddy.courses == null) {
-            CEGStudyBuddy.courses = new CourseList(plan);
+        if (courses == null) {
+            courses = new CourseList(plan);
         }
 
         String planFileName = plan + ".bin";
@@ -61,8 +65,8 @@ public class StorageManager {
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            CEGStudyBuddy.courses.setPlanName(plan);
-            oos.writeObject(CEGStudyBuddy.courses);
+            courses.setPlanName(plan);
+            oos.writeObject(courses);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CEGStudyBuddyException("Error in making new plan");
@@ -80,10 +84,10 @@ public class StorageManager {
             dir.mkdirs();
         }
 
-        String planFileName = CEGStudyBuddy.courses.getPlanName() + ".bin";
+        String planFileName = courses.getPlanName() + ".bin";
         File planFile = new File(dir, planFileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            oos.writeObject(CEGStudyBuddy.courses);
+            oos.writeObject(courses);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Error in saving");
         }
@@ -109,7 +113,7 @@ public class StorageManager {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(planFile))) {
-            CEGStudyBuddy.courses = (CourseList) ois.readObject();
+            courses = (CourseList) ois.readObject();
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Data Source Corrupted");
         }
@@ -148,7 +152,7 @@ public class StorageManager {
      */
     public void newPlan() throws CEGStudyBuddyException {
         String planName = "";
-        while (planName.equals("")) {
+        while (planName.isEmpty()) {
             System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
             planName = CEGStudyBuddy.in.nextLine().trim();
             if (!planName.matches("[a-zA-Z0-9]*")) {
