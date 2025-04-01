@@ -3,8 +3,8 @@ import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
 public class WorkloadBalanceCommand extends Command {
-    public WorkloadBalanceCommand(String param) {
-        super(param);
+    public WorkloadBalanceCommand() {
+        super("No param");
     }
 
     public String execute() throws CEGStudyBuddyException {
@@ -13,25 +13,18 @@ public class WorkloadBalanceCommand extends Command {
             int index = course.getTakeInYear() * 2 + course.getTakeInSem();
             mCs[index] += course.getTakeInSem();
         }
-        if(param.trim().equals("max")){
-            int max = 0;
-            for(int i : mCs){
-                if(i > max){
-                    max = i;
-                }
+        int max = 0;
+        int min = 1000000;
+        for(int i : mCs){
+            if(i > max){
+                max = i;
             }
-            return max + "";
-        }
-        if (param.trim().equals("min")){
-            int min = 0;
-            for(int i : mCs){
-                if(i < min){
-                    min = i;
-                }
+            if(i < min){
+                min = i;
             }
-            return min + "";
         }
+
         throwException("please enter min or max");
-        return "";
+        return "Max : " + max + "\nMin : " + min;
     }
 }

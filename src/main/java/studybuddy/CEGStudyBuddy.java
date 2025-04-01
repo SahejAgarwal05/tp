@@ -77,7 +77,7 @@ public class CEGStudyBuddy {
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> exitProgram();
             case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand(inputParts[1]);
+            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
             case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
             case CommandNames.LIST -> c = new ListCommand();
             case CommandNames.FIND -> c = new FindCommand(inputParts[1]);
