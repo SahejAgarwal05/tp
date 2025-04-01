@@ -15,14 +15,14 @@ public class Parser {
      * @throws IndexOutOfBoundsException If parameters are not included (inputParts.len() = 1).
      */
     public static Command parseCommand(String[] inputParts) throws CEGStudyBuddyException {
-        Command c = null;
+        Command c;
         try {
             switch (inputParts[0]) {
             case CommandNames.SAVE -> c = new SavePlanCommand();
             case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
             case CommandNames.ADD -> c = new AddCommand(inputParts[1]);
             case CommandNames.EDIT -> c = new EditCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand("");
+            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand();
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
@@ -92,7 +92,7 @@ public class Parser {
 
         String[] parts = param.split(" ");
         String code = null;
-        String title = "";
+        StringBuilder title = new StringBuilder();
         Integer mc = null;
         Integer y = null;
         Integer s = null;
@@ -102,11 +102,11 @@ public class Parser {
                 code = parts[i].substring(2);
             } else if (parts[i].startsWith("t/")) {
                 // title may consist of a few words
-                title = parts[i].substring(2);
+                title = new StringBuilder(parts[i].substring(2));
                 i += 1;
                 // while i is in bound and parts[i] is not next identifier
                 while (i < parts.length && !EditCommand.hasIdentifier(parts[i])) {
-                    title += " " + parts[i];
+                    title.append(" ").append(parts[i]);
                     i += 1;
                 }
                 // reset i back to the ending element of title
@@ -122,7 +122,7 @@ public class Parser {
         // if no edit value, hold place with empty string
         return new String[]{
             code,
-            title,
+            title.toString(),
             mc != null ? mc.toString() : "",
             y != null ? y.toString() : "",
             s != null ? s.toString() : ""
@@ -153,5 +153,7 @@ public class Parser {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid year and/or sem");
         }
+
+        return output;
     }
 }

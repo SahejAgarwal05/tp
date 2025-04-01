@@ -14,8 +14,8 @@ public class WorkloadSummaryCommand extends Command {
     // move to studybuddy.common.Util
     public static final int NUM_OF_SEMESTERS = 8;
 
-    public WorkloadSummaryCommand(String param) {
-        super(param);
+    public WorkloadSummaryCommand() {
+        super(""); // no parameter
     }
 
     // move to studybuddy.common.Util
