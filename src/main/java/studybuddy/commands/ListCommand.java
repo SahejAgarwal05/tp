@@ -15,7 +15,7 @@ public class ListCommand extends Command {
         }
         StringBuilder sb = new StringBuilder();
         int count = 1;
-        for (Course course : CEGStudyBuddy.courses) {
+        for (Course course : CEGStudyBuddy.courses.getCourses()) {
             sb.append(count).append(". ")
                     .append(course.getCode()).append(" - ").append(course.getTitle())
                     .append(" (").append(course.getMc()).append(" MCs)").append("\n");
