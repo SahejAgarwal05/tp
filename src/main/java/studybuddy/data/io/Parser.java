@@ -1,7 +1,20 @@
 package studybuddy.data.io;
 
-import studybuddy.commands.*;
-import studybuddy.data.CommandNames;
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.Command;
+import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.EditCommand;
+import studybuddy.commands.ExitCommand;
+import studybuddy.commands.FindCommand;
+import studybuddy.commands.GradRequirementCommand;
+import studybuddy.commands.HelpCommand;
+import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.ListCommand;
+import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SwitchPlanCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
+import studybuddy.commands.WorkloadForCommand;
+import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
@@ -18,19 +31,19 @@ public class Parser {
         Command c;
         try {
             switch (inputParts[0]) {
-            case CommandNames.SAVE -> c = new SavePlanCommand();
-            case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
             case CommandNames.ADD -> c = new AddCommand(inputParts[1]);
             case CommandNames.EDIT -> c = new EditCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand();
-            case CommandNames.HELP -> c = new HelpCommand();
-            case CommandNames.EXIT -> c = new ExitCommand();
-            case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
-            case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
             case CommandNames.LIST -> c = new ListCommand();
             case CommandNames.FIND -> c = new FindCommand(inputParts[1]);
+            case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
             case CommandNames.GRADREQ -> c = new GradRequirementCommand();
+            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand();
+            case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
+            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
+            case CommandNames.SAVE -> c = new SavePlanCommand();
+            case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
+            case CommandNames.HELP -> c = new HelpCommand();
+            case CommandNames.EXIT -> c = new ExitCommand();
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
@@ -121,11 +134,11 @@ public class Parser {
         }
         // if no edit value, hold place with empty string
         return new String[]{
-            code,
-            title.toString(),
-            mc != null ? mc.toString() : "",
-            y != null ? y.toString() : "",
-            s != null ? s.toString() : ""
+                code,
+                title.toString(),
+                mc != null ? mc.toString() : "",
+                y != null ? y.toString() : "",
+                s != null ? s.toString() : ""
         };
     }
 

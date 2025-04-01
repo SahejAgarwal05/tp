@@ -8,7 +8,8 @@ import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DeleteCourseTest {
     private CourseList courses;

@@ -11,10 +11,10 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SavePlanCommandTest {
+    private static final String TEST_DIR = "./testdata/";
+
     private CourseList courses;
     private StorageManager storage;
-
-    private static final String TEST_DIR = "./testdata/";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 

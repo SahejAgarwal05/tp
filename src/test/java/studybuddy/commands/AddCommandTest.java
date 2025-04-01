@@ -9,9 +9,6 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
-    private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData", courses);
-
     public static final String TEST_CODE = "CS2113";
     public static final String TEST_TITLE = "Software Engineering";
     public static final String TEST_MC = "4";
@@ -30,6 +27,9 @@ public class AddCommandTest {
             + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
     public static final String MISSING_INPUT_EXPECTED = "You missed an input.";
     public static final String INVALID_INPUT_EXPECTED = "You did not enter a valid number.";
+
+    private CourseList courses;
+    private StorageManager storage = new StorageManager("./PlanData", courses);
 
     @BeforeEach
     public void setup() {

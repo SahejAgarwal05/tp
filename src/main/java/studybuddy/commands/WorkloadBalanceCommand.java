@@ -1,6 +1,5 @@
 package studybuddy.commands;
 
-import studybuddy.CEGStudyBuddy;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;

@@ -1,7 +1,5 @@
 package studybuddy.commands;
 
-import java.util.ArrayList;
-
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.storage.StorageManager;
