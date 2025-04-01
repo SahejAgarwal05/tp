@@ -6,8 +6,7 @@ import studybuddy.course.Course;
 public class AddCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
     add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
-        Adds a course to your plan with the given parameters.
-    """;
+        Adds a course to your plan with the given parameters.""";
 
     public AddCommand(String param) {
         super(param);

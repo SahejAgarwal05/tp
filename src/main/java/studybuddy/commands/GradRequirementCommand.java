@@ -6,8 +6,7 @@ import studybuddy.course.Course;
 public class GradRequirementCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
     gradreq
-        Displays information about your graduation requirements based on your plan.
-    """;
+        Displays information about your graduation requirements based on your plan.""";
 
     private static final int GRADUATION_MCS = 160;
 

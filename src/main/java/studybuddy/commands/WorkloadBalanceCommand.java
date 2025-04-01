@@ -5,8 +5,7 @@ import studybuddy.course.Course;
 public class WorkloadBalanceCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
     workload_balance
-        Displays the minimum and maximum semester workload for the course plan.
-    """;
+        Displays the minimum and maximum semester workload for the course plan.""";
 
     public WorkloadBalanceCommand() {
         super("No param");

@@ -6,8 +6,7 @@ import studybuddy.course.Course;
 public class EditCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
             edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]
-                Edits a course with the given parameters.
-            """;
+                Edits a course with the given parameters.""";
 
     public EditCommand(String param) {
         super(param);

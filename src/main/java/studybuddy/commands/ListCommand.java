@@ -6,8 +6,7 @@ import studybuddy.course.Course;
 public class ListCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
             list
-                Lists all courses in your plan.
-            """;
+                Lists all courses in your plan.""";
 
     public ListCommand() {
         super(""); // no parameter needed

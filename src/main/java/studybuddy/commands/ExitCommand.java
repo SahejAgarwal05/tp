@@ -3,8 +3,7 @@ package studybuddy.commands;
 public class ExitCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
     exit
-        Exits the program.;
-    """;
+        Exits the program.;""";
 
     public ExitCommand() {
         super("");

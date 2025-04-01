@@ -5,8 +5,7 @@ import studybuddy.CEGStudyBuddy;
 public class DeleteCourse extends Command {
     public static final String COMMAND_DESCRIPTION = """
             delete c/CODE
-                Deletes a course from your plan.
-            """;
+                Deletes a course from your plan.""";
 
     public DeleteCourse(String param) {
         super(param); // Passes the command parameter
