@@ -69,19 +69,19 @@ public class CEGStudyBuddy {
         Command c = null;
         try {
             switch (inputParts[0]) {
-            case "save" -> c = new SavePlanCommand();
-            case "switch_plan" -> c = new SwitchPlanCommand();
-            case "add" -> c = new AddCommand(inputParts[1]);
-            case "edit" -> c = new EditCommand(inputParts[1]);
-            case "workload_summary" -> c = new WorkloadSummaryCommand("", courses.getCourses());
-            case "help" -> c = new HelpCommand();
-            case "exit" -> exitProgram();
-            case "workload_for" -> c = new WorkloadForCommand(inputParts[1]);
-            case "workload_balance" -> c = new WorkloadBalanceCommand(inputParts[1]);
-            case "delete" -> c = new DeleteCourse(inputParts[1]);
-            case "list" -> c = new ListCommand();
-            case "find" -> c = new FindCommand(inputParts[1]);
-            case "gradreq" -> c = new GradRequirementCommand();
+            case CommandNames.SAVE -> c = new SavePlanCommand();
+            case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
+            case CommandNames.ADD -> c = new AddCommand(inputParts[1]);
+            case CommandNames.EDIT -> c = new EditCommand(inputParts[1]);
+            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand("", courses.getCourses());
+            case CommandNames.HELP -> c = new HelpCommand();
+            case CommandNames.EXIT -> exitProgram();
+            case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
+            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
+            case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
+            case CommandNames.LIST -> c = new ListCommand();
+            case CommandNames.FIND -> c = new FindCommand(inputParts[1]);
+            case CommandNames.GRADREQ -> c = new GradRequirementCommand();
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
