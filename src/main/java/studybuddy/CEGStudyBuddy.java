@@ -17,6 +17,7 @@ import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.ExitCommand;
 
 public class CEGStudyBuddy {
     public static CourseList courses;// Global course list
@@ -33,19 +34,11 @@ public class CEGStudyBuddy {
             try {
                 Command c = parseCommand(userInput);
                 System.out.println(c.execute());
+                isRunning = c.isRunning();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-    }
-
-    /**
-     * Exits the program.
-     */
-    static void exitProgram() {
-        System.out.println("Bye");
-        isRunning = false;
-        System.exit(0);
     }
 
     /**
@@ -75,7 +68,7 @@ public class CEGStudyBuddy {
             case "edit" -> c = new EditCommand(inputParts[1]);
             case "workload_summary" -> c = new WorkloadSummaryCommand("", courses.getCourses());
             case "help" -> c = new HelpCommand();
-            case "exit" -> exitProgram();
+            case "exit" -> c = new ExitCommand();
             case "workload_for" -> c = new WorkloadForCommand(inputParts[1]);
             case "workload_balance" -> c = new WorkloadBalanceCommand(inputParts[1]);
             case "delete" -> c = new DeleteCourse(inputParts[1]);

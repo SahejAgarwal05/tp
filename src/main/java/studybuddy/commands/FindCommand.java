@@ -4,6 +4,10 @@ import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
 public class FindCommand extends Command {
+    public static final String COMMAND_DESCRIPTION = """
+            find c/CODE
+                Finds the course with the given code in your plan.
+            """;
 
     public FindCommand(String param) {
         super(param);
