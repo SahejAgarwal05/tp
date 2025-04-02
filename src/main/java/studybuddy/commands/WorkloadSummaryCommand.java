@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import studybuddy.course.Course;
 
 public class WorkloadSummaryCommand extends Command {
+    public static final String COMMAND_DESCRIPTION = """
+    workload_summary
+        Displays the total workload for all semesters.""";
+
     private static final int NUM_OF_SEMESTERS = 8;
     private final ArrayList<Course> courses;
     public WorkloadSummaryCommand(String param, ArrayList<Course> courses) {

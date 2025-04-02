@@ -3,6 +3,10 @@ import studybuddy.CEGStudyBuddy;
 import studybuddy.course.Course;
 
 public class WorkloadForCommand extends Command {
+    public static final String COMMAND_DESCRIPTION = """
+    workload_for y/YEAR s/SEMESTER
+        Displays the courses and the total workload for the given semester.""";
+
     public WorkloadForCommand(String params) {
         super(params);
     }
