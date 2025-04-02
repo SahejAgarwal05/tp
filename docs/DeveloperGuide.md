@@ -13,7 +13,6 @@
 ### **Parser Component**
 
 ### **Storage Component**
-
 #### **Saving Course Plans**
 
 #### **Predefined List of CEG Core Courses**
