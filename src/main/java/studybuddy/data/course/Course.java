@@ -1,11 +1,12 @@
 package studybuddy.data.course;
 
+import java.io.Serializable;
 /**
  * Represents a course in NUS.
  * Pre-set info: code, title, module credit (mc), offered in semester 1/2, ...
  * Editable info: take(n) in semester, is cleared/taken
  */
-public class Course {
+public class Course implements Serializable {
     protected String code;
     protected String title;
     protected int mc;
