@@ -7,10 +7,11 @@ import studybuddy.data.storage.StorageManager;
 import studybuddy.data.io.Ui;
 
 public class CEGStudyBuddy {
+    protected static Ui ui = new Ui();
     protected static CourseList courses; // Global course list
     private static boolean isRunning = true;
     private static StorageManager storage = new StorageManager("./PlanData", courses);
-    public static Ui ui = new Ui();
+
 
     public static void main(String[] args) {
         ui.showWelcome();
