@@ -82,37 +82,6 @@ public class Ui {
         System.out.println(c);
     }
 
-    public void showUndefinedCourseMessage() {
-        System.out.println("This course is not found in defined course list.");
-    }
-
-    public void showMissingDefinedListMessage() {
-        System.out.println("Warning: Defined course list is missing.");
-    }
-
-    public String parseIntErrorMessage() {
-        return "You did not enter a valid number, please check your input";
-    }
-
-    public String indexOutOfBoundErrorMessage() {
-        return "You entered an invalid index, please check your input";
-    }
-
-    public String editSuccessMessage() {
-        return "Edition is successful";
-    }
-
-    public String courseNotInPlannerMessage() {
-        return "This course is not found in the planner";
-    }
-
-    public String missingCodeErrorMessage() {
-        return "Course code is missing, please check your input";
-    }
-
-    public String missingInputErrorMessage() {
-        return "You missed an input, please check your input";
-    }
     /**
      * Method to allow user to choose a plan to delete
      * @param plans list of string of plan names
