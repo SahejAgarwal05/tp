@@ -46,14 +46,26 @@ public class Ui {
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Method to print plan creation message
+     */
     public void createNewPlanMessage() {
         System.out.println("New plan has been created");
     }
+
+    /**
+     * Method to print no previous plans
+     */
 
     public void noPreviousPlansMessage() {
         System.out.println("You have no previous plans");
     }
 
+    /**
+     *  Method to help user choose a plan or choose creating a new one
+     * @param plans list of string of plan names
+     * @return
+     */
     public String chooseOrCreateNewPlans(String[] plans) {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
@@ -72,7 +84,7 @@ public class Ui {
 
     /**
      * Method to allow user to choose a plan to delete
-     * @param plans
+     * @param plans list of string of plan names
      * @return
      */
     public String chooseDeletePLan(String[] plans) {
