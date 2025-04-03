@@ -136,10 +136,36 @@ Year 4 Semester 1: 14 MCs
 
 Year 4 Semester 2: 12 MCs
 
+### Wokload Balance Command : workload_balance
+To check the balance of your workload across the semester, you can use this command to see minimum and maximum credits take in a sem across your semesters in university. This takes no parameters.
+
+Format:
+`workload_balance`
+
+### Workload Summary Command: workload_summary
+This command displays a list of courses in the semester and the total workload.
+
+Format: 
+`workload_summary y/<year of study> s/<semester of study>`
+### Save Command: save
+For any course plan, you have to save the data to your computer using the save command. On fully saving the command, you will see the output :
+
+Plan Saved.
+
+This command takes no other user input.
+
+Format 
+`save`
+### Switch Plan Command: switch_plan
+This command allows you to switch to a pre-existing plan or create a completely new plan. Please note that this command does not autosave the current plan. It takes no parameters.
+After entering the command please follow the further instructions and given by the software.
+
+Format:
+`switch_plan`
+
 ## FAQ
 
-### Saving Data
-CEGStudyBuddy automatically saves the list of courses on the hard disk every time the list changes. There is no need to manually save.
+
 
 
 * For detailed instructions, visit: https://docs.google.com/document/d/1BYTlajOCgwL7bUaDveu3yrMp9dUQFgjM5Xe7gw2Bl-I/edit?tab=t.0
