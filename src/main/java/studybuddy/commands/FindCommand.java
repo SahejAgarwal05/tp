@@ -1,9 +1,12 @@
 package studybuddy.commands;
 
+import java.util.ArrayList;
+
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
+import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class FindCommand extends Command {
@@ -20,19 +23,8 @@ public class FindCommand extends Command {
         String[] parts = Parser.parseFind(param);
 
         String targetCode = parts[1].trim().toUpperCase();
+        ArrayList<Course> courseList = courses.getCourses();
 
-        // can move to Ui
-        for (Course course : courses.getCourses()) {
-            if (course.getCode().equalsIgnoreCase(targetCode)) {
-                return "Course Code: " + course.getCode() + "\n"
-                        + "Course Title: " + course.getTitle() + "\n"
-                        + "Number of MCs: " + course.getMc() + "\n"
-                        + "Year and Sem: Y" + course.getTakeInYear() + "S" + course.getTakeInSem();
-            }
-        }
-
-        return "Course " + targetCode + " not found in your course list.";
+        return ui.printFindCourse(courseList, targetCode);
     }
-
 }
-

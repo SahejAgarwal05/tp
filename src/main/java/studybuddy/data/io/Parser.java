@@ -16,6 +16,7 @@ import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.course.CourseManager;
@@ -85,7 +86,7 @@ public class Parser {
             throw new CEGStudyBuddyException("You did not enter a valid number.");
         }
 
-        if (!AddCommand.isValidMC(mc) || !AddCommand.isValidYear(takeInYear) || !AddCommand.isValidSem(takeInSem)) {
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
             throw new CEGStudyBuddyException("You did not enter a valid number.");
         }
 
@@ -129,7 +130,7 @@ public class Parser {
                 title = new StringBuilder(parts[i].substring(2));
                 i += 1;
                 // while i is in bound and parts[i] is not next identifier
-                while (i < parts.length && !EditCommand.hasIdentifier(parts[i])) {
+                while (i < parts.length && !Utils.hasIdentifier(parts[i])) {
                     title.append(" ").append(parts[i]);
                     i += 1;
                 }

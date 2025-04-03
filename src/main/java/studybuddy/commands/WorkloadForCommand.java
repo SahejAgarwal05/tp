@@ -1,9 +1,9 @@
 package studybuddy.commands;
 
-import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
+import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class WorkloadForCommand extends Command {
@@ -22,19 +22,6 @@ public class WorkloadForCommand extends Command {
         int sem = paramParts[0];
         int year = paramParts[1];
 
-        // move to Ui
-        String output = "These are the courses you will be taking";
-        int totalWorkLoad = 0;
-        int index = 1;
-        for (Course course : courses.getCourses()) {
-            if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
-                totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString();
-                index++;
-            }
-        }
-        output = output + "\nTotal work load: " + totalWorkLoad;
-        return output;
+        return ui.printWorkloadFor(courses, sem, year);
     }
-
 }

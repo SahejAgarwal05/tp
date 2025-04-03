@@ -2,14 +2,13 @@ package studybuddy.commands;
 
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
+import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class GradRequirementCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
             gradreq
                 Displays information about your graduation requirements based on your plan.""";
-
-    private static final int GRADUATION_MCS = 160;
 
     public GradRequirementCommand() {
         super(""); // no params needed
@@ -23,62 +22,6 @@ public class GradRequirementCommand extends Command {
             completedMCs += course.getMc();
         }
 
-        // whole thing can move to Ui
-        int remaining = GRADUATION_MCS - completedMCs;
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Current MCs Completed: ").append(completedMCs).append(" MCs\n");
-        sb.append("Graduation Requirement: ").append(GRADUATION_MCS).append(" MCs\n");
-        sb.append("Remaining MCs: ").append(remaining).append(" MCs\n\n");
-
-        if (remaining > 0) {
-            sb.append("Oh no! You don't meet graduation requirement yet, you need to finish ")
-                    .append(remaining).append(" more units of courses in order to graduate\n");
-            sb.append("Keep on going Champ! You got this!\n");
-            // 👍 Thumbs up made of hashtags
-            sb.append("      ####\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("    ##############\n");
-        } else {
-            sb.append("Congratulations! You have met the graduation requirement!");
-            // Your uploaded graduation ASCII art
-            sb.append("     ##                             \n");
-            sb.append("                           #######                          \n");
-            sb.append("                        #############                       \n");
-            sb.append("                         ###########                        \n");
-            sb.append("                           #######                          \n");
-            sb.append("                           ####### #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                            ####                             \n");
-            sb.append("                            ####                             \n");
-            sb.append("                            ####                             \n");
-            sb.append("                         ### ##  ###                         \n");
-            sb.append("                       ####  # ######                       \n");
-            sb.append("                      ####### ########                      \n");
-            sb.append("                     ##################                     \n");
-            sb.append("                     ###################                    \n");
-            sb.append("                     ###################                    \n");
-            sb.append("                    ####################                    \n");
-            sb.append("                    ####################                    \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
-        }
-        return sb.toString();
+        return ui.printGradReq(completedMCs);
     }
 }
-
