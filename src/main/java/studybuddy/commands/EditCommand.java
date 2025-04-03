@@ -21,7 +21,7 @@ public class EditCommand extends Command {
             String[] paramParts = Parser.parseEdit(param);
             boolean found = false;
             if (paramParts[0] == null) {
-                return "Course code is missing.";
+                return ui.missingCodeErrorMessage();
             }
             for (Course course : courses.getCourses()) {
                 if (course.getCode().equals(paramParts[0])) {
@@ -32,13 +32,13 @@ public class EditCommand extends Command {
                 }
             }
             if (found) {
-                return "Success";
+                return ui.editSuccessMessage();
             }
-            return "Course not found.";
+            return ui.courseNotInPlannerMessage();
         } catch (ArrayIndexOutOfBoundsException e) {
-            return "Error: Array index out of bounds";
+            return ui.indexOutOfBoundErrorMessage();
         } catch (NumberFormatException e) {
-            return "Error: Cannot convert to Integer";
+            return ui.parseIntErrorMessage();
         }
     }
 }

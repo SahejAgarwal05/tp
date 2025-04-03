@@ -10,11 +10,11 @@ import studybuddy.data.storage.StorageManager;
 
 public class CourseManagerTest {
     private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData", courses);
+    private StorageManager storage = new StorageManager("./PlanData");
 
     @Test
     public void testAddCourse1() {
-        AddCommand addCourse = new AddCommand("c/CDE2501");
+        AddCommand addCourse = new AddCommand("c/CDE2501 y/2 s/1");
         String output = "";
         String expected = "Course added: CDE2501 - Liveable Cities (4 MCs)";
         try {

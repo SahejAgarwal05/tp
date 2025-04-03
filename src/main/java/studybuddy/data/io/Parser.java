@@ -23,6 +23,7 @@ import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
+    private static Ui ui = new Ui();
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
@@ -69,10 +70,13 @@ public class Parser {
         try {
             code = paramParts[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         }
         if (CourseManager.ifDefined(code)) {
-            return CourseManager.getCourse(code);
+            Course course = getDefinedCourse(code, param);
+            if (course != null) {
+                return course;
+            }
         }
 
         try {
@@ -81,16 +85,39 @@ public class Parser {
             takeInYear = Integer.parseInt(paramParts[4]);
             takeInSem = Integer.parseInt(paramParts[5]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
         if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
         return new Course(code, title, mc, takeInYear, takeInSem);
+    }
+
+    private static Course getDefinedCourse(String code, String param)
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+        String[] parts = param.split(" ");
+        Integer y = null;
+        Integer s = null;
+
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
+            }
+        }
+        Course course = CourseManager.getCourse(code);
+        if (y != null && s != null) {
+            assert course != null;
+            course.setTakeInYear(y);
+            course.setTakeInSem(s);
+            return course;
+        }
+        return null;
     }
 
     public static String parseDelete(CourseList courses, String param) {

@@ -16,7 +16,6 @@ public class SavePlanCommand extends Command {
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         assert storage != null;
-        storage.saveCurrentPlan();
-        return "Plan saved.";
+        return storage.saveCurrentPlan();
     }
 }

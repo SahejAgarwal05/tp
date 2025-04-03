@@ -1,175 +1,309 @@
-# User Guide
+# CEG StudyBuddy User Guide
 
 ## Introduction
 
-CEGStudyBuddy is a desktop application that tracks and plans university courses efficiently for NUS Computer Engineering students who want a structured academic roadmap. It helps to optimise workload, ensure graduation requirements, and keep students organised with ease.
+**CEGStudyBuddy** is a desktop application that tracks and plans university courses efficiently for NUS Computer Engineering students who want a structured academic roadmap.  
+It helps to optimise workload, ensure graduation requirements, and keep students organised with ease.
 
-This application is designed to be optimised for a Command Line Interface (CLI). If you are a fast typer, you can plan and track your courses faster than NUSMods.
+This application is optimised for a **Command Line Interface (CLI)**.  
+If you are a fast typer, you can plan and track your courses faster than NUSMods!
 
+---
 
 ## Quick Start
 
-Ensure you have Java 17 installed on your computer.
-You may download Java 17 from here.
+1. Ensure you have **Java 17** installed on your computer.  
+   You may download Java 17 from [here](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 
-For Windows Users:
-Any Windows installer will work, but the Windows x64 Installer is recommended for ease of use.
+   - **Windows Users**: Any Windows installer will work, but the Windows x64 Installer is recommended.
+   - **Mac Users**: Use the macOS x64 DMG Installer if you have an Intel CPU, or the macOS Arm 64 DMG Installer for Apple M-series CPUs.
+   - **Linux Users**: Use the Debian Package for Debian-based distros (Ubuntu, Linux Mint) or the RPM Package for Red Hat-based distros (Fedora, CentOS).
 
-For Mac Users:
-The DMG installer is recommended. However, please note down the CPU of your Mac.
-Use the macOS x64 DMG Installer if your Mac has an Intel CPU, or the macOS Arm 64 DMG Installer if your Max has an Apple M-series CPU.
+2. Download the latest `.jar` file for CEGStudyBuddy [here](http://link.to/cegstudybuddy).
 
-For Linux Users:
-Check instructions for your distribution as installation may differ between distros. Generally, use the Debian Package for Debian-based distros (Ubuntu, Linux Mint) and the RPM Package for Red Hat-based distros (Fedora, CentOS).
+3. Place the `.jar` file in a desired folder.  
+   This folder will act as the working directory for the application.
 
-Download the latest .jar file.
-You may download the latest .jar file for CEGStudyBuddy here.
+4. Open your terminal in that folder:
+   - On **Windows**: Right-click in the folder and select *Open in Terminal*.
+   - On **Mac/Linux**: Use `cd` to navigate to the folder in Terminal.
 
-Place the .jar file in a desired home folder.
-Copy and paste the file to any desired folder on your computer.
-The folder it will be in will serve as the working home folder for CEGStudyBuddy.
+5. Run the application:
+   ```
+java -jar cegstudybuddy.jar
 
-Run the application from the terminal.
-Right-click an empty space in the home folder and select Open in Terminal.
-Alternatively, you may open Terminal and cd into the home folder.
 
-Run the command java -jar cegstudybuddy.jar to start the application in the terminal.
+6. Start typing commands and hit `Enter`.
 
-Input a command.
-Type the command you would like to input into the terminal and press Enter to execute it.
+Refer to the **Features** section below for all available commands.
 
-You may refer to Features below for a full list of each command and its details.
+---
 
 ## Features
 
 ### Notes about the Command Format
-Adds a new item to the list of todo items.
-Words in UPPER_CASE are parameters that must be supplied by the user.
-For example, in add c/CODE, CODE is a parameter that may be used as add c/CS2113.
-Parameters wrapped in square brackets [] are optional.
-For example, in edit c/CODE [t/TITLE], TITLE is an optional parameter.
-Extraneous parameters for commands that do not take parameters, such as list, will be ignored.
+
+- Words in `UPPER_CASE` are parameters to be supplied by the user.  
+  Example: `add c/CS2113`
+- Square brackets `[]` indicate optional fields.  
+  Example: `edit c/CODE [t/TITLE]`
+- Extra parameters in commands that don’t require them (e.g. `list`) will be ignored.
+
+---
 
 ### Adding a Course: `add`
+
 Adds a course to the planner.
 
-Format:
-`add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`
+**Format:**
+```
+add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
+```
 
-Examples:
+**Examples:**
+```
+add c/CS2040 t/Data Structures mc/4 y/2 s/1
+add c/MA1101 t/Linear Algebra mc/4 y/1 s/2
+```
 
-`add c/CS2040 t/Data Structures mc/4 y/2 s/1`
+---
 
-`add c/MA1101 t/Linear Algebra mc/4 y/1 s/2`
+### Deleting a Course: `delete`
 
-### Deleting a Course: delete
 Removes a course from the planner.
 
-Format:
-`delete c/CODE`
+**Format:**
+```
+delete c/CODE
+```
 
-Examples:
+**Examples:**
+```
+delete c/CS2040
+delete c/MA1101
+```
 
-`delete c/CS2040`
+---
 
-`delete c/MA1101`
+### Listing Courses: `list`
 
-### Listing Courses: list
-Displays all added courses.
+Displays all added courses by Year and Semester.
 
-Format:
-`list`
+**Format:**
+```
+list
+```
 
-Example Output:
+**Example Output:**
+```
+Y1S1 Courses:
+No courses taken!
 
-`CS2040 - Data Structures (4 MCs) - Year 2 Semester 1 ` 
+Y1S2 Courses:
+1. MA1101 - Linear Algebra (4 MCs)
 
-`MA1101 - Linear Algebra (4 MCs) - Year 1 Semester 2 `
+Y2S1 Courses:
+1. CS2040 - Data Structures (4 MCs)
 
-### Editing a Course: edit
-   Modifies course details.
-   Inputting any parameter will overwrite the old parameter assigned to the course.
-   At least one of the optional fields must be provided.
+Y2S2 Courses:
+No courses taken!
 
-Format:
-`edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`
+Y3S1 Courses:
+No courses taken!
 
-Examples:
-`edit c/CS2040 t/Advanced Data Structures mc/5`
-`edit c/MA1101 y/2 s/1`
+Y3S2 Courses:
+No courses taken!
 
-### Help Command: help
-Displays available commands and a link to the help page.
+Y4S1 Courses:
+No courses taken!
 
-Format:
-`help`
+Y4S2 Courses:
+No courses taken!
+```
 
-Example Output:
+---
+
+### Editing a Course: `edit`
+
+Modifies course details.  
+At least one optional field must be provided.
+
+**Format:**
+```
+edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]
+```
+
+**Examples:**
+```
+edit c/CS2040 t/Advanced Data Structures mc/5
+edit c/MA1101 y/2 s/1
+```
+
+---
+
+### Help Command: `help`
+
+Displays available commands and a help link.
+
+**Format:**
+```
+help
+```
+
+**Example Output:**
+```
 Available Commands:
 1. add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER - Adds a course.
 2. delete c/CODE - Deletes a course.
 3. list - Lists all courses.
 4. edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER] - Edits a course.
+```
 
-### Workload Command: workload
-Displays the total Modular Credits (MCs) for each semester over 4 years.
-Maybe can set up the mini and max workload for each semester such that students can balance the workload and graduate successfully.
+---
 
-Format:
-`workload`
+### Workload Command: `workload`
 
-Example Output:
+Displays the total Modular Credits (MCs) per semester.
 
-Year 1 Semester 1: 16 MCs
+**Format:**
+```
+workload
+```
 
-Year 1 Semester 2: 18 MCs
-
-Year 2 Semester 1: 20 MCs
-
-Year 2 Semester 2: 16 MCs
-
-Year 3 Semester 1: 18 MCs
-
-Year 3 Semester 2: 16 MCs
-
-Year 4 Semester 1: 14 MCs
-
+**Example Output:**
+```
+Year 1 Semester 1: 16 MCs  
+Year 1 Semester 2: 18 MCs  
+Year 2 Semester 1: 20 MCs  
+Year 2 Semester 2: 16 MCs  
+Year 3 Semester 1: 18 MCs  
+Year 3 Semester 2: 16 MCs  
+Year 4 Semester 1: 14 MCs  
 Year 4 Semester 2: 12 MCs
 
-### Wokload Balance Command : workload_balance
-To check the balance of your workload across the semester, you can use this command to see minimum and maximum credits take in a sem across your semesters in university. This takes no parameters.
+```
+---
 
-Format:
-`workload_balance`
+### Saving Data
 
-### Workload Summary Command: workload_summary
-This command displays a list of courses in the semester and the total workload.
+CEGStudyBuddy automatically saves your data to disk every time changes are made.  
+No manual saving is required.
 
-Format: 
-`workload_summary y/<year of study> s/<semester of study>`
-### Save Command: save
-For any course plan, you have to save the data to your computer using the save command. On fully saving the command, you will see the output :
+> 📄 For detailed instructions, visit: [Google Doc](https://docs.google.com/document/d/1BYTlajOCgwL7bUaDveu3yrMp9dUQFgjM5Xe7gw2Bl-I/edit?tab=t.0)
 
-Plan Saved.
+---
 
-This command takes no other user input.
+### Finding a Course: `find`
 
-Format 
-`save`
-### Switch Plan Command: switch_plan
-This command allows you to switch to a pre-existing plan or create a completely new plan. It takes no parameters.
-After entering the command please follow the further instructions and given by the software.
+Searches for a course by its code.
 
-Format:
-`switch_plan`
+**Format:**
+```
+find c/CODE
+```
 
-## FAQ
+**Example:**
+```
+find c/CS2040
+```
 
+**Example Output:**
+```
+Course Code: CS2040  
+Course Title: Data Structures and Algorithms  
+Number of MCs: 4  
+Year and Sem: Y2S2
+```
 
+If not found:
+```
+Course CS2040 not found in your course list.
+```
 
+---
 
-* For detailed instructions, visit: https://docs.google.com/document/d/1BYTlajOCgwL7bUaDveu3yrMp9dUQFgjM5Xe7gw2Bl-I/edit?tab=t.0
+### Graduation Requirement: `gradreq`
+
+Displays current MCs, total required, and MCs left to graduate.
+
+**Format:**
+```
+gradreq
+```
+
+**Example Output (if <160 MCs):**
+```
+Current MCs Completed: 100 MCs  
+Graduation Requirement: 160 MCs  
+Remaining MCs: 60 MCs
+
+Oh no! You don't meet graduation requirement yet.  
+Keep on going Champ! You got this! 👍
+```
+
+**Example Output (if 160 MCs or more):**
+```
+Current MCs Completed: 160 MCs  
+Graduation Requirement: 160 MCs  
+Remaining MCs: 0 MCs
+
+🎓 Congratulations! You have met the graduation requirement!
+```
+
+---
 
 ## Command Summary
 
-![img_3.png](img_3.png)
+| **Action**     | **Format**                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| **Add**        | `add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                  |
+|                | E.g., `add c/CS2040 t/Data Structures mc/4 y/2 s/1`                         |
+| **Delete**     | `delete c/CODE`                                                             |
+|                | E.g., `delete c/CS2040`                                                     |
+| **List**       | `list`                                                                      |
+| **Edit**       | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`         |
+|                | E.g., `edit c/CS2040 t/Advanced Data Structures mc/5`                      |
+| **Help**       | `help`                                                                      |
+| **Workload**   | `workload`                                                                  |
+| **Find**       | `find c/CODE`                                                               |
+|                | E.g., `find c/CS2113`                                                       |
+| **Graduation** | `gradreq`                                                                   |
+
+---
+
+## FAQ
+
+### ❓ Q: Do I need an internet connection to use the app?
+
+**A:** Nope! 🎉  
+CEGStudyBuddy is a fully offline application. No internet required.
+
+---
+
+### ❓ Q: What happens if I accidentally delete a course?
+
+**A:** Unfortunately, the app doesn’t support an undo feature (yet 😢).  
+Make sure to double-check before deleting. You can always re-add the course using the `add` command.
+
+---
+
+### ❓ Q: Can I plan courses beyond 4 years?
+
+**A:** Currently, CEGStudyBuddy supports up to Year 4 Semester 2.  
+If you wish to extend it, you can fork the project and modify the planner's backend to support more semesters!
+
+---
+
+### ❓ Q: Is this application open-source?
+
+**A:** Yes! You are free to fork, contribute, and improve the application. Contributions are welcome!  
+Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
+
+---
+
+### ❓ Q: I'm seeing errors when running the `.jar` file. What do I do?
+
+**A:** Make sure:
+- You have **Java 17 or above** installed.
+- You are running the `.jar` file from **terminal/command prompt** using:
+
