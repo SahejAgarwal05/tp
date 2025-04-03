@@ -103,11 +103,11 @@ public class Parser {
         Integer y = null;
         Integer s = null;
 
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].startsWith("y/")) {
-                y = Integer.parseInt(parts[i].substring(2));
-            } else if (parts[i].startsWith("s/")) {
-                s = Integer.parseInt(parts[i].substring(2));
+        for (String part : parts) {
+            if (part.startsWith("y/")) {
+                y = Integer.parseInt(part.substring(2));
+            } else if (part.startsWith("s/")) {
+                s = Integer.parseInt(part.substring(2));
             }
         }
         Course course = CourseManager.getCourse(code);
