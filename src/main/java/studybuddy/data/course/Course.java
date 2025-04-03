@@ -1,4 +1,4 @@
-package studybuddy.course;
+package studybuddy.data.course;
 
 /**
  * Represents a course in NUS.

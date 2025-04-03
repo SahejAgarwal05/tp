@@ -1,7 +1,9 @@
 package studybuddy.commands;
 
-import studybuddy.CEGStudyBuddy;
-import studybuddy.course.Course;
+import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.io.Parser;
+import studybuddy.data.storage.StorageManager;
 
 public class EditCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
@@ -12,100 +14,39 @@ public class EditCommand extends Command {
         super(param);
     }
 
-    public String[] parseEdit() throws ArrayIndexOutOfBoundsException, NumberFormatException {
-        assert (!param.isEmpty());
-
-        String[] parts = param.split(" ");
-        String code = null;
-        String title = "";
-        Integer mc = null;
-        Integer y = null;
-        Integer s = null;
-
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].startsWith("c/")) {
-                code = parts[i].substring(2);
-            } else if (parts[i].startsWith("t/")) {
-                // title may consist of a few words
-                title = parts[i].substring(2);
-                i += 1;
-                // while i is in bound and parts[i] is not next identifier
-                while (i < parts.length && !hasIdentifier(parts[i])) {
-                    title += " " + parts[i];
-                    i += 1;
-                }
-                // reset i back to the ending element of title
-                i -= 1;
-            } else if (parts[i].startsWith("mc/")) {
-                mc = Integer.parseInt(parts[i].substring(3));
-            } else if (parts[i].startsWith("y/")) {
-                y = Integer.parseInt(parts[i].substring(2));
-            } else if (parts[i].startsWith("s/")) {
-                s = Integer.parseInt(parts[i].substring(2));
-            }
-        }
-        // if no edit value, hold place with empty string
-        return new String[]{
-            code,
-            title,
-            mc != null ? mc.toString() : "",
-            y != null ? y.toString() : "",
-            s != null ? s.toString() : ""
-        };
-    }
-
-    protected boolean hasIdentifier(String str) {
+    // move to studybuddy.common.Utils class
+    public static boolean hasIdentifier(String str) {
         return str.startsWith("t/") || str.startsWith("c/") ||
                 str.startsWith("mc/") || str.startsWith("y/") ||
                 str.startsWith("s/");
     }
 
     @Override
-    public String execute() {
+    public String execute(CourseList courses, StorageManager storage) {
         try {
-            String[] paramParts = parseEdit();
+            String[] paramParts = Parser.parseEdit(param);
             boolean found = false;
             if (paramParts[0] == null) {
-                return "Course code is missing.";
+                return "Course code is missing."; // move to Ui
             }
-            for (Course course: CEGStudyBuddy.courses.getCourses()) {
+            for (Course course : courses.getCourses()) {
                 if (course.getCode().equals(paramParts[0])) {
-                    course = setEditedParams(paramParts, course);
+                    course = courses.setEditedParams(paramParts, course);
                     System.out.println(course);
                     found = true;
                     break;
                 }
             }
             if (found) {
-                return "Success";
+                return "Success"; // move to Ui
             }
-            return "Course not found.";
+            return "Course not found."; // move to Ui
         } catch (ArrayIndexOutOfBoundsException e) {
-            // print proper error message
+            // print proper error message, move to Ui
             return "Error: Array index out of bounds";
         } catch (NumberFormatException e) {
-            // print proper error message
+            // print proper error message, move to Ui
             return "Error: Cannot convert to Integer";
         }
-    }
-
-    protected Course setEditedParams(String[] editedParams, Course course) {
-        if (editedParams.length != 5) {
-            // throw an exception here
-            return course;
-        }
-        if (!editedParams[1].isEmpty()) {
-            course.setTitle(editedParams[1]);
-        }
-        if (!editedParams[2].isEmpty()) {
-            course.setMc(Integer.parseInt(editedParams[2]));
-        }
-        if (!editedParams[3].isEmpty()) {
-            course.setTakeInYear(Integer.parseInt(editedParams[3]));
-        }
-        if (!editedParams[4].isEmpty()) {
-            course.setTakeInSem(Integer.parseInt(editedParams[4]));
-        }
-        return course;
     }
 }

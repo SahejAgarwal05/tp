@@ -1,4 +1,4 @@
-package studybuddy.course;
+package studybuddy.data.course;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +10,26 @@ public class CourseList implements Serializable {
     public CourseList(String planName) {
         this.courses = new ArrayList<Course>();
         this.planName = planName;
+    }
+
+    public Course setEditedParams(String[] editedParams, Course course) {
+        if (editedParams.length != 5) {
+            // throw an exception here
+            return course;
+        }
+        if (!editedParams[1].isEmpty()) {
+            course.setTitle(editedParams[1]);
+        }
+        if (!editedParams[2].isEmpty()) {
+            course.setMc(Integer.parseInt(editedParams[2]));
+        }
+        if (!editedParams[3].isEmpty()) {
+            course.setTakeInYear(Integer.parseInt(editedParams[3]));
+        }
+        if (!editedParams[4].isEmpty()) {
+            course.setTakeInSem(Integer.parseInt(editedParams[4]));
+        }
+        return course;
     }
 
     public String getPlanName() {

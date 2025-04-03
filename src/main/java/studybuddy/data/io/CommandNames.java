@@ -1,4 +1,4 @@
-package studybuddy;
+package studybuddy.data.io;
 
 public class CommandNames {
     public static final String SAVE = "save";
