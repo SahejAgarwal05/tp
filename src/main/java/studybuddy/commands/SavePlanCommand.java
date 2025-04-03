@@ -17,6 +17,6 @@ public class SavePlanCommand extends Command {
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         assert storage != null;
         storage.saveCurrentPlan();
-        return "Plan saved."; // move to Ui
+        return "";
     }
 }

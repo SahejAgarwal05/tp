@@ -14,7 +14,6 @@ import studybuddy.data.io.Ui;
 
 public class StorageManager {
     private String directory;
-    private CourseList courses;
     private Ui ui;
 
     /**
@@ -22,9 +21,8 @@ public class StorageManager {
      *
      * @param directory The directory path where plans will be stored.
      */
-    public StorageManager(String directory, CourseList courses) {
+    public StorageManager(String directory) {
         this.directory = directory;
-        this.courses = courses;
         this.ui = new Ui();
     }
 
@@ -57,8 +55,7 @@ public class StorageManager {
         if (!dir.exists()) {
             dir.mkdirs(); // Create directory if it doesn't exist
         }
-        courses = new CourseList(plan);
-        CEGStudyBuddy.courses = courses;
+        CEGStudyBuddy.courses = new CourseList(plan);
         String planFileName = plan + ".bin";
         File planFile = new File(dir, planFileName);
         if (planFile.exists()) {
@@ -66,8 +63,8 @@ public class StorageManager {
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            courses.setPlanName(plan);
-            oos.writeObject(courses);
+            CEGStudyBuddy.courses.setPlanName(plan);
+            oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Error in making new plan");
         }
@@ -84,10 +81,10 @@ public class StorageManager {
             dir.mkdirs();
         }
 
-        String planFileName = courses.getPlanName() + ".bin";
+        String planFileName = CEGStudyBuddy.courses.getPlanName() + ".bin";
         File planFile = new File(dir, planFileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            oos.writeObject(courses);
+            oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CEGStudyBuddyException("Error in saving");
@@ -115,7 +112,7 @@ public class StorageManager {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(planFile))) {
-            courses = (CourseList) ois.readObject();
+            CEGStudyBuddy.courses = (CourseList) ois.readObject();
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Data Source Corrupted");
         }
