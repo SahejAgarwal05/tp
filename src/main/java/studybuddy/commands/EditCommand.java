@@ -6,6 +6,7 @@ import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommand extends Command {
+
     public static final String COMMAND_DESCRIPTION = """
             edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]
                 Edits a course with the given parameters.""";
@@ -32,7 +33,7 @@ public class EditCommand extends Command {
             for (Course course : courses.getCourses()) {
                 if (course.getCode().equals(paramParts[0])) {
                     course = courses.setEditedParams(paramParts, course);
-                    System.out.println(course);
+                    ui.printCourse(course);
                     found = true;
                     break;
                 }
