@@ -101,4 +101,36 @@ public class Ui {
     public void displaySuccessfullyDeletedMessage() {
         System.out.println("Plan deleted successfully");
     }
+
+    public String editSuccessMessage() {
+        return "Course is successfully edited";
+    }
+
+    public String courseNotInPlannerMessage() {
+        return "This course cannot be found inside the planner";
+    }
+
+    public String indexOutOfBoundErrorMessage() {
+        return "Input is not a valid index, pleasae check your input";
+    }
+
+    public String parseIntErrorMessage() {
+        return "Input cannot be converted to an valid number, please check your input";
+    }
+
+    public String missingCodeErrorMessage() {
+        return "Course code is missing, please ensure there is a course code in your input";
+    }
+
+    public void showMissingDefinedListMessage() {
+        System.out.println("The list of defined courses cannot be found");
+    }
+
+    public void showUndefinedCourseMessage() {
+        System.out.println("This course is not defined in the list of defined courses");
+    }
+
+    public String missingInputErrorMessage() {
+        return "Input is incomplete and information is missing, please check your input";
+    }
 }

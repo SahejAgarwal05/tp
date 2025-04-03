@@ -33,6 +33,4 @@ public class FindCommand extends Command {
 
         return "Course " + targetCode + " not found in your course list.";
     }
-
 }
-
