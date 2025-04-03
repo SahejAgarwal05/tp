@@ -75,7 +75,7 @@ public class StorageManager {
      *
      * @throws CEGStudyBuddyException If an error occurs during saving.
      */
-    public void saveCurrentPlan() throws CEGStudyBuddyException {
+    public String saveCurrentPlan() throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -89,7 +89,7 @@ public class StorageManager {
             e.printStackTrace();
             throw new CEGStudyBuddyException("Error in saving");
         }
-        ui.showSaveMessage("Plan saved successfully.");
+        return "Plan saved successfully.";
     }
 
     /**
