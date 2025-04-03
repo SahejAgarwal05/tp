@@ -1,18 +1,24 @@
 package studybuddy.commands;
 
-import java.util.ArrayList;
-
-import studybuddy.course.Course;
+import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.storage.StorageManager;
 
 public class WorkloadSummaryCommand extends Command {
-    private static final int NUM_OF_SEMESTERS = 8;
-    private final ArrayList<Course> courses;
-    public WorkloadSummaryCommand(String param, ArrayList<Course> courses) {
-        super(param);
-        this.courses = courses;
+    public static final String COMMAND_DESCRIPTION = """
+            workload_summary
+                Displays the total workload for all semesters.""";
+
+    // move to studybuddy.common.Util
+    public static final int NUM_OF_SEMESTERS = 8;
+
+    public WorkloadSummaryCommand() {
+        super(""); // no parameter
     }
 
+    // move to studybuddy.common.Util
     public static String checkWorkload(int mc, int sem) {
+        // three return strings move to Ui
         if (mc < 18) {
             return "(Too low! Minimum workload: 18 MCs)";
         }
@@ -25,12 +31,13 @@ public class WorkloadSummaryCommand extends Command {
         return "";
     }
 
-    public String execute() {
+    public String execute(CourseList courses, StorageManager storage) {
         assert (courses != null);
         int[] mcsInEachSemester = new int[NUM_OF_SEMESTERS];
         String[] period = new String[NUM_OF_SEMESTERS];
         int year = 1;
         int semester = 1;
+
         while (year <= 4) {
             int sem = ((year - 1) * 2) + semester;
             period[sem - 1] = "Year " + year + " Semester " + semester++;
@@ -39,13 +46,14 @@ public class WorkloadSummaryCommand extends Command {
                 year++;
             }
         }
-        for (Course course : courses) {
+        for (Course course : courses.getCourses()) {
             year = course.getTakeInYear();
             semester = course.getTakeInSem();
             int sem = ((year - 1) * 2) + semester;
             mcsInEachSemester[sem - 1] += course.getMc();
         }
 
+        // move to Ui
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < NUM_OF_SEMESTERS; i++) {
             sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
