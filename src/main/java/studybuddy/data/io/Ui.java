@@ -1,4 +1,4 @@
-package studybuddy.io;
+package studybuddy.data.io;
 
 import java.util.Scanner;
 
