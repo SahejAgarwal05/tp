@@ -232,7 +232,7 @@ public class StorageManager {
             return;
         }
 
-        String planNumber = ui.chooseDeletePLan(plans);
+        String planNumber = ui.chooseDeletePlan(plans);
         try {
             int planNo = Integer.parseInt(planNumber);
             this.deletePlan(plans[planNo - 1]);
