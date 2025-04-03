@@ -91,7 +91,7 @@ public class StorageManager {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Error in saving");
         }
-        System.out.println("Plan saved successfully.");
+        CEGStudyBuddy.ui.showSaveMessage("Plan saved successfully.");
     }
 
     /**
@@ -153,17 +153,16 @@ public class StorageManager {
     public void newPlan() throws CEGStudyBuddyException {
         String planName = "";
         while (planName.isEmpty()) {
-            System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
-            planName = CEGStudyBuddy.in.nextLine().trim();
+            planName = CEGStudyBuddy.ui.newPlanInput();
             if (!planName.matches("[a-zA-Z0-9]*")) {
                 planName = "";
             }
         }
         try {
             this.saveNewPlan(planName);
-            System.out.println("New plan has been created");
+            CEGStudyBuddy.ui.createNewPlanMessage();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            CEGStudyBuddy.ui.showError(e.getMessage());
         }
     }
 
@@ -178,7 +177,7 @@ public class StorageManager {
             try {
                 selectPlan();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                CEGStudyBuddy.ui.showError(e.getMessage());
                 initRun = true;
             }
         }
@@ -194,17 +193,12 @@ public class StorageManager {
         try {
             plans = this.listPlans();
         } catch (Exception e) {
-            System.out.println("You have no previous plans");
+            CEGStudyBuddy.ui.noPreviousPlansMessage();
             this.newPlan();
             return;
         }
 
-        for (int i = 0; i < plans.length; i++) {
-            System.out.println((i + 1) + ". " + plans[i]);
-        }
-
-        System.out.print("Please enter a plan number between 1 and " + plans.length + " or 0 to create a new plan: ");
-        String planNumber = CEGStudyBuddy.in.nextLine().trim();
+        String planNumber = CEGStudyBuddy.ui.chooseOrCreateNewPlans(plans);
 
         if (planNumber.equals("0")) {
             this.newPlan();
@@ -218,6 +212,6 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
 
-        System.out.println("Plan loaded successfully");
+        CEGStudyBuddy.ui.planSuccessfullyLoadedMessage();
     }
 }

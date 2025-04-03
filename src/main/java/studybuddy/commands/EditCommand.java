@@ -1,5 +1,6 @@
 package studybuddy.commands;
 
+import studybuddy.CEGStudyBuddy;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Parser;
@@ -32,7 +33,7 @@ public class EditCommand extends Command {
             for (Course course : courses.getCourses()) {
                 if (course.getCode().equals(paramParts[0])) {
                     course = courses.setEditedParams(paramParts, course);
-                    System.out.println(course);
+                    CEGStudyBuddy.ui.printCourse(course);
                     found = true;
                     break;
                 }

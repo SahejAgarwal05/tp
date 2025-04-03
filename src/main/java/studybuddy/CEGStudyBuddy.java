@@ -6,26 +6,27 @@ import studybuddy.data.course.CourseList;
 import studybuddy.commands.Command;
 import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.io.Ui;
 
 public class CEGStudyBuddy {
     protected static CourseList courses; // Global course list
     private static boolean isRunning = true;
     public static Scanner in = new Scanner(System.in); // put this in Ui
     private static StorageManager storage = new StorageManager("./PlanData", courses);
+    public static Ui ui = new Ui();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to CEGStudyBuddy!");
+        ui.showWelcome();
         storage.initializePlan();
 
         while (isRunning) {
-            System.out.print("Enter command: ");
-            String[] userInput = readInput();
+            String[] userInput = ui.readInput();
             try {
                 Command c = Parser.parseCommand(userInput);
-                System.out.println(c.execute(courses, storage));
+                ui.showMessage(c.execute(courses, storage));
                 isRunning = c.isRunning();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                ui.showMessage(e.getMessage());
             }
         }
     }
