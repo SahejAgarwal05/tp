@@ -69,4 +69,12 @@ public class Ui {
     public void printCourse(Course c) {
         System.out.println(c);
     }
+
+    public void showUndefinedCourseMessage() {
+        System.out.println("This course is not found in defined course list.");
+    }
+
+    public void showMissingDefinedListMessage() {
+        System.out.println("Warning: Defined course list is missing.");
+    }
 }
