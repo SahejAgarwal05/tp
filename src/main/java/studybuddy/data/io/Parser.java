@@ -69,7 +69,10 @@ public class Parser {
             throw new CEGStudyBuddyException("You missed an input.");
         }
         if (CourseManager.ifDefined(code)) {
-            return CourseManager.getCourse(code);
+            Course course = getDefinedCourse(code, param);
+            if (course != null) {
+                return course;
+            }
         }
 
         try {
@@ -88,6 +91,29 @@ public class Parser {
         }
 
         return new Course(code, title, mc, takeInYear, takeInSem);
+    }
+
+    private static Course getDefinedCourse(String code, String param)
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+        String[] parts = param.split(" ");
+        Integer y = null;
+        Integer s = null;
+
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
+            }
+        }
+        Course course = CourseManager.getCourse(code);
+        if (y != null && s != null) {
+            assert course != null;
+            course.setTakeInYear(y);
+            course.setTakeInSem(s);
+            return course;
+        }
+        return null;
     }
 
     public static String parseDelete(CourseList courses, String param) {
