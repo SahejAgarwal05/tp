@@ -69,4 +69,11 @@ public class Ui {
     public void printCourse(Course c) {
         System.out.println(c);
     }
+    public String chooseDeletePLan(String[] plans) {
+        for (int i = 0; i < plans.length; i++) {
+            System.out.println((i + 1) + ". " + plans[i]);
+        }
+        System.out.print("Please enter a plan number between 1 and " + plans.length + " : ");
+        return scanner.nextLine().trim();
+    }
 }

@@ -1,20 +1,6 @@
 package studybuddy.data.io;
 
-import studybuddy.commands.AddCommand;
-import studybuddy.commands.Command;
-import studybuddy.commands.DeleteCourse;
-import studybuddy.commands.EditCommand;
-import studybuddy.commands.ExitCommand;
-import studybuddy.commands.FindCommand;
-import studybuddy.commands.GradRequirementCommand;
-import studybuddy.commands.HelpCommand;
-import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.ListCommand;
-import studybuddy.commands.SavePlanCommand;
-import studybuddy.commands.SwitchPlanCommand;
-import studybuddy.commands.WorkloadBalanceCommand;
-import studybuddy.commands.WorkloadForCommand;
-import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.*;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
@@ -44,6 +30,7 @@ public class Parser {
             case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
+            case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {

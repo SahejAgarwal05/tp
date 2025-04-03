@@ -157,7 +157,7 @@ This command takes no other user input.
 Format 
 `save`
 ### Switch Plan Command: switch_plan
-This command allows you to switch to a pre-existing plan or create a completely new plan. Please note that this command does not autosave the current plan. It takes no parameters.
+This command allows you to switch to a pre-existing plan or create a completely new plan. It takes no parameters.
 After entering the command please follow the further instructions and given by the software.
 
 Format:
