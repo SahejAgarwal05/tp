@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Ui;
@@ -13,7 +14,6 @@ import studybuddy.data.io.Ui;
 
 public class StorageManager {
     private String directory;
-    private CourseList courses;
     private Ui ui;
 
     /**
@@ -21,9 +21,8 @@ public class StorageManager {
      *
      * @param directory The directory path where plans will be stored.
      */
-    public StorageManager(String directory, CourseList courses) {
+    public StorageManager(String directory) {
         this.directory = directory;
-        this.courses = courses;
         this.ui = new Ui();
     }
 
@@ -56,11 +55,7 @@ public class StorageManager {
         if (!dir.exists()) {
             dir.mkdirs(); // Create directory if it doesn't exist
         }
-
-        if (courses == null) {
-            courses = new CourseList(plan);
-        }
-
+        CEGStudyBuddy.courses = new CourseList(plan);
         String planFileName = plan + ".bin";
         File planFile = new File(dir, planFileName);
         if (planFile.exists()) {
@@ -68,10 +63,9 @@ public class StorageManager {
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            courses.setPlanName(plan);
-            oos.writeObject(courses);
+            CEGStudyBuddy.courses.setPlanName(plan);
+            oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CEGStudyBuddyException("Error in making new plan");
         }
     }
@@ -81,20 +75,21 @@ public class StorageManager {
      *
      * @throws CEGStudyBuddyException If an error occurs during saving.
      */
-    public void saveCurrentPlan() throws CEGStudyBuddyException {
+    public String saveCurrentPlan() throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        String planFileName = courses.getPlanName() + ".bin";
+        String planFileName = CEGStudyBuddy.courses.getPlanName() + ".bin";
         File planFile = new File(dir, planFileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
-            oos.writeObject(courses);
+            oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CEGStudyBuddyException("Error in saving");
         }
-        ui.showSaveMessage("Plan saved successfully.");
+        return "Plan saved successfully.";
     }
 
     /**
@@ -117,7 +112,7 @@ public class StorageManager {
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(planFile))) {
-            courses = (CourseList) ois.readObject();
+            CEGStudyBuddy.courses = (CourseList) ois.readObject();
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Data Source Corrupted");
         }
@@ -217,5 +212,49 @@ public class StorageManager {
         }
 
         ui.planSuccessfullyLoadedMessage();
+    }
+
+    /**
+     * This method allows the user to select a plan and delete it.
+     *
+     * @throws CEGStudyBuddyException
+     */
+    public void deletePlanWithSelection() throws CEGStudyBuddyException{
+        String[] plans;
+        try {
+            plans = this.listPlans();
+        } catch (Exception e) {
+            ui.noPreviousPlansMessage();
+            return;
+        }
+
+        String planNumber = ui.chooseDeletePlan(plans);
+        try {
+            int planNo = Integer.parseInt(planNumber);
+            this.deletePlan(plans[planNo - 1]);
+        } catch (Exception e) {
+            throw new CEGStudyBuddyException("Invalid plan number");
+        }
+
+        ui.displaySuccessfullyDeletedMessage();
+    }
+
+    /**
+     * This method delets the plan
+     * @param planName
+     * @throws CEGStudyBuddyException
+     */
+    public void deletePlan(String planName) throws CEGStudyBuddyException {
+        File dir = new File(directory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+            return;
+        }
+        File planFile = new File(dir, planName + ".bin");
+        if (planFile.exists()) {
+            planFile.delete();
+        } else {
+            throw new CEGStudyBuddyException("Plan does not exist");
+        }
     }
 }

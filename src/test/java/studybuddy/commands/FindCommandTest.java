@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class FindCommandTest {
     private CourseList courses;
     private StorageManager storage;
-
+    //testing input FIX
     @BeforeEach
     public void setup() {
         courses = new CourseList("test");
-        storage = new StorageManager("./PlanData", courses);
+        storage = new StorageManager("./PlanData");
         courses.clear();
 
         courses.add(new Course("CS2113", "Software Engineering", 4, 2, 2));
