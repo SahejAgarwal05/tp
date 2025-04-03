@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Ui;
@@ -21,10 +20,10 @@ public class StorageManager {
      *
      * @param directory The directory path where plans will be stored.
      */
-    public StorageManager(String directory, CourseList courses, Ui ui) {
+    public StorageManager(String directory, CourseList courses) {
         this.directory = directory;
         this.courses = courses;
-        this.ui = ui;
+        this.ui = new Ui();
     }
 
     /**

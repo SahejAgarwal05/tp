@@ -1,14 +1,11 @@
 package studybuddy.commands;
 
-import studybuddy.CEGStudyBuddy;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Parser;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommand extends Command {
-    private final Ui ui = new Ui();
 
     public static final String COMMAND_DESCRIPTION = """
             edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]
