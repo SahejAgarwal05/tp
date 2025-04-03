@@ -1,4 +1,4 @@
-package studybuddy.commands;
+package studybuddy.data.exception;
 
 public class CEGStudyBuddyException extends Exception {
     public CEGStudyBuddyException(String message) {

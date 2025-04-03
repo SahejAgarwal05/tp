@@ -1,4 +1,4 @@
-package studybuddy.course;
+package studybuddy.data.course;
 
 import java.io.File;
 import java.io.FileNotFoundException;

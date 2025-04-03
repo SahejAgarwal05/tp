@@ -13,6 +13,15 @@
 ### **Parser Component**
 
 ### **Storage Component**
+**Course Plan**
+The StorageManager class handles storage related tasks like creating new plans,  saving changes to plans and deleting plans. For storage, it uses the PlanData folder and creates one if needed. 
+
+
+switch_plan
+![image](https://github.com/user-attachments/assets/73d22d10-a048-4c13-831d-766896843b32)
+
+
+Other functions also follow a similar flow. Since the user will always be working with a plan when the programme starts the storage manager initializes, allowing the user to select a workflow.
 
 #### **Saving Course Plans**
 
