@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Ui;
@@ -56,11 +57,8 @@ public class StorageManager {
         if (!dir.exists()) {
             dir.mkdirs(); // Create directory if it doesn't exist
         }
-
-        if (courses == null) {
-            courses = new CourseList(plan);
-        }
-
+        courses = new CourseList(plan);
+        CEGStudyBuddy.courses = courses;
         String planFileName = plan + ".bin";
         File planFile = new File(dir, planFileName);
         if (planFile.exists()) {
@@ -71,7 +69,6 @@ public class StorageManager {
             courses.setPlanName(plan);
             oos.writeObject(courses);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CEGStudyBuddyException("Error in making new plan");
         }
     }
@@ -92,6 +89,7 @@ public class StorageManager {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
             oos.writeObject(courses);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CEGStudyBuddyException("Error in saving");
         }
         ui.showSaveMessage("Plan saved successfully.");
@@ -217,5 +215,49 @@ public class StorageManager {
         }
 
         ui.planSuccessfullyLoadedMessage();
+    }
+
+    /**
+     * This method allows the user to select a plan and delete it.
+     *
+     * @throws CEGStudyBuddyException
+     */
+    public void deletePlanWithSelection() throws CEGStudyBuddyException{
+        String[] plans;
+        try {
+            plans = this.listPlans();
+        } catch (Exception e) {
+            ui.noPreviousPlansMessage();
+            return;
+        }
+
+        String planNumber = ui.chooseDeletePlan(plans);
+        try {
+            int planNo = Integer.parseInt(planNumber);
+            this.deletePlan(plans[planNo - 1]);
+        } catch (Exception e) {
+            throw new CEGStudyBuddyException("Invalid plan number");
+        }
+
+        ui.displaySuccessfullyDeletedMessage();
+    }
+
+    /**
+     * This method delets the plan
+     * @param planName
+     * @throws CEGStudyBuddyException
+     */
+    public void deletePlan(String planName) throws CEGStudyBuddyException {
+        File dir = new File(directory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+            return;
+        }
+        File planFile = new File(dir, planName + ".bin");
+        if (planFile.exists()) {
+            planFile.delete();
+        } else {
+            throw new CEGStudyBuddyException("Plan does not exist");
+        }
     }
 }
