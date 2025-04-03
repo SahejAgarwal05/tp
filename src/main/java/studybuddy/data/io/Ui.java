@@ -46,14 +46,26 @@ public class Ui {
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Method to print plan creation message
+     */
     public void createNewPlanMessage() {
         System.out.println("New plan has been created");
     }
+
+    /**
+     * Method to print no previous plans
+     */
 
     public void noPreviousPlansMessage() {
         System.out.println("You have no previous plans");
     }
 
+    /**
+     *  Method to help user choose a plan or choose creating a new one
+     * @param plans list of string of plan names
+     * @return
+     */
     public String chooseOrCreateNewPlans(String[] plans) {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
@@ -70,6 +82,7 @@ public class Ui {
         System.out.println(c);
     }
 
+<<<<<<< HEAD
     public void showUndefinedCourseMessage() {
         System.out.println("This course is not found in defined course list.");
     }
@@ -100,5 +113,25 @@ public class Ui {
 
     public String missingInputErrorMessage() {
         return "You missed an input, please check your input";
+=======
+    /**
+     * Method to allow user to choose a plan to delete
+     * @param plans list of string of plan names
+     * @return
+     */
+    public String chooseDeletePlan(String[] plans) {
+        for (int i = 0; i < plans.length; i++) {
+            System.out.println((i + 1) + ". " + plans[i]);
+        }
+        System.out.print("Please enter a plan number between 1 and " + plans.length + " : ");
+        return scanner.nextLine().trim();
+    }
+
+    /**
+     * Method to print plan deletion message
+     */
+    public void displaySuccessfullyDeletedMessage() {
+        System.out.println("Plan deleted successfully");
+>>>>>>> 00cf4fe19921aff85dc0b8c22dbb234b5667f8b1
     }
 }
