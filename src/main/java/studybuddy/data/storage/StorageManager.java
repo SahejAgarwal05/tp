@@ -10,6 +10,7 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.io.Ui;
 
+
 public class StorageManager {
     private String directory;
     private CourseList courses;
@@ -102,6 +103,7 @@ public class StorageManager {
      * @param planName The name of the plan to load.
      * @throws CEGStudyBuddyException If the plan does not exist or the data is corrupted.
      */
+
     public void loadPlan(String planName) throws CEGStudyBuddyException {
         File dir = new File(directory);
         if (!dir.exists()) {
