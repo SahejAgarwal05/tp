@@ -69,6 +69,12 @@ public class Ui {
     public void printCourse(Course c) {
         System.out.println(c);
     }
+
+    /**
+     * Method to allow user to choose a plan to delete
+     * @param plans
+     * @return
+     */
     public String chooseDeletePLan(String[] plans) {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
@@ -76,6 +82,10 @@ public class Ui {
         System.out.print("Please enter a plan number between 1 and " + plans.length + " : ");
         return scanner.nextLine().trim();
     }
+
+    /**
+     * Method to print plan deletion message
+     */
     public void displaySuccessfullyDeletedMessage() {
         System.out.println("Plan deleted successfully");
     }
