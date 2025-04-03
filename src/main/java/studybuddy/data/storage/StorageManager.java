@@ -6,13 +6,14 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
+import studybuddy.data.io.Ui;
 
 public class StorageManager {
     private String directory;
     private CourseList courses;
+    private Ui ui;
 
     /**
      * Constructs a StorageManager with a specified directory for storing plans.
@@ -22,6 +23,7 @@ public class StorageManager {
     public StorageManager(String directory, CourseList courses) {
         this.directory = directory;
         this.courses = courses;
+        this.ui = new Ui();
     }
 
     /**
@@ -91,7 +93,7 @@ public class StorageManager {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Error in saving");
         }
-        System.out.println("Plan saved successfully.");
+        ui.showSaveMessage("Plan saved successfully.");
     }
 
     /**
@@ -153,17 +155,16 @@ public class StorageManager {
     public void newPlan() throws CEGStudyBuddyException {
         String planName = "";
         while (planName.isEmpty()) {
-            System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
-            planName = CEGStudyBuddy.in.nextLine().trim();
+            planName = ui.newPlanInput();
             if (!planName.matches("[a-zA-Z0-9]*")) {
                 planName = "";
             }
         }
         try {
             this.saveNewPlan(planName);
-            System.out.println("New plan has been created");
+            ui.createNewPlanMessage();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            ui.showError(e.getMessage());
         }
     }
 
@@ -178,7 +179,7 @@ public class StorageManager {
             try {
                 selectPlan();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
                 initRun = true;
             }
         }
@@ -194,17 +195,12 @@ public class StorageManager {
         try {
             plans = this.listPlans();
         } catch (Exception e) {
-            System.out.println("You have no previous plans");
+            ui.noPreviousPlansMessage();
             this.newPlan();
             return;
         }
 
-        for (int i = 0; i < plans.length; i++) {
-            System.out.println((i + 1) + ". " + plans[i]);
-        }
-
-        System.out.print("Please enter a plan number between 1 and " + plans.length + " or 0 to create a new plan: ");
-        String planNumber = CEGStudyBuddy.in.nextLine().trim();
+        String planNumber = ui.chooseOrCreateNewPlans(plans);
 
         if (planNumber.equals("0")) {
             this.newPlan();
@@ -218,6 +214,6 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
 
-        System.out.println("Plan loaded successfully");
+        ui.planSuccessfullyLoadedMessage();
     }
 }
