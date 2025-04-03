@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import studybuddy.course.CourseList;
-import studybuddy.CEGStudyBuddy;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
     public static final String TEST_CODE = "CS2113";
@@ -27,9 +28,12 @@ public class AddCommandTest {
     public static final String MISSING_INPUT_EXPECTED = "You missed an input.";
     public static final String INVALID_INPUT_EXPECTED = "You did not enter a valid number.";
 
+    private CourseList courses;
+    private StorageManager storage = new StorageManager("./PlanData", courses);
+
     @BeforeEach
     public void setup() {
-        CEGStudyBuddy.courses = new CourseList("test");
+        courses = new CourseList("test");
     }
 
     @Test
@@ -77,7 +81,7 @@ public class AddCommandTest {
 
     String executeTest(AddCommand cmd) {
         try {
-            return cmd.execute();
+            return cmd.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             return e.getMessage();
         }

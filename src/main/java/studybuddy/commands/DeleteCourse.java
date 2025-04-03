@@ -1,6 +1,9 @@
 package studybuddy.commands;
 
-import studybuddy.CEGStudyBuddy;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.io.Parser;
+import studybuddy.data.storage.StorageManager;
 
 public class DeleteCourse extends Command {
     public static final String COMMAND_DESCRIPTION = """
@@ -12,32 +15,11 @@ public class DeleteCourse extends Command {
     }
 
     @Override
-    public String execute() {
+    public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         try {
-            // Example input: c/CS2040
-            String[] parts = param.trim().split("c/", 2);
-            if (parts.length < 2) {
-                return "Invalid format! Please use: delete c/CODE";
-            }
-            String code = parts[1].trim().toUpperCase();
-
-            boolean deleted = CEGStudyBuddy.courses.getCourses().removeIf(course ->
-                    course.getCode().equalsIgnoreCase(code)
-            );
-
-            if (deleted) {
-                return "Course with code " + code + " has been deleted.";
-            } else {
-                return "Course with code " + code + " not found.";
-            }
-
+            return Parser.parseDelete(courses, param);
         } catch (Exception e) {
-            return "An error occurred while trying to delete the course.";
+            throw new CEGStudyBuddyException("An error occurred while trying to delete the course.");
         }
     }
 }
-
-
-
-
-

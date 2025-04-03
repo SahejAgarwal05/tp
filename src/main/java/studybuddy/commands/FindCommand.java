@@ -1,7 +1,10 @@
 package studybuddy.commands;
 
-import studybuddy.CEGStudyBuddy;
-import studybuddy.course.Course;
+import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
+import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.io.Parser;
+import studybuddy.data.storage.StorageManager;
 
 public class FindCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
@@ -13,21 +16,13 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public String execute() throws CEGStudyBuddyException {
-        // Ensure the command has proper format
-        if (!param.trim().toLowerCase().startsWith("c/")) {
-            throwException("Invalid find format! Use: find c/CODE");
-        }
-
-        // Extract course code
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throwException("Please provide a course code after c/");
-        }
+    public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
+        String[] parts = Parser.parseFind(param);
 
         String targetCode = parts[1].trim().toUpperCase();
 
-        for (Course course : CEGStudyBuddy.courses.getCourses()) {
+        // can move to Ui
+        for (Course course : courses.getCourses()) {
             if (course.getCode().equalsIgnoreCase(targetCode)) {
                 return "Course Code: " + course.getCode() + "\n"
                         + "Course Title: " + course.getTitle() + "\n"
@@ -38,5 +33,6 @@ public class FindCommand extends Command {
 
         return "Course " + targetCode + " not found in your course list.";
     }
+
 }
 

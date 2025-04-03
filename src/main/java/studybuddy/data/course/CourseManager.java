@@ -1,4 +1,4 @@
-package studybuddy.course;
+package studybuddy.data.course;
 
 import com.google.gson.Gson;
 
