@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class FindCommandTest {
     private CourseList courses;
     private StorageManager storage;
-
+    //testing input FIX
     @BeforeEach
     public void setup() {
         courses = new CourseList("test");
