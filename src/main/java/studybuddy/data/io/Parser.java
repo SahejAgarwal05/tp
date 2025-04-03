@@ -21,6 +21,7 @@ import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
+    private static Ui ui = new Ui();
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
@@ -66,7 +67,7 @@ public class Parser {
         try {
             code = paramParts[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         }
         if (CourseManager.ifDefined(code)) {
             return CourseManager.getCourse(code);
@@ -78,7 +79,7 @@ public class Parser {
             takeInYear = Integer.parseInt(paramParts[4]);
             takeInSem = Integer.parseInt(paramParts[5]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         } catch (NumberFormatException e) {
             throw new CEGStudyBuddyException("You did not enter a valid number.");
         }

@@ -77,4 +77,28 @@ public class Ui {
     public void showMissingDefinedListMessage() {
         System.out.println("Warning: Defined course list is missing.");
     }
+
+    public String parseIntErrorMessage() {
+        return "Error: Cannot convert to Integer, please check your input";
+    }
+
+    public String indexOutOfBoundErrorMessage() {
+        return "Error: Index is out of bounds, please check your input";
+    }
+
+    public String editSuccessMessage() {
+        return "Edition is successful";
+    }
+
+    public String courseNotInPlannerMessage() {
+        return "This course is not found in the planner";
+    }
+
+    public String missingCodeErrorMessage() {
+        return "Error: Course code is missing, please check your input";
+    }
+
+    public String missingInputErrorMessage() {
+        return "Error: You missed an input, please check your input";
+    }
 }
