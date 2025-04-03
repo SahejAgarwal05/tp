@@ -17,6 +17,7 @@ import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
+import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
@@ -64,6 +65,14 @@ public class Parser {
 
         try {
             code = paramParts[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new CEGStudyBuddyException("You missed an input.");
+        }
+        if (CourseManager.ifDefined(code)) {
+            return CourseManager.getCourse(code);
+        }
+
+        try {
             title = paramParts[2];
             mc = Integer.parseInt(paramParts[3]);
             takeInYear = Integer.parseInt(paramParts[4]);
