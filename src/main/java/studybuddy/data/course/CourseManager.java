@@ -30,6 +30,7 @@ public class CourseManager {
         System.out.println(ifDefined("CS1231"));
         System.out.println(getCourse("Hi"));
         System.out.println(getCourse("CS1231"));
+        System.out.println(c1);
     }
 
     /**
@@ -41,6 +42,17 @@ public class CourseManager {
     public static Course jsonToCourse (String jsonString) {
         Gson gson = new Gson();
         return gson.fromJson(jsonString, Course.class);
+    }
+
+    /**
+     * Convert a Course object to a string in json format.
+     *
+     * @param course Input Course object to be converted.
+     * @return Json format string.
+     */
+    public static String courseToJson (Course course) {
+        Gson gson = new Gson();
+        return gson.toJson(Course.class);
     }
 
     /**
