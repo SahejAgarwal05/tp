@@ -244,7 +244,7 @@ public class StorageManager {
     }
 
     /**
-     * THis method delets the plan
+     * This method delets the plan
      * @param planName
      * @throws CEGStudyBuddyException
      */
