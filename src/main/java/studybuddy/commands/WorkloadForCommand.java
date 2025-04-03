@@ -3,7 +3,6 @@ package studybuddy.commands;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class WorkloadForCommand extends Command {

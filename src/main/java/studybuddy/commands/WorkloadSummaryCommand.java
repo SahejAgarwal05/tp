@@ -3,7 +3,6 @@ package studybuddy.commands;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class WorkloadSummaryCommand extends Command {

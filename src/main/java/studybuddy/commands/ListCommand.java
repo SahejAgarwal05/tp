@@ -1,7 +1,6 @@
 package studybuddy.commands;
 
 import studybuddy.data.course.CourseList;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class ListCommand extends Command {

@@ -2,7 +2,6 @@ package studybuddy.commands;
 
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class GradRequirementCommand extends Command {
