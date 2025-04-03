@@ -10,7 +10,7 @@ import studybuddy.data.storage.StorageManager;
 
 public class CourseManagerTest {
     private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData", courses);
+    private StorageManager storage = new StorageManager("./PlanData");
 
     @Test
     public void testAddCourse1() {

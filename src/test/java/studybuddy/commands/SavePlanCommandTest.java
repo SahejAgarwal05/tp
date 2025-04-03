@@ -21,7 +21,7 @@ public class SavePlanCommandTest {
     @BeforeEach
     public void setup() throws Exception {
         System.setOut(new PrintStream(outContent));
-        storage = new StorageManager(TEST_DIR, courses);;
+        storage = new StorageManager(TEST_DIR);;
         File dir = new File(TEST_DIR);
         if (!dir.exists()) {
             dir.mkdirs();
