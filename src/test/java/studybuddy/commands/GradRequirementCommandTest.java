@@ -15,7 +15,7 @@ public class GradRequirementCommandTest {
     @BeforeEach
     public void setup() {
         courses = new CourseList("test");
-        storage = new StorageManager("./PlanData", courses);
+        storage = new StorageManager("./PlanData");
     }
 
     @Test

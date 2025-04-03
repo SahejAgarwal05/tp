@@ -10,7 +10,7 @@ public class CEGStudyBuddy {
     public static CourseList courses;
     private static boolean isRunning = true;
     private static Ui ui = new Ui();
-    private static StorageManager storage = new StorageManager("./PlanData", courses);
+    private static StorageManager storage = new StorageManager("./PlanData");
 
     public static void main(String[] args) {
         ui.showWelcome();
