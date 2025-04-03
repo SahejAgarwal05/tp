@@ -3,6 +3,7 @@ package studybuddy.data.io;
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.Command;
 import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
 import studybuddy.commands.FindCommand;
@@ -45,6 +46,7 @@ public class Parser {
             case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
+            case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
