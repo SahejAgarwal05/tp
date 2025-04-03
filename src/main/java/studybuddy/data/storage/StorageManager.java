@@ -240,7 +240,7 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
 
-        ui.planSuccessfullyLoadedMessage();
+        ui.displaySuccessfullyDeletedMessage();
     }
 
     /**
@@ -258,7 +258,7 @@ public class StorageManager {
         if (planFile.exists()) {
             planFile.delete();
         } else {
-            throw new CEGStudyBuddyException("PLan does not exist");
+            throw new CEGStudyBuddyException("Plan does not exist");
         }
     }
 }

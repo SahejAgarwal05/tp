@@ -76,4 +76,7 @@ public class Ui {
         System.out.print("Please enter a plan number between 1 and " + plans.length + " : ");
         return scanner.nextLine().trim();
     }
+    public void displaySuccessfullyDeletedMessage() {
+        System.out.println("Plan deleted successfully");
+    }
 }
