@@ -8,13 +8,11 @@ import org.junit.jupiter.api.Test;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommandTest {
     private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData", courses);
-    private Ui ui = new Ui();
+    private StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {
@@ -31,7 +29,7 @@ public class EditCommandTest {
     public void testEditExistingCourse1() throws CEGStudyBuddyException {
         EditCommand editCourse = new EditCommand("c/CS2113 s/1 y/3");
         String output = editCourse.execute(courses, storage);
-        assertEquals(ui.editSuccessMessage(), output);
+        assertEquals("Success", output);
 
         // Ensure the course has actually been edited
         FindCommand findCourse = new FindCommand("c/CS2113");
@@ -47,7 +45,7 @@ public class EditCommandTest {
     public void testEditExistingCourse2() throws CEGStudyBuddyException {
         EditCommand editCourse = new EditCommand("c/PF1101 s/2 y/1 t/Management Project");
         String output = editCourse.execute(courses, storage);
-        assertEquals(ui.editSuccessMessage(), output);
+        assertEquals("Success", output);
 
         // Ensure the course has actually been edited
         FindCommand findCourse = new FindCommand("c/PF1101");
@@ -63,13 +61,13 @@ public class EditCommandTest {
     public void testEditNonExistingCourse1() throws CEGStudyBuddyException {
         EditCommand editCourse = new EditCommand("c/CDE2501 mc/2");
         String output = editCourse.execute(courses, storage);
-        assertEquals(ui.courseNotInPlannerMessage(), output);
+        assertEquals("Course not found.", output);
     }
 
     @Test
     public void testEditInvalidInput1() throws CEGStudyBuddyException {
         EditCommand editCourse = new EditCommand("c/DTK1234 mc/2.0 t/Design and Think");
         String output = editCourse.execute(courses, storage);
-        assertEquals(ui.parseIntErrorMessage(), output);
+        assertEquals("Error: Cannot convert to Integer", output);
     }
 }

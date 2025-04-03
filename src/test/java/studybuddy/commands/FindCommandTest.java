@@ -19,7 +19,7 @@ public class FindCommandTest {
     @BeforeEach
     public void setup() {
         courses = new CourseList("test");
-        storage = new StorageManager("./PlanData", courses);
+        storage = new StorageManager("./PlanData");
         courses.clear();
 
         courses.add(new Course("CS2113", "Software Engineering", 4, 2, 2));

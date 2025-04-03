@@ -31,7 +31,7 @@ public class AddCommandTest {
     public static final String INVALID_INPUT_EXPECTED = ui.parseIntErrorMessage();
 
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData", courses);
+    private StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {
