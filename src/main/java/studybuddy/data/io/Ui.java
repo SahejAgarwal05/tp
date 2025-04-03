@@ -79,11 +79,11 @@ public class Ui {
     }
 
     public String parseIntErrorMessage() {
-        return "Error: Cannot convert to Integer, please check your input";
+        return "You did not enter a valid number, please check your input";
     }
 
     public String indexOutOfBoundErrorMessage() {
-        return "Error: Index is out of bounds, please check your input";
+        return "You entered an invalid index, please check your input";
     }
 
     public String editSuccessMessage() {
@@ -95,10 +95,10 @@ public class Ui {
     }
 
     public String missingCodeErrorMessage() {
-        return "Error: Course code is missing, please check your input";
+        return "Course code is missing, please check your input";
     }
 
     public String missingInputErrorMessage() {
-        return "Error: You missed an input, please check your input";
+        return "You missed an input, please check your input";
     }
 }

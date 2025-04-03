@@ -81,11 +81,11 @@ public class Parser {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
         if (!AddCommand.isValidMC(mc) || !AddCommand.isValidYear(takeInYear) || !AddCommand.isValidSem(takeInSem)) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
         return new Course(code, title, mc, takeInYear, takeInSem);
