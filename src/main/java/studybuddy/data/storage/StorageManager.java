@@ -69,7 +69,6 @@ public class StorageManager {
             courses.setPlanName(plan);
             oos.writeObject(courses);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new CEGStudyBuddyException("Error in making new plan");
         }
     }
