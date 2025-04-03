@@ -9,7 +9,7 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
-    public static final String TEST_CODE = "CS2113";
+    public static final String TEST_CODE = "CS2103";
     public static final String TEST_TITLE = "Software Engineering";
     public static final String TEST_MC = "4";
     public static final String TEST_SEM = "2";

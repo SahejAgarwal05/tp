@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 
 public class CourseManager {
-    private static final String FILEPATH = "./src/main/java/studybuddy/course/Defined_Courses";
+    private static final String FILEPATH = "./src/main/java/studybuddy/data/course/Defined_Courses";
     private static final File file = new File(FILEPATH);
 
     public static void main(String[] args) {
@@ -32,13 +32,25 @@ public class CourseManager {
         System.out.println(getCourse("CS1231"));
     }
 
+    /**
+     * Convert a string in json format to a Course object.
+     *
+     * @param jsonString Input String array containing parameters of a Course object.
+     * @return The Course object corresponding to the input.
+     */
     public static Course jsonToCourse (String jsonString) {
-        System.out.println(jsonString);
         Gson gson = new Gson();
         return gson.fromJson(jsonString, Course.class);
     }
 
+    /**
+     * Check if a course code is already defined in the file Defined_Courses.
+     *
+     * @param code Course code.
+     * @return if the course code is already defined.
+     */
     public static boolean ifDefined(String code) {
+        assert (file.exists());
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
@@ -54,6 +66,12 @@ public class CourseManager {
         return false;
     }
 
+    /**
+     * Get a course with parameters defined as in the file Defined_Courses.
+     *
+     * @param code Course code.
+     * @return A course object using predefined information in database Defined_Courses.
+     */
     public static Course getCourse(String code) {
         try {
             Scanner scanner = new Scanner(file);
