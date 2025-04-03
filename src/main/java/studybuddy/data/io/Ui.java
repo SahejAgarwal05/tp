@@ -87,7 +87,7 @@ public class Ui {
      * @param plans list of string of plan names
      * @return
      */
-    public String chooseDeletePLan(String[] plans) {
+    public String chooseDeletePlan(String[] plans) {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
         }
