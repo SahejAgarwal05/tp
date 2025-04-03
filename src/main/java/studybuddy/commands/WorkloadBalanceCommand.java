@@ -30,6 +30,6 @@ public class WorkloadBalanceCommand extends Command {
                 min = i;
             }
         }
-        return "Max : " + max + "\nMin : " + min; // move to Ui
+        return "Max : " + max + "\nMin : " + min;
     }
 }

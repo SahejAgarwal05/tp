@@ -15,13 +15,6 @@ public class EditCommand extends Command {
         super(param);
     }
 
-    // move to studybuddy.common.Utils class
-    public static boolean hasIdentifier(String str) {
-        return str.startsWith("t/") || str.startsWith("c/") ||
-                str.startsWith("mc/") || str.startsWith("y/") ||
-                str.startsWith("s/");
-    }
-
     @Override
     public String execute(CourseList courses, StorageManager storage) {
         try {

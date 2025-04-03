@@ -16,6 +16,7 @@ import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.course.CourseManager;
@@ -89,7 +90,7 @@ public class Parser {
             throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
-        if (!AddCommand.isValidMC(mc) || !AddCommand.isValidYear(takeInYear) || !AddCommand.isValidSem(takeInSem)) {
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
             throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
@@ -102,11 +103,11 @@ public class Parser {
         Integer y = null;
         Integer s = null;
 
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].startsWith("y/")) {
-                y = Integer.parseInt(parts[i].substring(2));
-            } else if (parts[i].startsWith("s/")) {
-                s = Integer.parseInt(parts[i].substring(2));
+        for (String part : parts) {
+            if (part.startsWith("y/")) {
+                y = Integer.parseInt(part.substring(2));
+            } else if (part.startsWith("s/")) {
+                s = Integer.parseInt(part.substring(2));
             }
         }
         Course course = CourseManager.getCourse(code);
@@ -156,7 +157,7 @@ public class Parser {
                 title = new StringBuilder(parts[i].substring(2));
                 i += 1;
                 // while i is in bound and parts[i] is not next identifier
-                while (i < parts.length && !EditCommand.hasIdentifier(parts[i])) {
+                while (i < parts.length && !Utils.hasIdentifier(parts[i])) {
                     title.append(" ").append(parts[i]);
                     i += 1;
                 }
