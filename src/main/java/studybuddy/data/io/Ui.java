@@ -82,7 +82,6 @@ public class Ui {
         System.out.println(c);
     }
 
-<<<<<<< HEAD
     public void showUndefinedCourseMessage() {
         System.out.println("This course is not found in defined course list.");
     }
@@ -113,7 +112,7 @@ public class Ui {
 
     public String missingInputErrorMessage() {
         return "You missed an input, please check your input";
-=======
+    }
     /**
      * Method to allow user to choose a plan to delete
      * @param plans list of string of plan names
@@ -132,6 +131,5 @@ public class Ui {
      */
     public void displaySuccessfullyDeletedMessage() {
         System.out.println("Plan deleted successfully");
->>>>>>> 00cf4fe19921aff85dc0b8c22dbb234b5667f8b1
     }
 }
