@@ -182,7 +182,10 @@ For the developers, this list is essential for other enhancement functions such 
 
 ## Implementation
 
-TBD
+### Adding a Course
+A simplified sequence diagram of the AddCommand class implementation:
+
+![AddCommandSequence.png](AddCommandSequence.png)
 
 ---
 
