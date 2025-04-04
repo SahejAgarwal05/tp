@@ -131,8 +131,34 @@ public class Ui {
 
     // Displays the welcome logo and greeting
     public void showWelcome() {
-        System.out.println("Welcome to CEGStudyBuddy!");
+        String banner = """
+        __________  ___________ ________
+        \\_   ___ \\\\_   _____//  _____/
+        /    \\  \\/ |    __)_/   \\  ___
+        \\     \\____|        \\    \\_\\  \\
+         \\______  /_______  /\\______  /
+                \\/        \\/        \\/
+
+          ________________________ ___________ _____.___. 
+         /   _____/\\__    ___/    |   \\______ \\\\__  |   | 
+         \\_____  \\   |    |  |    |   /|    |  \\/   |   | 
+         /        \\  |    |  |    |  / |    `   \\____   | 
+        /_______  /  |____|  |______/ /_______  / ______| 
+                \\/                            \\/\\/        
+
+        __________ ____ ___________  ________ _____.___.  
+        \\______   \\    |   \\______ \\ \\______ \\\\__  |   |  
+         |    |  _/    |   /|    |  \\ |    |  \\/   |   |  
+         |    |   \\    |  / |    `   \\|    `   \\____   |  
+         |______  /______/ /_______  /_______  / ______|  
+                \\/                 \\/        \\/\\/        
+
+                      Welcome to CEGStudyBuddy!
+            Type 'help' to see a list of available commands.
+        """;
+        System.out.println(banner);
     }
+
 
     // Prints help hint
     public void showHelpHint() {
