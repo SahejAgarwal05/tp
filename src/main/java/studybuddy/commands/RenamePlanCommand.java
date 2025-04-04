@@ -1,4 +1,5 @@
-import studybuddy.commands.Command;
+package studybuddy.commands;
+
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
@@ -13,6 +14,7 @@ public class RenamePlanCommand extends Command {
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         assert storage != null;
-        return storage.renamePlan();
+        storage.renamePlan();
+        return "";
     }
 }

@@ -245,7 +245,7 @@ public class Ui {
      */
     public boolean isUserConfirm(String confirmationMessgae) {
         System.out.println(confirmationMessgae);
-        System.out.print("Please enter a y/Y to confirm: ");
+        System.out.print("Please enter a Y/y to confirm: ");
         String userInput = scanner.nextLine().trim();
         return userInput.equalsIgnoreCase("y");
     }

@@ -15,6 +15,7 @@ public class SwitchPlanCommand extends Command {
 
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
+        assert storage != null;
         storage.saveCurrentPlan();
         storage.initializePlan();
         return "";
