@@ -1,37 +1,26 @@
 package studybuddy.commands;
 
+import studybuddy.data.course.CourseList;
+import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.io.Ui;
+import studybuddy.data.storage.StorageManager;
+
 public abstract class Command {
-    private String commandName;
-    private String description;
-    public Command(String commandName) {
-        this.commandName = commandName;
-    }
-    public String getCommandName() {
-        return commandName;
-    }
-    public void setCommandName(String commandName) {
-        this.commandName = commandName;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
+    protected String param;
+    protected final Ui ui;
+
+    public Command(String param) {
+        this.param = param;
+        this.ui = new Ui();
     }
 
     /**
-     * Abstract method to execute the command
-     * @param args
-     * @return
+     * Executes the command.
+     * @return The result string to be printed.
      */
-    public abstract String execute(String[] args);
+    public abstract String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException;
 
-    /**
-     * Throws CEGStudyBuddyException of the message
-     * @param message
-     * @throws CEGStudyBuddyException
-     */
-    private void throwException (String message) throws CEGStudyBuddyException {
-        throw new CEGStudyBuddyException(message);
+    public boolean isRunning() {
+        return true;
     }
 }
