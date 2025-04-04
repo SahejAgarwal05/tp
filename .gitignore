@@ -16,5 +16,5 @@ bin/
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
 
-META-INF/MANIFEST.INF
-src/main/java/studybuddy/data/course/Load Course from List of Defined Courses.puml
+META-INF
+PlanData

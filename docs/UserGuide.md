@@ -3,10 +3,10 @@
 ## Introduction
 
 **CEGStudyBuddy** is a desktop application that tracks and plans university courses efficiently for NUS Computer Engineering students who want a structured academic roadmap.  
-It helps to optimise workload, ensure graduation requirements, and keep students organised with ease.
+It helps to optimise workload, ensure graduation requirements, and keep students organised with ease, while managing multiple scenarios and possible schedules in their academic journey.
 
 This application is optimised for a **Command Line Interface (CLI)**.  
-If you are a fast typer, you can plan and track your courses faster than NUSMods!
+If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same tim e!
 
 ---
 
@@ -40,6 +40,13 @@ Refer to the **Features** section below for all available commands.
 ---
 
 ## Features
+
+### Notes about Course Plans
+At any time, in CEGStudyBuddy, you will be working on a plan, so in the start you will be asked to create a new plan or work on a pre-existing plan.
+You can save multiple course plans and switch between them (see Switch Plan Command below).
+
+Note that the current version of CEGStudyBuddy does not automatically save your course plan. Please remember to run the save command before you exit.
+
 
 ### Notes about the Command Format
 
@@ -141,58 +148,6 @@ edit c/MA1101 y/2 s/1
 
 ---
 
-### Help Command: `help`
-
-Displays available commands and a help link.
-
-**Format:**
-```
-help
-```
-
-**Example Output:**
-```
-Available Commands:
-1. add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER - Adds a course.
-2. delete c/CODE - Deletes a course.
-3. list - Lists all courses.
-4. edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER] - Edits a course.
-```
-
----
-
-### Workload Command: `workload`
-
-Displays the total Modular Credits (MCs) per semester.
-
-**Format:**
-```
-workload
-```
-
-**Example Output:**
-```
-Year 1 Semester 1: 16 MCs  
-Year 1 Semester 2: 18 MCs  
-Year 2 Semester 1: 20 MCs  
-Year 2 Semester 2: 16 MCs  
-Year 3 Semester 1: 18 MCs  
-Year 3 Semester 2: 16 MCs  
-Year 4 Semester 1: 14 MCs  
-Year 4 Semester 2: 12 MCs
-
-```
----
-
-### Saving Data
-
-CEGStudyBuddy automatically saves your data to disk every time changes are made.  
-No manual saving is required.
-
-> 📄 For detailed instructions, visit: [Google Doc](https://docs.google.com/document/d/1BYTlajOCgwL7bUaDveu3yrMp9dUQFgjM5Xe7gw2Bl-I/edit?tab=t.0)
-
----
-
 ### Finding a Course: `find`
 
 Searches for a course by its code.
@@ -222,9 +177,70 @@ Course CS2040 not found in your course list.
 
 ---
 
+### Workload Summary: `workload_summary`
+
+Displays the total Modular Credits (MCs) per semester. Will also inform you if the total MCs in the semester is too low or high.
+
+
+**Format:**
+```
+workload_summary
+```
+
+**Example Output:**
+```
+Year 1 Semester 1: 16 MCs (Too low! Minimum workload: 18 MCs)
+Year 1 Semester 2: 18 MCs  
+Year 2 Semester 1: 20 MCs  
+Year 2 Semester 2: 16 MCs (Too low! Minimum workload: 18 MCs)
+Year 3 Semester 1: 18 MCs  
+Year 3 Semester 2: 16 MCs (Too low! Minimum workload: 18 MCs)
+Year 4 Semester 1: 14 MCs (Too low! Minimum workload: 18 MCs)
+Year 4 Semester 2: 12 MCs (Too low! Minimum workload: 18 MCs)
+
+```
+---
+### Workload For: `workload_for`
+Displays the courses taken for the given semester and gives the total workload.
+
+**Format:**
+```
+workload_for y/YEAR s/SEMESTER
+```
+
+Example Output:
+```
+These are the courses you will be taking:
+1.(c/CS1010 t/Programming Methodology mc/4 y/1 s/1)
+2.(c/EG1311 t/Design and Make mc/4 y/1 s/1)
+3.(c/CDE2501 t/Liveable Cities mc/4 y/1 s/1)
+4.(c/MA1511 t/Engineering Calculus mc/2 y/1 s/1)
+5.(c/MA1512 t/Differential Equations for Engineering mc/2 y/1 s/1)
+6.(c/CG1111A t/Engineering Principles and Practice I mc/4 y/1 s/1)
+Total workload: 20
+```
+
+---
+### Workload Balance: `workload_balance`
+In order to gain a better understanding of the workload balance across all you semesters, you can use this command which
+displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
+
+**Format:**
+```
+workload_balance
+```
+
+Example Output:
+```
+Max: 6
+Min: 2
+```
+
+---
+
 ### Graduation Requirement: `gradreq`
 
-Displays current MCs, total required, and MCs left to graduate.
+Displays the total MCs completed, the graduation requirement (160 MCs), and the number of MCs still required to graduate.
 
 **Format:**
 ```
@@ -247,27 +263,90 @@ Current MCs Completed: 160 MCs
 Graduation Requirement: 160 MCs  
 Remaining MCs: 0 MCs
 
-🎓 Congratulations! You have met the graduation requirement!
+Congratulations! You have met the graduation requirement! 🎓
 ```
+
+---
+
+### Help: `help`
+
+In cases where you need information about the different commands, you can use the help command to get information about the different commands and their formats.
+
+**Format:**
+```
+help
+```
+
+---
+
+### Save Plan: `save`
+Saves the current course plan, similar to a simple save in most Microsoft Office applications. Since, there is no autosave, it is highly recommneded to use this before exiting. 
+This command works for both new plans and saving changes to a pre-existing plan. It does not take any parameters.
+
+**Format:**
+```
+save
+```
+**Expected Output:**
+```
+Plan saved successfully.
+```
+---
+
+### Switch Plan: `switch_plan`
+Allows you to switch to a different course plan.
+
+**Format:**
+```
+switch_plan
+```
+
+---n
+
+### Delete Plan: `delete_plan`
+Allows you to delete a course plan. Using this command will allow you to select a plan to delete. At the moment, once you select a plan
+using the delete_plan command, you cannot abort the deletion. However, this will be changed in v2.1 where you will be asked for confirmation.
+This command does not take any parameters.
+
+**Format:**
+```
+delete_plan
+```
+
+---
+
+### Exit Program: `exit`
+Exits the program.
+
+**Format:**
+```
+exit
+```
+
+Warning:\
+The current version of CEGStudyBuddy does not automatically save your course plan.
+Please run the `save` command before you run the exit command to avoid losing your course data.
 
 ---
 
 ## Command Summary
 
-| **Action**     | **Format**                                                                 |
-|----------------|-----------------------------------------------------------------------------|
-| **Add**        | `add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                  |
-|                | E.g., `add c/CS2040 t/Data Structures mc/4 y/2 s/1`                         |
-| **Delete**     | `delete c/CODE`                                                             |
-|                | E.g., `delete c/CS2040`                                                     |
-| **List**       | `list`                                                                      |
-| **Edit**       | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`         |
-|                | E.g., `edit c/CS2040 t/Advanced Data Structures mc/5`                      |
-| **Help**       | `help`                                                                      |
-| **Workload**   | `workload`                                                                  |
-| **Find**       | `find c/CODE`                                                               |
-|                | E.g., `find c/CS2113`                                                       |
-| **Graduation** | `gradreq`                                                                   |
+| **Action**           | **Format**                                                                                                                 |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------|
+| **Add**              | `add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`<br>E.g. `add c/CS2040 t/Data Structures mc/4 y/2 s/1`            |
+| **Delete**           | `delete c/CODE`                                                                                                            |
+|                      | E.g., `delete c/CS2040`                                                                                                    |
+| **List**             | `list`                                                                                                                     |
+| **Edit**             | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`<br>E.g. `edit c/CS2040 t/Advanced Data Structures mc/5` |
+| **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                     |
+| **Help**             | `help`                                                                                                                     |
+| **Workload Summary** | `workload_summary`                                                                                                         |
+| **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                           |
+| **Workload Balance** | `workload_balance`                                                                                                         |
+| **Grad Req**         | `gradreq`                                                                                                                  |
+| **Save Plan**        | `save`                                                                                                                     |
+| **Switch Plan**      | `switch_plan`                                                                                                              |
+| **Delete Plan**      | `delete_plan`                                                                                                              |
 
 ---
 
@@ -304,6 +383,10 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 ### ❓ Q: I'm seeing errors when running the `.jar` file. What do I do?
 
 **A:** Make sure:
-- You have **Java 17 or above** installed.
-- You are running the `.jar` file from **terminal/command prompt** using:
+- You have **Java 17** installed.
+- You are running the `.jar` file from **terminal/command prompt** using `java -jar CEGStudyBuddy.jar`
 
+
+### ❓ Q: What if I accidentally delete a plan?
+
+**A:** Currently, there is delete_plan is irreversible, and it is highly recommended to be 100% sure while deleting. 

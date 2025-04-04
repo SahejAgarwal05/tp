@@ -146,7 +146,7 @@ public class Ui {
     }
 
     public String printWorkloadFor(CourseList courses, int sem, int year) {
-        String output = "These are the courses you will be taking";
+        String output = "These are the courses you will be taking:";
         int totalWorkLoad = 0;
         int index = 1;
         for (Course course : courses.getCourses()) {
@@ -156,7 +156,7 @@ public class Ui {
                 index++;
             }
         }
-        output = output + "\nTotal work load: " + totalWorkLoad;
+        output = output + "\nTotal workload: " + totalWorkLoad;
         return output;
     }
 
