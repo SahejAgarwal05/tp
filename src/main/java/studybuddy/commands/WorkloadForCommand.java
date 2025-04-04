@@ -30,6 +30,9 @@ public class WorkloadForCommand extends Command {
                 index++;
             }
         }
+        if (index == 1){
+            return "You have are not taking any courses yet";
+        }
         output = output + "\nTotal workload: " + totalWorkLoad;
         return output;
     }

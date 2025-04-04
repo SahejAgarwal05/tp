@@ -111,49 +111,6 @@ public class Ui {
                 ExitCommand.COMMAND_DESCRIPTION;
     }
 
-    public String printCourseList(CourseList courses) {
-        StringBuilder sb = new StringBuilder();
-
-        // Loop through all semesters: Y1S1 to Y4S2
-        for (int year = 1; year <= 4; year++) {
-            for (int sem = 1; sem <= 2; sem++) {
-                sb.append("Y").append(year).append("S").append(sem).append(" Courses\n");
-
-                // Filter courses taken in this year/sem
-                ArrayList<Course> filtered = new ArrayList<>();
-                for (Course course : courses.getCourses()) {
-                    if (course.getTakeInYear() == year && course.getTakeInSem() == sem) {
-                        filtered.add(course);
-                    }
-                }
-
-                if (filtered.isEmpty()) {
-                    sb.append("No courses taken!\n\n");
-                } else {
-                    int count = 1;
-                    for (Course course : filtered) {
-                        sb.append(count).append(". ")
-                                .append(course.getCode()).append(" - ").append(course.getTitle())
-                                .append(" (").append(course.getMc()).append(" MCs)").append("\n");
-                        count++;
-                    }
-                    sb.append("\n");
-                }
-            }
-        }
-
-        return sb.toString().trim();
-    }
-
-    public String printWorkloadSummary(String[] period, int[] mcsInEachSemester) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
-            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
-            sb.append(Utils.checkWorkload(mcsInEachSemester[i], i) + "\n");
-        }
-        return sb.toString();
-    }
-
     /**
      * Reads the input and parses it into a String array.
      *
