@@ -131,7 +131,8 @@ public class Ui {
 
     // Displays the welcome logo and greeting
     public void showWelcome() {
-        String banner = """
+        String banner =
+        """
         __________  ___________ ________
         \\_   ___ \\\\_   _____//  _____/
         /    \\  \\/ |    __)_/   \\  ___
