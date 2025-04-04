@@ -53,9 +53,7 @@ public class Parser {
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
             case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
             case CommandNames.UNDO -> c = new UndoCommand();
-
-
-                default -> c = new InvalidCommand();
+            default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
             throw new CEGStudyBuddyException(e.getMessage());
