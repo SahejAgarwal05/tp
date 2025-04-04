@@ -296,4 +296,19 @@ public class Ui {
     public String missingInputErrorMessage() {
         return "Input is incomplete and information is missing, please check your input";
     }
+
+    /**
+     * Askes for user confirmation for an action. Returns true if user input Y or y
+     * @param confirmationMessgae
+     * @return
+     */
+    public boolean isUserConfirm(String confirmationMessgae) {
+        System.out.println(confirmationMessgae);
+        System.out.print("Please enter a y/Y to confirm: ");
+        String userInput = scanner.nextLine().trim();
+        return userInput.equalsIgnoreCase("y");
+    }
+    public void disaplayCancelMessage() {
+        System.out.println("Cancelled");
+    }
 }
