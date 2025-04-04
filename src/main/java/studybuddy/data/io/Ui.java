@@ -249,7 +249,17 @@ public class Ui {
         String userInput = scanner.nextLine().trim();
         return userInput.equalsIgnoreCase("y");
     }
-    public void disaplayCancelMessage() {
+    public void cancelMessage() {
         System.out.println("Cancelled");
+    }
+    public String getNewPlanName(String[] plans) {
+        for (int i = 0; i < plans.length; i++) {
+            System.out.println((i + 1) + ". " + plans[i]);
+        }
+        System.out.print("These are your prexisting plans");
+        return this.newPlanInput();
+    }
+    public void renameSuccessfulMessage(){
+        System.out.println("Successfully renamed");
     }
 }
