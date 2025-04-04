@@ -14,6 +14,7 @@ import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.RenamePlanCommand;
 import studybuddy.commands.SavePlanCommand;
 import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.ReplaceCommand;
@@ -51,6 +52,7 @@ public class Parser {
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
+            case CommandNames.RENAME_PLAN -> c = new RenamePlanCommand();
             case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
             case CommandNames.UNDO -> c = new UndoCommand();
             default -> c = new InvalidCommand();
