@@ -15,4 +15,5 @@ public class CommandNames {
     public static final String FIND = "find";
     public static final String GRADREQ = "gradreq";
     public static final String DELETE_PLAN = "delete_plan";
+    public static final String FILL_SEM = "fill";
 }

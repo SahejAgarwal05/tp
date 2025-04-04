@@ -18,7 +18,7 @@ public class Course implements Serializable {
     protected final String PLACEHOLDER = "To be confirmed";
 
     /**
-     * Constructor for v1.0
+     * Constructor for common creation of course
      * @param code Code of the course, e.g. CS1231, CG1111As.
      * @param title Text title of the course, e.g. Programming Methodology.
      * @param mc Module credit of the course, e.g. 2, 4, 8.
