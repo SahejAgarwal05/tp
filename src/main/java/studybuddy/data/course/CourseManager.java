@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import studybuddy.data.io.Ui;
 
 public class CourseManager {
-    private static final String FILEPATH = "./src/resources/Defined_Courses";
+    private static final String FILEPATH = "./src/main/java/studybuddy/data/course/Defined_Courses";
     private static final File file = new File(FILEPATH);
     private static final Ui ui = new Ui();
 
