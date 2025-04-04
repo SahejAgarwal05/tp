@@ -3,10 +3,10 @@
 ## Introduction
 
 **CEGStudyBuddy** is a desktop application that tracks and plans university courses efficiently for NUS Computer Engineering students who want a structured academic roadmap.  
-It helps to optimise workload, ensure graduation requirements, and keep students organised with ease.
+It helps to optimise workload, ensure graduation requirements, and keep students organised with ease, while managing multiple scenarios and possible schedules in their academic journey.
 
 This application is optimised for a **Command Line Interface (CLI)**.  
-If you are a fast typer, you can plan and track your courses faster than NUSMods!
+If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same tim e!
 
 ---
 
@@ -42,8 +42,7 @@ Refer to the **Features** section below for all available commands.
 ## Features
 
 ### Notes about Course Plans
-When the program is first started, it will prompt you to give a name for a course plan.
-
+At any time, in CEGStudyBuddy, you will be working on a plan, so in the start you will be asked to create a new plan or work on a pre-existing plan.
 You can save multiple course plans and switch between them (see Switch Plan Command below).
 
 Note that the current version of CEGStudyBuddy does not automatically save your course plan. Please remember to run the save command before you exit.
@@ -223,7 +222,8 @@ Total workload: 20
 
 ---
 ### Workload Balance: `workload_balance`
-Displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
+In order to gain a better understanding of the workload balance across all you semesters, you can use this command which
+displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
 
 **Format:**
 ```
@@ -270,7 +270,7 @@ Congratulations! You have met the graduation requirement! 🎓
 
 ### Help: `help`
 
-Displays available commands and their formats.
+In cases where you need information about the different commands, you can use the help command to get information about the different commands and their formats.
 
 **Format:**
 ```
@@ -280,13 +280,17 @@ help
 ---
 
 ### Save Plan: `save`
-Saves the current course plan.
+Saves the current course plan, similar to a simple save in most Microsoft Office applications. Since, there is no autosave, it is highly recommneded to use this before exiting. 
+This command works for both new plans and saving changes to a pre-existing plan. It does not take any parameters.
 
 **Format:**
 ```
 save
 ```
-
+**Expected Output:**
+```
+Plan saved successfully.
+```
 ---
 
 ### Switch Plan: `switch_plan`
@@ -297,10 +301,12 @@ Allows you to switch to a different course plan.
 switch_plan
 ```
 
----
+---n
 
 ### Delete Plan: `delete_plan`
-Allows you to delete a course plan.
+Allows you to delete a course plan. Using this command will allow you to select a plan to delete. At the moment, once you select a plan
+using the delete_plan command, you cannot abort the deletion. However, this will be changed in v2.1 where you will be asked for confirmation.
+This command does not take any parameters.
 
 **Format:**
 ```
@@ -335,7 +341,7 @@ Please run the `save` command before you run the exit command to avoid losing yo
 | **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                     |
 | **Help**             | `help`                                                                                                                     |
 | **Workload Summary** | `workload_summary`                                                                                                         |
-| **Workload For**     | `workload_for`                                                                                                             |
+| **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                           |
 | **Workload Balance** | `workload_balance`                                                                                                         |
 | **Grad Req**         | `gradreq`                                                                                                                  |
 | **Save Plan**        | `save`                                                                                                                     |
@@ -380,3 +386,7 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 - You have **Java 17** installed.
 - You are running the `.jar` file from **terminal/command prompt** using `java -jar CEGStudyBuddy.jar`
 
+
+### ❓ Q: What if I accidentally delete a plan?
+
+**A:** Currently, there is delete_plan is irreversible, and it is highly recommended to be 100% sure while deleting. 
