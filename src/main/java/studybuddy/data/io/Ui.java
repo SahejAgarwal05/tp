@@ -18,7 +18,6 @@ import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
-import studybuddy.data.course.CourseList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
