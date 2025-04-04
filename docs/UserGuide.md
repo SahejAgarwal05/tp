@@ -294,8 +294,9 @@ Plan saved successfully.
 ---
 
 ### Switch Plan: `switch_plan`
-Allows you to switch to a different course plan.
+Allows you to switch to a different course plan after following the prompted flow. This also autosaves your changes made to the plan. Still, it is recommended to save manually before exit.
 
+It does not take any parameters.
 **Format:**
 ```
 switch_plan
@@ -304,8 +305,8 @@ switch_plan
 ---n
 
 ### Delete Plan: `delete_plan`
-Allows you to delete a course plan. Using this command will allow you to select a plan to delete. At the moment, once you select a plan
-using the delete_plan command, you cannot abort the deletion. However, this will be changed in v2.1 where you will be asked for confirmation.
+Allows you to delete a course plan. Using this command will allow you to select a plan to delete. Please , once you select a plan
+using the delete_plan command and confirm, you cannot abort the deletion. 
 This command does not take any parameters.
 
 **Format:**
@@ -316,16 +317,14 @@ delete_plan
 ---
 
 ### Exit Program: `exit`
-Exits the program.
+Exits the program after asking for confirmation. This also autosaves your changes made to the plan. Still, it is recommended to save manually before exit.
+
+It does not take any parameters.
 
 **Format:**
 ```
 exit
 ```
-
-Warning:\
-The current version of CEGStudyBuddy does not automatically save your course plan.
-Please run the `save` command before you run the exit command to avoid losing your course data.
 
 ---
 
