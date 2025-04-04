@@ -145,21 +145,6 @@ public class Ui {
         return sb.toString().trim();
     }
 
-    public String printWorkloadFor(CourseList courses, int sem, int year) {
-        String output = "These are the courses you will be taking:";
-        int totalWorkLoad = 0;
-        int index = 1;
-        for (Course course : courses.getCourses()) {
-            if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
-                totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString();
-                index++;
-            }
-        }
-        output = output + "\nTotal workload: " + totalWorkLoad;
-        return output;
-    }
-
     public String printWorkloadSummary(String[] period, int[] mcsInEachSemester) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
