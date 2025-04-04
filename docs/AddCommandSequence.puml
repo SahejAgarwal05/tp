@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+":CEGStudyBuddy" -> ":Parser": parseCommand
+activate ":Parser"
+":Parser" -> "c:AddCommand" **
+activate "c:AddCommand"
+"c:AddCommand" --> ":Parser" : c
+deactivate "c:AddCommand"
+":Parser" --> ":CEGStudyBuddy" : c
+deactivate ":Parser"
+
+":CEGStudyBuddy" -> "c:AddCommand" : execute
+activate "c:AddCommand"
+"c:AddCommand" --> ":CEGStudyBuddy" : output
+deactivate "c:AddCommand"
+
+@enduml
