@@ -10,6 +10,6 @@ public class InvalidCommand extends Command {
 
     @Override
     public String execute(CourseList courses, StorageManager storage) {
-        return "Invalid Command"; // move to Ui
+        return "Invalid Command";
     }
 }

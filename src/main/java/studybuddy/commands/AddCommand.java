@@ -15,19 +15,6 @@ public class AddCommand extends Command {
         super(param);
     }
 
-    // 3 methods below move to studybuddy.common.Utils
-    public static boolean isValidMC(int mc) {
-        return mc >= 1 && mc <= 12;
-    }
-
-    public static boolean isValidYear(int year) {
-        return year >= 1 && year <= 4;
-    }
-
-    public static boolean isValidSem(int sem) {
-        return sem >= 1 && sem <= 2;
-    }
-
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         Course newCourse = Parser.parseCourse(param);

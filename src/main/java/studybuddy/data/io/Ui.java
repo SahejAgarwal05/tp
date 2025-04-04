@@ -1,11 +1,173 @@
 package studybuddy.data.io;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.EditCommand;
+import studybuddy.commands.ExitCommand;
+import studybuddy.commands.FindCommand;
+import studybuddy.commands.GradRequirementCommand;
+import studybuddy.commands.HelpCommand;
+import studybuddy.commands.ListCommand;
+import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SwitchPlanCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
+import studybuddy.commands.WorkloadForCommand;
+import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
+
+    public String printFindCourse(ArrayList<Course> courseList, String targetCode) {
+        for (Course course : courseList) {
+            if (course.getCode().equalsIgnoreCase(targetCode)) {
+                return "Course Code: " + course.getCode() + "\n"
+                        + "Course Title: " + course.getTitle() + "\n"
+                        + "Number of MCs: " + course.getMc() + "\n"
+                        + "Year and Sem: Y" + course.getTakeInYear() + "S" + course.getTakeInSem();
+            }
+        }
+
+        return "Course " + targetCode + " not found in your course list.";
+    }
+
+    public String printGradReq(int completedMCs) {
+        StringBuilder sb = new StringBuilder();
+        int remaining = Utils.GRADUATION_MCS - completedMCs;
+
+        sb.append("Current MCs Completed: ").append(completedMCs).append(" MCs\n");
+        sb.append("Graduation Requirement: ").append(Utils.GRADUATION_MCS).append(" MCs\n");
+        sb.append("Remaining MCs: ").append(remaining).append(" MCs\n\n");
+
+        if (remaining > 0) {
+            sb.append("Oh no! You don't meet graduation requirement yet, you need to finish ")
+                    .append(remaining).append(" more units of courses in order to graduate\n");
+            sb.append("Keep on going Champ! You got this!\n");
+            // 👍 Thumbs up made of hashtags
+            sb.append("      ####\n");
+            sb.append("     ######\n");
+            sb.append("     ######\n");
+            sb.append("     ######\n");
+            sb.append("     ######\n");
+            sb.append("     ######\n");
+            sb.append("   ################\n");
+            sb.append("   ################\n");
+            sb.append("   ################\n");
+            sb.append("   ################\n");
+            sb.append("   ################\n");
+            sb.append("   ################\n");
+            sb.append("    ##############\n");
+        } else {
+            sb.append("Congratulations! You have met the graduation requirement!");
+            // Your uploaded graduation ASCII art
+            sb.append("     ##                             \n");
+            sb.append("                           #######                          \n");
+            sb.append("                        #############                       \n");
+            sb.append("                         ###########                        \n");
+            sb.append("                           #######                          \n");
+            sb.append("                           ####### #                        \n");
+            sb.append("                           ######  #                        \n");
+            sb.append("                           ######  #                        \n");
+            sb.append("                           ######  #                        \n");
+            sb.append("                           ######  #                        \n");
+            sb.append("                            ####                             \n");
+            sb.append("                            ####                             \n");
+            sb.append("                            ####                             \n");
+            sb.append("                         ### ##  ###                         \n");
+            sb.append("                       ####  # ######                       \n");
+            sb.append("                      ####### ########                      \n");
+            sb.append("                     ##################                     \n");
+            sb.append("                     ###################                    \n");
+            sb.append("                     ###################                    \n");
+            sb.append("                    ####################                    \n");
+            sb.append("                    ####################                    \n");
+            sb.append("                    #####################                   \n");
+            sb.append("                    #####################                   \n");
+            sb.append("                    #####################                   \n");
+            sb.append("                    #####################                   \n");
+        }
+        return sb.toString();
+    }
+
+    public String printCommandList() {
+        return "List of Commands:" + System.lineSeparator() +
+                AddCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                DeleteCourse.COMMAND_DESCRIPTION + System.lineSeparator() +
+                ListCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                EditCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                FindCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                WorkloadSummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                WorkloadForCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                WorkloadBalanceCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                GradRequirementCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                SavePlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                SwitchPlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                HelpCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                ExitCommand.COMMAND_DESCRIPTION;
+    }
+
+    public String printCourseList(CourseList courses) {
+        StringBuilder sb = new StringBuilder();
+
+        // Loop through all semesters: Y1S1 to Y4S2
+        for (int year = 1; year <= 4; year++) {
+            for (int sem = 1; sem <= 2; sem++) {
+                sb.append("Y").append(year).append("S").append(sem).append(" Courses\n");
+
+                // Filter courses taken in this year/sem
+                ArrayList<Course> filtered = new ArrayList<>();
+                for (Course course : courses.getCourses()) {
+                    if (course.getTakeInYear() == year && course.getTakeInSem() == sem) {
+                        filtered.add(course);
+                    }
+                }
+
+                if (filtered.isEmpty()) {
+                    sb.append("No courses taken!\n\n");
+                } else {
+                    int count = 1;
+                    for (Course course : filtered) {
+                        sb.append(count).append(". ")
+                                .append(course.getCode()).append(" - ").append(course.getTitle())
+                                .append(" (").append(course.getMc()).append(" MCs)").append("\n");
+                        count++;
+                    }
+                    sb.append("\n");
+                }
+            }
+        }
+
+        return sb.toString().trim();
+    }
+
+    public String printWorkloadFor(CourseList courses, int sem, int year) {
+        String output = "These are the courses you will be taking:";
+        int totalWorkLoad = 0;
+        int index = 1;
+        for (Course course : courses.getCourses()) {
+            if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
+                totalWorkLoad += course.getMc();
+                output = output + "\n" + index + "." + course.toString();
+                index++;
+            }
+        }
+        output = output + "\nTotal workload: " + totalWorkLoad;
+        return output;
+    }
+
+    public String printWorkloadSummary(String[] period, int[] mcsInEachSemester) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
+            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
+            sb.append(Utils.checkWorkload(mcsInEachSemester[i], i) + "\n");
+        }
+        return sb.toString();
+    }
 
     /**
      * Reads the input and parses it into a String array.
@@ -13,6 +175,7 @@ public class Ui {
      * @return The String array containing the command and parameters.
      */
     public String[] readInput() {
+        System.out.print("Enter command: ");
         String userInput = scanner.nextLine();
         return userInput.split(" ", 2);
     }
@@ -100,5 +263,52 @@ public class Ui {
      */
     public void displaySuccessfullyDeletedMessage() {
         System.out.println("Plan deleted successfully");
+    }
+
+    public String editSuccessMessage() {
+        return "Course is successfully edited";
+    }
+
+    public String courseNotInPlannerMessage() {
+        return "This course cannot be found inside the planner";
+    }
+
+    public String indexOutOfBoundErrorMessage() {
+        return "Input is not a valid index, pleasae check your input";
+    }
+
+    public String parseIntErrorMessage() {
+        return "Input cannot be converted to an valid number, please check your input";
+    }
+
+    public String missingCodeErrorMessage() {
+        return "Course code is missing, please ensure there is a course code in your input";
+    }
+
+    public void showMissingDefinedListMessage() {
+        System.out.println("The list of defined courses cannot be found");
+    }
+
+    public void showUndefinedCourseMessage() {
+        System.out.println("This course is not defined in the list of defined courses");
+    }
+
+    public String missingInputErrorMessage() {
+        return "Input is incomplete and information is missing, please check your input";
+    }
+
+    /**
+     * Askes for user confirmation for an action. Returns true if user input Y or y
+     * @param confirmationMessgae
+     * @return
+     */
+    public boolean isUserConfirm(String confirmationMessgae) {
+        System.out.println(confirmationMessgae);
+        System.out.print("Please enter a y/Y to confirm: ");
+        String userInput = scanner.nextLine().trim();
+        return userInput.equalsIgnoreCase("y");
+    }
+    public void disaplayCancelMessage() {
+        System.out.println("Cancelled");
     }
 }

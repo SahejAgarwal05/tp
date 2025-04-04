@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Command {
+# String param
+# Ui ui
++ {abstract} execute()
++ isRunning()
+}
+
+AddCommand --|> Command
+EditCommand --|> Command
+FindCommand --|> Command
+Command <|- HelpCommand
+Command <|- ListCommand
+Command <|-- WorkloadBalanceCommand
+Command <|-- WorkloadForCommand
+Command <|-- WorkloadSummaryCommand
+DeleteCourse -|> Command
+ExitCommand -|> Command
+Command <|--- SavePlanCommand
+Command <|--- SwitchPlanCommand
+Command <|--- DeletePlanCommand
+Command <|--- InvalidCommand
+
+@enduml

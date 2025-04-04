@@ -6,9 +6,12 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 
+import studybuddy.data.io.Ui;
+
 public class CourseManager {
     private static final String FILEPATH = "./src/main/java/studybuddy/data/course/Defined_Courses";
     private static final File file = new File(FILEPATH);
+    private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
         String s = "{\"code\": \"CS1010\", \"title\": \"Programming Met\", \"mc\": 4, " +
@@ -72,8 +75,7 @@ public class CourseManager {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Warning: Defined course list is missing.");
-            throw new RuntimeException(e);
+            ui.showMissingDefinedListMessage();
         }
         return false;
     }
@@ -94,10 +96,9 @@ public class CourseManager {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Warning: Defined course list is missing.");
-            throw new RuntimeException(e);
+            ui.showMissingDefinedListMessage();
         }
-        System.out.println("This course is not found in defined course list.");
+        ui.showUndefinedCourseMessage();
         return null;
     }
 }

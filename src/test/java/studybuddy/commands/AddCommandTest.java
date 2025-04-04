@@ -6,9 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
+import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
+    public static final Ui ui = new Ui();
     public static final String TEST_CODE = "CS2103";
     public static final String TEST_TITLE = "Software Engineering";
     public static final String TEST_MC = "4";
@@ -25,11 +27,11 @@ public class AddCommandTest {
 
     public static final String ADD_COURSE_EXPECTED = "Course added: "
             + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
-    public static final String MISSING_INPUT_EXPECTED = "You missed an input.";
-    public static final String INVALID_INPUT_EXPECTED = "You did not enter a valid number.";
+    public static final String MISSING_INPUT_EXPECTED = ui.missingInputErrorMessage();
+    public static final String INVALID_INPUT_EXPECTED = ui.parseIntErrorMessage();
 
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData", courses);
+    private StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {

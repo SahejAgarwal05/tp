@@ -16,12 +16,14 @@ import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
+    private static Ui ui = new Ui();
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
@@ -68,10 +70,13 @@ public class Parser {
         try {
             code = paramParts[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         }
         if (CourseManager.ifDefined(code)) {
-            return CourseManager.getCourse(code);
+            Course course = getDefinedCourse(code, param);
+            if (course != null) {
+                return course;
+            }
         }
 
         try {
@@ -80,16 +85,39 @@ public class Parser {
             takeInYear = Integer.parseInt(paramParts[4]);
             takeInSem = Integer.parseInt(paramParts[5]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException("You missed an input.");
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
-        if (!AddCommand.isValidMC(mc) || !AddCommand.isValidYear(takeInYear) || !AddCommand.isValidSem(takeInSem)) {
-            throw new CEGStudyBuddyException("You did not enter a valid number.");
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
         return new Course(code, title, mc, takeInYear, takeInSem);
+    }
+
+    private static Course getDefinedCourse(String code, String param)
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+        String[] parts = param.split(" ");
+        Integer y = null;
+        Integer s = null;
+
+        for (String part : parts) {
+            if (part.startsWith("y/")) {
+                y = Integer.parseInt(part.substring(2));
+            } else if (part.startsWith("s/")) {
+                s = Integer.parseInt(part.substring(2));
+            }
+        }
+        Course course = CourseManager.getCourse(code);
+        if (y != null && s != null) {
+            assert course != null;
+            course.setTakeInYear(y);
+            course.setTakeInSem(s);
+            return course;
+        }
+        return null;
     }
 
     public static String parseDelete(CourseList courses, String param) {
@@ -129,7 +157,7 @@ public class Parser {
                 title = new StringBuilder(parts[i].substring(2));
                 i += 1;
                 // while i is in bound and parts[i] is not next identifier
-                while (i < parts.length && !EditCommand.hasIdentifier(parts[i])) {
+                while (i < parts.length && !Utils.hasIdentifier(parts[i])) {
                     title.append(" ").append(parts[i]);
                     i += 1;
                 }

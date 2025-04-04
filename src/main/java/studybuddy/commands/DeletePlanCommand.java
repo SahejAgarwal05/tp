@@ -16,7 +16,6 @@ public class DeletePlanCommand extends Command {
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         storage.deletePlanWithSelection();
-        storage.initializePlan();
-        return "Deleted"; // move to Ui
+        return "";
     }
 }
