@@ -20,7 +20,6 @@ public class WorkloadSummaryCommand extends Command {
         String[] period = new String[Utils.NUM_OF_SEMESTERS];
         int year = 1;
         int semester = 1;
-
         while (year <= 4) {
             int sem = ((year - 1) * 2) + semester;
             period[sem - 1] = "Year " + year + " Semester " + semester++;

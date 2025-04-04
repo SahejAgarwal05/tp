@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import studybuddy.CEGStudyBuddy;
+import studybuddy.data.course.Course;
 import studybuddy.data.storage.StorageManager;
 import studybuddy.data.course.CourseList;
 import java.io.ByteArrayOutputStream;
@@ -30,20 +31,38 @@ public class SavePlanCommandTest {
         for (File file : dir.listFiles()) {
             file.delete();
         }
-        CEGStudyBuddy.courses = new CourseList("MyPlan");
+
     }
 
     @Test
     public void testSavePlanCommandPrintsSuccess() throws Exception {
         Command command = new SavePlanCommand();
+        CEGStudyBuddy.courses = new CourseList("MyPlan");
         String output = command.execute(CEGStudyBuddy.courses, storage);
         assertTrue(output.contains("Plan saved successfully"));
         File file = new File(TEST_DIR + "MyPlan.bin");
         assertTrue(file.exists());
     }
 
+    @Test
+    public void testSavePlanCommandWithCourses() throws Exception {
+        Command command = new SavePlanCommand();
+        CEGStudyBuddy.courses = new CourseList("MyPlan2");
+        CEGStudyBuddy.courses.addCourse(new Course("CS2113", "Software Engineering", 4,2,2));
+        CEGStudyBuddy.courses.addCourse(new Course("EE2026", "Digital Design", 4,2,1));
+        String output = command.execute(CEGStudyBuddy.courses, storage);
+        assertTrue(output.contains("Plan saved successfully"));
+        File file = new File(TEST_DIR + "MyPlan2.bin");
+        assertTrue(file.exists());
+    }
+
     @AfterEach
     public void tearDown() {
         System.setOut(originalOut);
+        File dir = new File(TEST_DIR);
+        for (File file : dir.listFiles()) {
+            file.delete();
+        }
+        dir.delete();
     }
 }
