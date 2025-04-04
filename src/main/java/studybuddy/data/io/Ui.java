@@ -18,7 +18,6 @@ import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
-import studybuddy.data.course.CourseList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
@@ -109,64 +108,6 @@ public class Ui {
                 SwitchPlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 HelpCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ExitCommand.COMMAND_DESCRIPTION;
-    }
-
-    public String printCourseList(CourseList courses) {
-        StringBuilder sb = new StringBuilder();
-
-        // Loop through all semesters: Y1S1 to Y4S2
-        for (int year = 1; year <= 4; year++) {
-            for (int sem = 1; sem <= 2; sem++) {
-                sb.append("Y").append(year).append("S").append(sem).append(" Courses\n");
-
-                // Filter courses taken in this year/sem
-                ArrayList<Course> filtered = new ArrayList<>();
-                for (Course course : courses.getCourses()) {
-                    if (course.getTakeInYear() == year && course.getTakeInSem() == sem) {
-                        filtered.add(course);
-                    }
-                }
-
-                if (filtered.isEmpty()) {
-                    sb.append("No courses taken!\n\n");
-                } else {
-                    int count = 1;
-                    for (Course course : filtered) {
-                        sb.append(count).append(". ")
-                                .append(course.getCode()).append(" - ").append(course.getTitle())
-                                .append(" (").append(course.getMc()).append(" MCs)").append("\n");
-                        count++;
-                    }
-                    sb.append("\n");
-                }
-            }
-        }
-
-        return sb.toString().trim();
-    }
-
-    public String printWorkloadFor(CourseList courses, int sem, int year) {
-        String output = "These are the courses you will be taking:";
-        int totalWorkLoad = 0;
-        int index = 1;
-        for (Course course : courses.getCourses()) {
-            if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
-                totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString();
-                index++;
-            }
-        }
-        output = output + "\nTotal workload: " + totalWorkLoad;
-        return output;
-    }
-
-    public String printWorkloadSummary(String[] period, int[] mcsInEachSemester) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
-            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
-            sb.append(Utils.checkWorkload(mcsInEachSemester[i], i) + "\n");
-        }
-        return sb.toString();
     }
 
     /**
@@ -295,5 +236,20 @@ public class Ui {
 
     public String missingInputErrorMessage() {
         return "Input is incomplete and information is missing, please check your input";
+    }
+
+    /**
+     * Askes for user confirmation for an action. Returns true if user input Y or y
+     * @param confirmationMessgae
+     * @return
+     */
+    public boolean isUserConfirm(String confirmationMessgae) {
+        System.out.println(confirmationMessgae);
+        System.out.print("Please enter a y/Y to confirm: ");
+        String userInput = scanner.nextLine().trim();
+        return userInput.equalsIgnoreCase("y");
+    }
+    public void disaplayCancelMessage() {
+        System.out.println("Cancelled");
     }
 }
