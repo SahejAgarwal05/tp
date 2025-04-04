@@ -22,6 +22,14 @@ import studybuddy.data.course.Course;
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
+    public String showCourseReplacedMessage(String oldCode, String newCode) {
+        return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    }
+
+    public String showCourseNotFoundInReplaceMessage(String code) {
+        return "Could not find a course with the code \"" + code + "\" in your plan.";
+    }
+
     public String printFindCourse(ArrayList<Course> courseList, String targetCode) {
         for (Course course : courseList) {
             if (course.getCode().equalsIgnoreCase(targetCode)) {
@@ -123,8 +131,36 @@ public class Ui {
 
     // Displays the welcome logo and greeting
     public void showWelcome() {
-        System.out.println("Welcome to CEGStudyBuddy!");
+        String banner =
+                """             
+                        __________  ___________ ________
+                        \\_   ___ \\\\_   _____//  _____/
+                        /    \\  \\/ |    __)_/   \\  ___
+                        \\     \\____|        \\    \\_\\  \\
+                         \\______  /_______  /\\______  /
+                                \\/        \\/        \\/
+                
+                          ________________________ ___________ _____.___. 
+                         /   _____/\\__    ___/    |   \\______ \\\\__  |   | 
+                         \\_____  \\   |    |  |    |   /|    |  \\/   |   | 
+                         /        \\  |    |  |    |  / |    `   \\____   | 
+                        /_______  /  |____|  |______/ /_______  / ______| 
+                                \\/                            \\/\\/        
+                
+                        __________ ____ ___________  ________ _____.___.  
+                        \\______   \\    |   \\______ \\ \\______ \\\\__  |   |  
+                         |    |  _/    |   /|    |  \\ |    |  \\/   |   |  
+                         |    |   \\    |  / |    `   \\|    `   \\____   |  
+                         |______  /______/ /_______  /_______  / ______|  
+                                \\/                 \\/        \\/\\/        
+                
+                                      Welcome to CEGStudyBuddy!
+                            Type 'help' to see a list of available commands.
+                """;
+
+        System.out.println(banner);
     }
+
 
     // Prints help hint
     public void showHelpHint() {
@@ -263,3 +299,8 @@ public class Ui {
         System.out.println("Successfully renamed");
     }
 }
+
+
+
+
+

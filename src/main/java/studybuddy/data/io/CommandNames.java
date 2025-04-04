@@ -16,4 +16,6 @@ public class CommandNames {
     public static final String GRADREQ = "gradreq";
     public static final String DELETE_PLAN = "delete_plan";
     public static final String RENAME_PLAN = "rename_plan";
+    public static final String REPLACE = "replace";
+    public static final String UNDO = "undo";
 }
