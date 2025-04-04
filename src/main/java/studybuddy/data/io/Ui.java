@@ -22,6 +22,14 @@ import studybuddy.data.course.Course;
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
+    public String courseNotFoundToReplaceMessage(String oldCode) {
+        return "Could not find a course with the code \"" + oldCode + "\" in your plan.";
+    }
+
+    public String successfullyReplacedCourseMessage(String oldCode, String newCode) {
+        return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    }
+
     public String printFindCourse(ArrayList<Course> courseList, String targetCode) {
         for (Course course : courseList) {
             if (course.getCode().equalsIgnoreCase(targetCode)) {
@@ -253,3 +261,8 @@ public class Ui {
         System.out.println("Cancelled");
     }
 }
+
+
+
+
+

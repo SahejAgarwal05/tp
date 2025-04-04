@@ -1,21 +1,6 @@
 package studybuddy.data.io;
 
-import studybuddy.commands.AddCommand;
-import studybuddy.commands.Command;
-import studybuddy.commands.DeleteCourse;
-import studybuddy.commands.DeletePlanCommand;
-import studybuddy.commands.EditCommand;
-import studybuddy.commands.ExitCommand;
-import studybuddy.commands.FindCommand;
-import studybuddy.commands.GradRequirementCommand;
-import studybuddy.commands.HelpCommand;
-import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.ListCommand;
-import studybuddy.commands.SavePlanCommand;
-import studybuddy.commands.SwitchPlanCommand;
-import studybuddy.commands.WorkloadBalanceCommand;
-import studybuddy.commands.WorkloadForCommand;
-import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.*;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -49,12 +34,32 @@ public class Parser {
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
-            default -> c = new InvalidCommand();
+            case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
+
+                default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
             throw new CEGStudyBuddyException(e.getMessage());
         }
         return c;
+    }
+
+    public static String[] parseReplace(String param) throws CEGStudyBuddyException {
+        if (!param.toLowerCase().startsWith("c/")) {
+            throw new CEGStudyBuddyException("Invalid replace format! Use: replace c/OLD_CODE NEW_CODE");
+        }
+
+        String[] parts = param.trim().split("c/", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new CEGStudyBuddyException("Please provide both old and new course codes.");
+        }
+
+        String[] codes = parts[1].trim().split(" ");
+        if (codes.length != 2) {
+            throw new CEGStudyBuddyException("Please provide exactly two course codes: OLD_CODE NEW_CODE");
+        }
+
+        return new String[]{codes[0].trim().toUpperCase(), codes[1].trim().toUpperCase()};
     }
 
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
