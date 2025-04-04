@@ -161,25 +161,6 @@ public class Parser {
         return null;
     }
 
-    public static String parseDelete(CourseList courses, String param) {
-        // Example input: c/CS2040
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2) {
-            return "Invalid format! Please use: delete c/CODE";
-        }
-        String code = parts[1].trim().toUpperCase();
-
-        boolean deleted = courses.getCourses().removeIf(course ->
-                course.getCode().equalsIgnoreCase(code)
-        );
-
-        if (deleted) {
-            return "Course with code " + code + " has been deleted.";
-        } else {
-            return "Course with code " + code + " not found.";
-        }
-    }
-
     public static String[] parseEdit(String param) throws ArrayIndexOutOfBoundsException, NumberFormatException {
         assert (!param.isEmpty());
 
