@@ -35,6 +35,8 @@ public class Parser {
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
             case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
+            case CommandNames.UNDO -> c = new UndoCommand();
+
 
                 default -> c = new InvalidCommand();
             }
@@ -42,6 +44,24 @@ public class Parser {
             throw new CEGStudyBuddyException(e.getMessage());
         }
         return c;
+    }
+
+    public static Course parseDeleteReturnCourse(CourseList courses, String param) throws CEGStudyBuddyException {
+        String[] parts = param.trim().split("c/", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new CEGStudyBuddyException("Invalid format! Please use: delete c/CODE");
+        }
+
+        String code = parts[1].trim().toUpperCase();
+
+        for (Course course : courses.getCourses()) {
+            if (course.getCode().equalsIgnoreCase(code)) {
+                courses.getCourses().remove(course);
+                return course; // Return the deleted course for undo
+            }
+        }
+
+        throw new CEGStudyBuddyException("Course with code " + code + " not found.");
     }
 
     public static String[] parseReplace(String param) throws CEGStudyBuddyException {
