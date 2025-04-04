@@ -45,21 +45,20 @@ public class Parser {
     }
 
     public static String[] parseReplace(String param) throws CEGStudyBuddyException {
-        if (!param.toLowerCase().startsWith("c/")) {
-            throw new CEGStudyBuddyException("Invalid replace format! Use: replace c/OLD_CODE NEW_CODE");
+        String[] tokens = param.trim().split("\\s+");
+
+        if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
+            throw new CEGStudyBuddyException("Please provide exactly two course codes: OLD_CODE NEW_CODE. Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new CEGStudyBuddyException("Please provide both old and new course codes.");
+        String oldCode = tokens[0].substring(2).toUpperCase();
+        String newCode = tokens[1].substring(2).toUpperCase();
+
+        if (oldCode.isEmpty() || newCode.isEmpty()) {
+            throw new CEGStudyBuddyException("Course codes cannot be empty. Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        String[] codes = parts[1].trim().split(" ");
-        if (codes.length != 2) {
-            throw new CEGStudyBuddyException("Please provide exactly two course codes: OLD_CODE NEW_CODE");
-        }
-
-        return new String[]{codes[0].trim().toUpperCase(), codes[1].trim().toUpperCase()};
+        return new String[]{oldCode, newCode};
     }
 
     public static Course parseCourse(String param) throws CEGStudyBuddyException {

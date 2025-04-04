@@ -1,13 +1,13 @@
 package studybuddy.commands;
 
+import studybuddy.CEGStudyBuddy;
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
-
-import java.util.ArrayList;
 
 /**
  * The ReplaceCommand class replaces an existing course in the planner with a new one.
@@ -17,73 +17,71 @@ import java.util.ArrayList;
 
 public class ReplaceCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
-            replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
-                Replaces a course in your plan with a new course.""";
+        replace c/OLD_CODE NEW_CODE mc/MODULAR_CREDITS y/YEAR s/SEMESTER t/TITLE
+            Replaces an existing course with a new one, preserving year/sem/mc."""; // help reference
 
-    private final Ui ui = new Ui();
+    private final Ui ui = new Ui(); // UI for output messages
 
     public ReplaceCommand(String param) {
         super(param);
     }
 
     @Override
-    public String execute(CourseList courses, StorageManager storage) {
-        // Step 1: Check if the course list is empty
-        if (courses == null || courses.isEmpty()) {
-            return "No courses available to replace. Your plan is currently empty.";
+    public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
+        // Step 1: Parse old and new codes using Parser utility
+        String[] codes = Parser.parseReplace(param);
+        String oldCode = codes[0];
+        String newCode = codes[1];
+
+        // Step 2: Extract title, mc, y, s from param using split logic
+        String[] paramParts = param.split("t/|mc/|y/|s/");
+        if (paramParts.length < 4) {
+            throw new CEGStudyBuddyException("Missing required fields! Please use format: "
+                    + "replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Step 2: Try splitting the param string into old code and new course info
-        String[] parts = param.split(" ", 3); // replace c/OLD_CODE c/NEW_CODE ...
-
-        if (parts.length < 3) {
-            return "Invalid format. Please use:\n"
-                    + "replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER";
-        }
-
-        // Step 3: Extract course codes
-        String oldCode = "";
-        String newCode = "";
+        // Extract values and sanitize
+        String title = paramParts[1].trim();
+        int mc;
+        int year;
+        int sem;
 
         try {
-            oldCode = parts[0].substring(2).trim(); // remove "c/"
-            newCode = parts[1].substring(2).trim(); // remove "c/"
+            mc = Integer.parseInt(paramParts[2].trim());
+            year = Integer.parseInt(paramParts[3].trim());
+            sem = Integer.parseInt(paramParts[4].trim());
         } catch (Exception e) {
-            return "Please provide exactly two course codes: c/OLD_CODE c/NEW_CODE";
+            throw new CEGStudyBuddyException("Invalid input format! Make sure mc/y/s are numbers. Please use format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Step 4: Extract new course details and build course
-        Course newCourse;
-        try {
-            newCourse = Parser.parseCourse("c/" + newCode + " " + parts[2]);
-        } catch (CEGStudyBuddyException e) {
-            return "Missing or invalid input while adding new course details.\n"
-                    + "Ensure correct format: t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER";
-        } catch (Exception e) {
-            return "An unexpected error occurred while parsing the new course.";
+        // Validate extracted values
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(year) || !Utils.isValidSem(sem)) {
+            throw new CEGStudyBuddyException("Invalid MC/Year/Semester values! Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Step 5: Search and remove old course
-        ArrayList<Course> courseList = courses.getCourses();
+        // Step 3: Search for old course and remove
         boolean found = false;
-
-        for (int i = 0; i < courseList.size(); i++) {
-            Course c = courseList.get(i);
-            if (c.getCode().equalsIgnoreCase(oldCode)) {
-                courseList.remove(i);
+        for (int i = 0; i < courses.getCourses().size(); i++) {
+            Course course = courses.getCourses().get(i);
+            if (course.getCode().equalsIgnoreCase(oldCode)) {
+                courses.getCourses().remove(i);
                 found = true;
                 break;
             }
         }
 
         if (!found) {
-            return ui.courseNotFoundToReplaceMessage(oldCode);
+            return ui.showCourseNotFoundInReplaceMessage(oldCode);
         }
 
-        courses.add(newCourse);
-        return ui.successfullyReplacedCourseMessage(oldCode, newCode);
+        // Step 4: Create and add the new course
+        Course newCourse = new Course(newCode, title, mc, year, sem);
+        courses.addCourse(newCourse);
 
+        // Step 5: Return success message
+        return ui.showCourseReplacedMessage(oldCode, newCode);
     }
 }
+
 
 

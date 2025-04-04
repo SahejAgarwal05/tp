@@ -22,12 +22,12 @@ import studybuddy.data.course.Course;
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String courseNotFoundToReplaceMessage(String oldCode) {
-        return "Could not find a course with the code \"" + oldCode + "\" in your plan.";
+    public String showCourseReplacedMessage(String oldCode, String newCode) {
+        return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
     }
 
-    public String successfullyReplacedCourseMessage(String oldCode, String newCode) {
-        return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    public String showCourseNotFoundInReplaceMessage(String code) {
+        return "Could not find a course with the code \"" + code + "\" in your plan.";
     }
 
     public String printFindCourse(ArrayList<Course> courseList, String targetCode) {
