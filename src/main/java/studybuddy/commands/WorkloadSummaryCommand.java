@@ -35,7 +35,11 @@ public class WorkloadSummaryCommand extends Command {
             int sem = ((year - 1) * 2) + semester;
             mcsInEachSemester[sem - 1] += course.getMc();
         }
-
-        return ui.printWorkloadSummary(period, mcsInEachSemester);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
+            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
+            sb.append(Utils.checkWorkload(mcsInEachSemester[i], i) + "\n");
+        }
+        return sb.toString();
     }
 }
