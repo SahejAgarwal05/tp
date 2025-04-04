@@ -25,21 +25,22 @@ public class UndoManager {
         Action lastAction = actionHistory.pop();
 
         switch (lastAction.getType()) {
-            case ADD:
-                courses.deleteCourseByCode(lastAction.getCourse().getCode());
-                return "Undo: Added course \"" + lastAction.getCourse().getCode() + "\" has been removed.";
-            case DELETE:
-                courses.addCourse(lastAction.getCourse());
-                return "Undo: Deleted course \"" + lastAction.getCourse().getCode() + "\" has been restored.";
-            case REPLACE:
-                // Remove the new one and re-add the old one
-                courses.deleteCourseByCode(lastAction.getNewCourse().getCode());
-                courses.addCourse(lastAction.getCourse());
-                return "Undo: Module changes for \"" + lastAction.getCourse().getCode() + "\" have been reverted.";
-            default:
-                return "Nothing to undo.";
+        case ADD:
+            courses.deleteCourseByCode(lastAction.getCourse().getCode());
+            return "Undo: Added course \"" + lastAction.getCourse().getCode() + "\" has been removed.";
+        case DELETE:
+            courses.addCourse(lastAction.getCourse());
+            return "Undo: Deleted course \"" + lastAction.getCourse().getCode() + "\" has been restored.";
+        case REPLACE:
+            courses.deleteCourseByCode(lastAction.getNewCourse().getCode());
+            courses.addCourse(lastAction.getCourse());
+            return "Undo: Module changes for \"" + lastAction.getCourse().getCode() + "\" have been reverted.";
+        default:
+            return "Nothing to undo.";
         }
+
     }
+
 
     private enum ActionType {
         ADD, DELETE, REPLACE

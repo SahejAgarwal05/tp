@@ -1,6 +1,23 @@
 package studybuddy.data.io;
 
-import studybuddy.commands.*;
+import studybuddy.commands.AddCommand;
+import studybuddy.commands.Command;
+import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.DeletePlanCommand;
+import studybuddy.commands.EditCommand;
+import studybuddy.commands.ExitCommand;
+import studybuddy.commands.HelpCommand;
+import studybuddy.commands.ListCommand;
+import studybuddy.commands.FindCommand;
+import studybuddy.commands.GradRequirementCommand;
+import studybuddy.commands.InvalidCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
+import studybuddy.commands.WorkloadForCommand;
+import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SwitchPlanCommand;
+import studybuddy.commands.ReplaceCommand;
+import studybuddy.commands.UndoCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -68,14 +85,14 @@ public class Parser {
         String[] tokens = param.trim().split("\\s+");
 
         if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
-            throw new CEGStudyBuddyException("Please provide exactly two course codes: OLD_CODE NEW_CODE. Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
         String oldCode = tokens[0].substring(2).toUpperCase();
         String newCode = tokens[1].substring(2).toUpperCase();
 
         if (oldCode.isEmpty() || newCode.isEmpty()) {
-            throw new CEGStudyBuddyException("Course codes cannot be empty. Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("Course codes cannot be empty.");
         }
 
         return new String[]{oldCode, newCode};

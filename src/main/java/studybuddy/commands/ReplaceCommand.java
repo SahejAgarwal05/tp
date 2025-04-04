@@ -45,11 +45,11 @@ public class ReplaceCommand extends Command {
             year = Integer.parseInt(paramParts[3].trim());
             sem = Integer.parseInt(paramParts[4].trim());
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Invalid input format! Make sure mc/y/s are numbers. Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SE");
+            throw new CEGStudyBuddyException("Invalid input format! Make sure mc/y/s are numbers.");
         }
 
         if (!Utils.isValidMC(mc) || !Utils.isValidYear(year) || !Utils.isValidSem(sem)) {
-            throw new CEGStudyBuddyException("Invalid MC/Year/Semester values! Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SE");
+            throw new CEGStudyBuddyException("Invalid MC/Year/Semester values!");
         }
 
         Course oldCourse = null;
