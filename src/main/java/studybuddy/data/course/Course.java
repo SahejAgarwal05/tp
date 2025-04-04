@@ -15,7 +15,6 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected boolean isCleared;
 
     /**
      * Constructor for v1.0
@@ -34,7 +33,6 @@ public class Course implements Serializable {
 
         this.offerInSem1 = true;
         this.offerInSem2 = true;
-        this.isCleared = false;
     }
 
     public String getCode() {
@@ -65,16 +63,8 @@ public class Course implements Serializable {
         return takeInYear;
     }
 
-    public boolean isCleared() {
-        return isCleared;
-    }
-
     public void setTakeInSem(int takeInSem) {
         this.takeInSem = takeInSem;
-    }
-
-    public void setCleared(boolean cleared) {
-        isCleared = cleared;
     }
 
     public void setCode(String code) {
