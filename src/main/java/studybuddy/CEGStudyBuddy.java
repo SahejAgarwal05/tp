@@ -1,5 +1,7 @@
 package studybuddy;
 
+import java.util.Scanner;
+
 import studybuddy.data.course.CourseList;
 import studybuddy.commands.Command;
 import studybuddy.data.io.Parser;
@@ -10,16 +12,19 @@ import studybuddy.data.storage.StorageManager;
 public class CEGStudyBuddy {
     public static CourseList courses;
     private static boolean isRunning = true;
-    private static final Ui ui = new Ui();
+    private static final Scanner scanner = new Scanner(System.in);
     private static final StorageManager storage = new StorageManager("./PlanData");
 
     public static void main(String[] args) {
+        Ui ui = new Ui(scanner);
         ui.showWelcome();
         storage.initializePlan();
+        ui.showEnterCommand();
 
-        while (isRunning) {
+        while (isRunning && scanner.hasNextLine()) {
             String[] userInput = ui.readInput();
-            String fullCommand = String.join(" ", userInput).trim(); // full input line
+            // full input line
+            String fullCommand = String.join(" ", userInput).trim();
 
             // Skip logging if it's the summary command
             boolean isSummary = fullCommand.toLowerCase().startsWith("summary");
@@ -34,6 +39,9 @@ public class CEGStudyBuddy {
                 }
 
                 isRunning = c.isRunning();
+                if (isRunning) {
+                    ui.showEnterCommand();
+                }
             } catch (Exception e) {
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
@@ -41,5 +49,6 @@ public class CEGStudyBuddy {
                 ui.showMessage(e.getMessage());
             }
         }
+        scanner.close();
     }
 }

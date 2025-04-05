@@ -20,7 +20,15 @@ import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 
 public class Ui {
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public Ui(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public String showCourseReplacedMessage(String oldCode, String newCode) {
         return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
@@ -119,12 +127,11 @@ public class Ui {
     }
 
     /**
-     * Reads the input and parses it into a String array.
+     * Reads the input and parses it into a String array. Make sure there is a next line before calling.
      *
      * @return The String array containing the command and parameters.
      */
     public String[] readInput() {
-        System.out.print("Enter command: ");
         String userInput = scanner.nextLine().trim();
         return userInput.split(" ", 2);
     }
@@ -175,6 +182,9 @@ public class Ui {
     // Displays error message with prefix
     public void showError(String error) {
         System.out.println(error);
+    }
+    public void showEnterCommand() {
+        System.out.print("Enter command: ");
     }
 
     public void showSaveMessage(String message) {
