@@ -15,7 +15,7 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected final String PLACEHOLDER = "To be confirmed";
+    protected String PLACEHOLDER = "To be confirmed";
 
     /**
      * Constructor for v1.0
