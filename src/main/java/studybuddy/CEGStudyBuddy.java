@@ -42,10 +42,3 @@ public class CEGStudyBuddy {
         }
     }
 }
-
-
-
-
-
-
-
