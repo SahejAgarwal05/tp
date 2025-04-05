@@ -289,6 +289,10 @@ public class Ui {
         System.out.println("The list of defined courses cannot be found");
     }
 
+    public String missingDefinedListMessage() {
+        return "The list of defined courses cannot be found";
+    }
+
     public void showUndefinedCourseMessage() {
         System.out.println("This course is not defined in the list of defined courses");
     }
