@@ -1,24 +1,23 @@
 package studybuddy.commands;
 
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
-
-import java.util.ArrayList;
+import studybuddy.data.course.UndoManager;
 
 /**
  * The ReplaceCommand class replaces an existing course in the planner with a new one.
  * Usage: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
  * Example: replace c/CS2040 c/CS2100 t/Computer Organization mc/4 y/2 s/1
  */
-
 public class ReplaceCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
-            replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
-                Replaces a course in your plan with a new course.""";
+        replace c/OLD_CODE NEW_CODE mc/MODULAR_CREDITS y/YEAR s/SEMESTER t/TITLE
+            Replaces an existing course with a new one, preserving year/sem/mc.""";
 
     private final Ui ui = new Ui();
 
@@ -27,63 +26,59 @@ public class ReplaceCommand extends Command {
     }
 
     @Override
-    public String execute(CourseList courses, StorageManager storage) {
-        // Step 1: Check if the course list is empty
-        if (courses == null || courses.isEmpty()) {
-            return "No courses available to replace. Your plan is currently empty.";
+    public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
+        String[] codes = Parser.parseReplace(param);
+        String oldCode = codes[0];
+        String newCode = codes[1];
+
+        String[] paramParts = param.split("t/|mc/|y/|s/");
+        if (paramParts.length < 4) {
+            throw new CEGStudyBuddyException("Missing required fields! Please use format: "
+                    + "replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Step 2: Try splitting the param string into old code and new course info
-        String[] parts = param.split(" ", 3); // replace c/OLD_CODE c/NEW_CODE ...
-
-        if (parts.length < 3) {
-            return "Invalid format. Please use:\n"
-                    + "replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER";
-        }
-
-        // Step 3: Extract course codes
-        String oldCode = "";
-        String newCode = "";
-
+        String title = paramParts[1].trim();
+        int mc;
+        int year;
+        int sem;
         try {
-            oldCode = parts[0].substring(2).trim(); // remove "c/"
-            newCode = parts[1].substring(2).trim(); // remove "c/"
+            mc = Integer.parseInt(paramParts[2].trim());
+            year = Integer.parseInt(paramParts[3].trim());
+            sem = Integer.parseInt(paramParts[4].trim());
         } catch (Exception e) {
-            return "Please provide exactly two course codes: c/OLD_CODE c/NEW_CODE";
+            throw new CEGStudyBuddyException("Invalid input format! Make sure mc/y/s are numbers.");
         }
 
-        // Step 4: Extract new course details and build course
-        Course newCourse;
-        try {
-            newCourse = Parser.parseCourse("c/" + newCode + " " + parts[2]);
-        } catch (CEGStudyBuddyException e) {
-            return "Missing or invalid input while adding new course details.\n"
-                    + "Ensure correct format: t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER";
-        } catch (Exception e) {
-            return "An unexpected error occurred while parsing the new course.";
+        if (!Utils.isValidMC(mc)) {
+            throw new CEGStudyBuddyException("Invalid MC value!");
+        }
+        if (!Utils.isValidYear(year)) {
+            throw new CEGStudyBuddyException("Invalid Year value!");
+        }
+        if (!Utils.isValidSem(sem)) {
+            throw new CEGStudyBuddyException("Invalid Semester value!");
         }
 
-        // Step 5: Search and remove old course
-        ArrayList<Course> courseList = courses.getCourses();
-        boolean found = false;
-
-        for (int i = 0; i < courseList.size(); i++) {
-            Course c = courseList.get(i);
-            if (c.getCode().equalsIgnoreCase(oldCode)) {
-                courseList.remove(i);
-                found = true;
+        Course oldCourse = null;
+        for (Course course : courses.getCourses()) {
+            if (course.getCode().equalsIgnoreCase(oldCode)) {
+                oldCourse = course;
                 break;
             }
         }
 
-        if (!found) {
-            return ui.courseNotFoundToReplaceMessage(oldCode);
+        if (oldCourse == null) {
+            return ui.showCourseNotFoundInReplaceMessage(oldCode);
         }
 
-        courses.add(newCourse);
-        return ui.successfullyReplacedCourseMessage(oldCode, newCode);
+        courses.deleteCourseByCode(oldCode);
 
+        Course newCourse = new Course(newCode, title, mc, year, sem);
+        courses.addCourse(newCourse);
+
+        UndoManager.recordReplace(oldCourse, newCourse);
+
+        return ui.showCourseReplacedMessage(oldCode, newCode);
     }
 }
-
 
