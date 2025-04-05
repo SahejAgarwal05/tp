@@ -43,10 +43,3 @@ public class CEGStudyBuddy {
         }
     }
 }
-
-
-
-
-
-
-

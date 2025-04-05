@@ -55,7 +55,7 @@ public class Ui {
             sb.append("Oh no! You don't meet graduation requirement yet, you need to finish ")
                     .append(remaining).append(" more units of courses in order to graduate\n");
             sb.append("Keep on going Champ! You got this!\n");
-            // 👍 Thumbs up made of hashtags
+            // Thumbs up made of hashtags
             sb.append("      ####\n");
             sb.append("     ######\n");
             sb.append("     ######\n");
@@ -264,6 +264,10 @@ public class Ui {
 
     public void showMissingDefinedListMessage() {
         System.out.println("The list of defined courses cannot be found");
+    }
+
+    public String missingDefinedListMessage() {
+        return "The list of defined courses cannot be found";
     }
 
     public void showUndefinedCourseMessage() {

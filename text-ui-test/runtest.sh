@@ -4,7 +4,7 @@
 cd "${0%/*}"
 
 cd ..
-./gradlew clean shadowJar
+./gradlew clean dukeJar
 
 cd text-ui-test
 
