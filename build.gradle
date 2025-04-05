@@ -33,6 +33,14 @@ application {
     mainClass.set("studybuddy.CEGStudyBuddy")
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'seedu.duke.Duke'
+        )
+    }
+}
+
 shadowJar {
     archiveBaseName.set("CEGStudyBuddy")
     archiveClassifier.set("")
