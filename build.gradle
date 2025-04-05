@@ -30,7 +30,7 @@ test {
 }
 
 application {
-    mainClass.set("studybuddy.CEGStudyBuddy")
+    mainClass.set("seedu.duke.Duke")
 }
 
 jar {
