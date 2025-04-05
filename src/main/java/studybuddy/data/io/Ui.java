@@ -126,6 +126,20 @@ public class Ui {
                 ExitCommand.COMMAND_DESCRIPTION;
     }
 
+    // Below is to fix infinite loops over control+Z input
+    public String robustNextLine() {
+        if (!scanner.hasNextLine()) {
+            System.out.println("Input stream is closed. CEGStudyBuddy has to exit, sorry!");
+            System.exit(0);
+        }
+        String str = scanner.nextLine();
+        if (str == null) {
+            System.out.println("Null input is detected. CEGStudyBuddy has to exit, sorry!");
+            System.exit(0);
+        }
+        return str.trim();
+    }
+
     /**
      * Reads the input and parses it into a String array. Make sure there is a next line before calling.
      *
@@ -193,7 +207,7 @@ public class Ui {
 
     public String newPlanInput() {
         System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
-        return scanner.nextLine().trim();
+        return robustNextLine();
     }
 
     /**
@@ -221,7 +235,7 @@ public class Ui {
             System.out.println((i + 1) + ". " + plans[i]);
         }
         System.out.print("Please enter a plan number between 1 and " + plans.length + " or 0 to create a new plan: ");
-        return scanner.nextLine().trim();
+        return robustNextLine();
     }
 
     public void planSuccessfullyLoadedMessage() {
@@ -242,7 +256,7 @@ public class Ui {
             System.out.println((i + 1) + ". " + plans[i]);
         }
         System.out.print("Please enter a plan number between 1 and " + plans.length + " : ");
-        return scanner.nextLine().trim();
+        return robustNextLine();
     }
 
     /**

@@ -13,10 +13,10 @@ public class CEGStudyBuddy {
     public static CourseList courses;
     private static boolean isRunning = true;
     private static final Scanner scanner = new Scanner(System.in);
-    private static final StorageManager storage = new StorageManager("./PlanData");
+    private static final StorageManager storage = new StorageManager("./PlanData", scanner);
+    private static final Ui ui = new Ui(scanner);
 
     public static void main(String[] args) {
-        Ui ui = new Ui(scanner);
         ui.showWelcome();
         storage.initializePlan();
         ui.showEnterCommand();
