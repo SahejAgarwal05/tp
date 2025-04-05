@@ -42,19 +42,19 @@ public class Parser {
             switch (command) {
             case CommandNames.ADD:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters! Format: add c/CODE t/TITLE mc/MC y/YEAR s/SEM");
+                    throw new CEGStudyBuddyException("Missing parameters!");
                 }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters! Format: edit c/CODE [t/TITLE] [mc/MC] [y/YEAR] [s/SEM]");
+                    throw new CEGStudyBuddyException("Missing parameters!");
                 }
                 return new EditCommand(inputParts[1]);
 
             case CommandNames.REPLACE:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters! Format: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MC y/YEAR s/SEM");
+                    throw new CEGStudyBuddyException("Missing parameters!");
                 }
                 return new ReplaceCommand(inputParts[1]);
 
