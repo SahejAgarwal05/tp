@@ -35,32 +35,76 @@ public class Parser {
      * @throws IndexOutOfBoundsException If parameters are not included (inputParts.len() = 1).
      */
     public static Command parseCommand(String[] inputParts) throws CEGStudyBuddyException {
-        Command c;
         try {
-            switch (inputParts[0]) {
-            case CommandNames.ADD -> c = new AddCommand(inputParts[1]);
-            case CommandNames.EDIT -> c = new EditCommand(inputParts[1]);
-            case CommandNames.LIST -> c = new ListCommand();
-            case CommandNames.FIND -> c = new FindCommand(inputParts[1]);
-            case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
-            case CommandNames.GRADREQ -> c = new GradRequirementCommand();
-            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand();
-            case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
-            case CommandNames.SAVE -> c = new SavePlanCommand();
-            case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
-            case CommandNames.HELP -> c = new HelpCommand();
-            case CommandNames.EXIT -> c = new ExitCommand();
-            case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
-            case CommandNames.RENAME_PLAN -> c = new RenamePlanCommand();
-            case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
-            case CommandNames.UNDO -> c = new UndoCommand();
-            default -> c = new InvalidCommand();
+            //Logic to solve Exception message for command inputs without space and with space (no information)
+            String command = inputParts[0].toLowerCase();
+            switch (command) {
+            case CommandNames.ADD:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: add c/CODE t/TITLE mc/MC y/YEAR s/SEM");
+                return new AddCommand(inputParts[1]);
+
+            case CommandNames.EDIT:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: edit c/CODE [t/TITLE] [mc/MC] [y/YEAR] [s/SEM]");
+                return new EditCommand(inputParts[1]);
+
+            case CommandNames.REPLACE:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MC y/YEAR s/SEM");
+                return new ReplaceCommand(inputParts[1]);
+
+            case CommandNames.DELETE:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
+                return new DeleteCourse(inputParts[1]);
+
+            case CommandNames.FIND:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
+                return new FindCommand(inputParts[1]);
+
+            case CommandNames.WORKLOAD_FOR:
+                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
+                return new WorkloadForCommand(inputParts[1]);
+
+            case CommandNames.LIST:
+                return new ListCommand();
+
+            case CommandNames.GRADREQ:
+                return new GradRequirementCommand();
+
+            case CommandNames.WORKLOAD_SUMMARY:
+                return new WorkloadSummaryCommand();
+
+            case CommandNames.WORKLOAD_BALANCE:
+                return new WorkloadBalanceCommand();
+
+            case CommandNames.SAVE:
+                return new SavePlanCommand();
+
+            case CommandNames.SWITCH_PLAN:
+                return new SwitchPlanCommand();
+
+            case CommandNames.DELETE_PLAN:
+                return new DeletePlanCommand();
+
+            case CommandNames.RENAME_PLAN:
+                return new RenamePlanCommand();
+
+            case CommandNames.HELP:
+                return new HelpCommand();
+
+            case CommandNames.EXIT:
+                return new ExitCommand();
+
+            case CommandNames.UNDO:
+                return new UndoCommand();
+
+            default:
+                return new InvalidCommand();
             }
+
+        } catch (CEGStudyBuddyException e) {
+            throw e;
         } catch (Exception e) {
-            throw new CEGStudyBuddyException(e.getMessage());
+            throw new CEGStudyBuddyException("An unknown error occurred while parsing the command.");
         }
-        return c;
     }
 
     public static Course parseDeleteReturnCourse(CourseList courses, String param) throws CEGStudyBuddyException {
