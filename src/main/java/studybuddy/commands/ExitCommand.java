@@ -5,11 +5,10 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
 
 public class ExitCommand extends Command {
-    private boolean isRunning = true;
     public static final String COMMAND_DESCRIPTION = """
             exit
                 Exits the program.;""";
-
+    private boolean isRunning = true;
     public ExitCommand() {
         super("");
         this.isRunning = true;
