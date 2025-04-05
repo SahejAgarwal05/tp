@@ -41,27 +41,39 @@ public class Parser {
             String command = inputParts[0].toLowerCase();
             switch (command) {
             case CommandNames.ADD:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: add c/CODE t/TITLE mc/MC y/YEAR s/SEM");
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: add c/CODE t/TITLE mc/MC y/YEAR s/SEM");
+                }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: edit c/CODE [t/TITLE] [mc/MC] [y/YEAR] [s/SEM]");
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: edit c/CODE [t/TITLE] [mc/MC] [y/YEAR] [s/SEM]");
+                }
                 return new EditCommand(inputParts[1]);
 
             case CommandNames.REPLACE:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MC y/YEAR s/SEM");
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MC y/YEAR s/SEM");
+                }
                 return new ReplaceCommand(inputParts[1]);
 
             case CommandNames.DELETE:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
+                }
                 return new DeleteCourse(inputParts[1]);
 
             case CommandNames.FIND:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
+                }
                 return new FindCommand(inputParts[1]);
 
             case CommandNames.WORKLOAD_FOR:
-                if (inputParts.length < 2) throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
+                }
                 return new WorkloadForCommand(inputParts[1]);
 
             case CommandNames.LIST:

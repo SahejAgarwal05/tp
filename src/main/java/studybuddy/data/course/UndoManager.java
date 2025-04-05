@@ -53,24 +53,24 @@ public class UndoManager {
         Action lastAction = actionHistory.pop();
 
         switch (lastAction.getType()) {
-            case ADD:
-                // Undoing an add means removing the course
-                courses.deleteCourseByCode(lastAction.getCourse().getCode());
-                return "Undo: Added course \"" + lastAction.getCourse().getCode() + "\" has been removed.";
+        case ADD:
+            // Undoing an add means removing the course
+            courses.deleteCourseByCode(lastAction.getCourse().getCode());
+            return "Undo: Added course \"" + lastAction.getCourse().getCode() + "\" has been removed.";
 
-            case DELETE:
-                // Undoing a delete means restoring the course
-                courses.addCourse(lastAction.getCourse());
-                return "Undo: Deleted course \"" + lastAction.getCourse().getCode() + "\" has been restored.";
+        case DELETE:
+            // Undoing a delete means restoring the course
+            courses.addCourse(lastAction.getCourse());
+            return "Undo: Deleted course \"" + lastAction.getCourse().getCode() + "\" has been restored.";
 
-            case REPLACE:
-                // Undoing a replace means removing the new course and restoring the old one
-                courses.deleteCourseByCode(lastAction.getNewCourse().getCode());
-                courses.addCourse(lastAction.getCourse());
-                return "Undo: Module changes for \"" + lastAction.getCourse().getCode() + "\" have been reverted.";
+        case REPLACE:
+            // Undoing a replace means removing the new course and restoring the old one
+            courses.deleteCourseByCode(lastAction.getNewCourse().getCode());
+            courses.addCourse(lastAction.getCourse());
+            return "Undo: Module changes for \"" + lastAction.getCourse().getCode() + "\" have been reverted.";
 
-            default:
-                return "Nothing to undo.";
+        default:
+            return "Nothing to undo.";
         }
     }
 
