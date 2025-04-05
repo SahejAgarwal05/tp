@@ -18,4 +18,5 @@ public class CommandNames {
     public static final String RENAME_PLAN = "rename_plan";
     public static final String REPLACE = "replace";
     public static final String UNDO = "undo";
+    public static final String SUMMARY = "summary";
 }

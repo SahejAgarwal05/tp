@@ -137,7 +137,9 @@ public class StorageManager {
 
         // Remove ".bin" extension
         for (int i = 0; i < plans.length; i++) {
-            plans[i] = plans[i].substring(0, plans[i].length() - 4);
+            if(plans[i].endsWith(".bin")) {
+                plans[i] = plans[i].substring(0, plans[i].length() - 4);
+            }
         }
 
         return plans;
