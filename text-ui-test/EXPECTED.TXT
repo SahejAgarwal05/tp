@@ -24,3 +24,5 @@
 
 You have no previous plans
 Please enter a plan name
+No special characters are allowed, only alphanumeric input: New plan has been created
+Enter command:
