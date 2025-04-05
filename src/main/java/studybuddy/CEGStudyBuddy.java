@@ -32,7 +32,6 @@ public class CEGStudyBuddy {
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
                 }
-
                 isRunning = c.isRunning();
             } catch (Exception e) {
                 if (!isSummary) {

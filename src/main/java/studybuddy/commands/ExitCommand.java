@@ -8,13 +8,15 @@ public class ExitCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
             exit
                 Exits the program.;""";
-
+    private boolean isRunning = true;
     public ExitCommand() {
         super("");
+        this.isRunning = true;
     }
 
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         if(!ui.isUserConfirm("Are you sure you want to exit?")) {
+            isRunning = true;
             return "Exit Cancelled";
         }
         storage.saveCurrentPlan();
@@ -22,6 +24,6 @@ public class ExitCommand extends Command {
     }
 
     public boolean isRunning() {
-        return false;
+        return isRunning;
     }
 }
