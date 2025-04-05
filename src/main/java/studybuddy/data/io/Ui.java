@@ -126,7 +126,13 @@ public class Ui {
                 ExitCommand.COMMAND_DESCRIPTION;
     }
 
-    // Below is to fix infinite loops over control+Z input
+    /**
+     * Checks through conditions to make sure there is next line from scanner, and next line is not null.
+     * This method should be called when ever using scanner.nextLine() to read an input, to prevent
+     * crashing from Ctrl+Z input.
+     *
+     * @return The String from next line input of scanner.
+     */
     public String robustNextLine() {
         if (!scanner.hasNextLine()) {
             System.out.println("Input stream is closed. CEGStudyBuddy has to exit, sorry!");
