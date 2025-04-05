@@ -21,7 +21,7 @@ public class WorkloadForCommand extends Command {
         int sem = paramParts[0];
         int year = paramParts[1];
         if(year <= 0 || year >= 5 || sem <= 0 || sem >= 3) {
-            throw new CEGStudyBuddyException("Invalid input. Year must be from 1 to 4 and semester must be either 1 or 2.");
+            throw new CEGStudyBuddyException("Invalid input. Year must be from 1 to 4 and sem must be either 1 or 2.");
         }
         String output = "These are the courses you will be taking:";
         int totalWorkLoad = 0;
