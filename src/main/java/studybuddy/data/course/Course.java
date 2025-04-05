@@ -15,7 +15,7 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected String PLACEHOLDER = "To be confirmed";
+    protected String placeHolder = "To be confirmed";
 
     /**
      * Constructor for v1.0
@@ -36,8 +36,8 @@ public class Course implements Serializable {
     }
 
     public Course(int mc, int takeInYear, int takeInSem) {
-        this.code = PLACEHOLDER;
-        this.title = PLACEHOLDER;
+        this.code = placeHolder;
+        this.title = placeHolder;
         this.mc = mc;
         this.takeInYear = takeInYear;
         this.takeInSem = takeInSem;
