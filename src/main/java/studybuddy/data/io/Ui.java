@@ -18,10 +18,17 @@ import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
-import studybuddy.data.course.CourseList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
+
+    public String showCourseReplacedMessage(String oldCode, String newCode) {
+        return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    }
+
+    public String showCourseNotFoundInReplaceMessage(String code) {
+        return "Could not find a course with the code \"" + code + "\" in your plan.";
+    }
 
     public String printFindCourse(ArrayList<Course> courseList, String targetCode) {
         for (Course course : courseList) {
@@ -111,64 +118,6 @@ public class Ui {
                 ExitCommand.COMMAND_DESCRIPTION;
     }
 
-    public String printCourseList(CourseList courses) {
-        StringBuilder sb = new StringBuilder();
-
-        // Loop through all semesters: Y1S1 to Y4S2
-        for (int year = 1; year <= 4; year++) {
-            for (int sem = 1; sem <= 2; sem++) {
-                sb.append("Y").append(year).append("S").append(sem).append(" Courses\n");
-
-                // Filter courses taken in this year/sem
-                ArrayList<Course> filtered = new ArrayList<>();
-                for (Course course : courses.getCourses()) {
-                    if (course.getTakeInYear() == year && course.getTakeInSem() == sem) {
-                        filtered.add(course);
-                    }
-                }
-
-                if (filtered.isEmpty()) {
-                    sb.append("No courses taken!\n\n");
-                } else {
-                    int count = 1;
-                    for (Course course : filtered) {
-                        sb.append(count).append(". ")
-                                .append(course.getCode()).append(" - ").append(course.getTitle())
-                                .append(" (").append(course.getMc()).append(" MCs)").append("\n");
-                        count++;
-                    }
-                    sb.append("\n");
-                }
-            }
-        }
-
-        return sb.toString().trim();
-    }
-
-    public String printWorkloadFor(CourseList courses, int sem, int year) {
-        String output = "These are the courses you will be taking:";
-        int totalWorkLoad = 0;
-        int index = 1;
-        for (Course course : courses.getCourses()) {
-            if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
-                totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString();
-                index++;
-            }
-        }
-        output = output + "\nTotal workload: " + totalWorkLoad;
-        return output;
-    }
-
-    public String printWorkloadSummary(String[] period, int[] mcsInEachSemester) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Utils.NUM_OF_SEMESTERS; i++) {
-            sb.append(period[i] + ": " + mcsInEachSemester[i] + "MCs ");
-            sb.append(Utils.checkWorkload(mcsInEachSemester[i], i) + "\n");
-        }
-        return sb.toString();
-    }
-
     /**
      * Reads the input and parses it into a String array.
      *
@@ -176,14 +125,42 @@ public class Ui {
      */
     public String[] readInput() {
         System.out.print("Enter command: ");
-        String userInput = scanner.nextLine();
+        String userInput = scanner.nextLine().trim();
         return userInput.split(" ", 2);
     }
 
     // Displays the welcome logo and greeting
     public void showWelcome() {
-        System.out.println("Welcome to CEGStudyBuddy!");
+        String banner =
+                """             
+                        __________  ___________ ________
+                        \\_   ___ \\\\_   _____//  _____/
+                        /    \\  \\/ |    __)_/   \\  ___
+                        \\     \\____|        \\    \\_\\  \\
+                         \\______  /_______  /\\______  /
+                                \\/        \\/        \\/
+                
+                          ________________________ ___________ _____.___. 
+                         /   _____/\\__    ___/    |   \\______ \\\\__  |   | 
+                         \\_____  \\   |    |  |    |   /|    |  \\/   |   | 
+                         /        \\  |    |  |    |  / |    `   \\____   | 
+                        /_______  /  |____|  |______/ /_______  / ______| 
+                                \\/                            \\/\\/        
+                
+                        __________ ____ ___________  ________ _____.___.  
+                        \\______   \\    |   \\______ \\ \\______ \\\\__  |   |  
+                         |    |  _/    |   /|    |  \\ |    |  \\/   |   |  
+                         |    |   \\    |  / |    `   \\|    `   \\____   |  
+                         |______  /______/ /_______  /_______  / ______|  
+                                \\/                 \\/        \\/\\/        
+                
+                                      Welcome to CEGStudyBuddy!
+                            Type 'help' to see a list of available commands.
+                """;
+
+        System.out.println(banner);
     }
+
 
     // Prints help hint
     public void showHelpHint() {
@@ -300,4 +277,34 @@ public class Ui {
     public String missingInputErrorMessage() {
         return "Input is incomplete and information is missing, please check your input";
     }
+
+    /**
+     * Askes for user confirmation for an action. Returns true if user input Y or y
+     * @param confirmationMessgae
+     * @return
+     */
+    public boolean isUserConfirm(String confirmationMessgae) {
+        System.out.println(confirmationMessgae);
+        System.out.print("Please enter a Y/y to confirm: ");
+        String userInput = scanner.nextLine().trim();
+        return userInput.equalsIgnoreCase("y");
+    }
+    public void cancelMessage() {
+        System.out.println("Cancelled");
+    }
+    public String getNewPlanName(String[] plans) {
+        for (int i = 0; i < plans.length; i++) {
+            System.out.println((i + 1) + ". " + plans[i]);
+        }
+        System.out.print("These are your prexisting plans");
+        return this.newPlanInput();
+    }
+    public void renameSuccessfulMessage(){
+        System.out.println("Successfully renamed");
+    }
 }
+
+
+
+
+

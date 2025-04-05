@@ -5,6 +5,7 @@ import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.course.UndoManager;
 
 public class AddCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
@@ -19,6 +20,7 @@ public class AddCommand extends Command {
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         Course newCourse = Parser.parseCourse(param);
         courses.add(newCourse);
+        UndoManager.recordAdd(newCourse);
         return "Course added: " + newCourse.getCode()
                 + " - " + newCourse.getTitle() + " (" + newCourse.getMc() + " MCs)";
     }

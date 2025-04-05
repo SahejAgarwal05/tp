@@ -15,7 +15,7 @@ public class CourseManager {
     public static void main(String[] args) {
         String s = "{\"code\": \"CS1010\", \"title\": \"Programming Met\", \"mc\": 4, " +
                 "\"offerInSem1\": true, \"offerInSem2\": true, " +
-                "takeInSem\": 0, \"takeInYear\": 0, \"isCleared\": false}";
+                "takeInSem\": 0, \"takeInYear\": 0}";
         Course c1 = jsonToCourse(s);
         System.out.println(c1);
         try {

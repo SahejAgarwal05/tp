@@ -6,16 +6,19 @@ import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
+import studybuddy.commands.HelpCommand;
+import studybuddy.commands.ListCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
-import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.ListCommand;
-import studybuddy.commands.SavePlanCommand;
-import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.RenamePlanCommand;
+import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SwitchPlanCommand;
+import studybuddy.commands.ReplaceCommand;
+import studybuddy.commands.UndoCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -49,12 +52,50 @@ public class Parser {
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
+            case CommandNames.RENAME_PLAN -> c = new RenamePlanCommand();
+            case CommandNames.REPLACE -> c = new ReplaceCommand(inputParts[1]);
+            case CommandNames.UNDO -> c = new UndoCommand();
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
             throw new CEGStudyBuddyException(e.getMessage());
         }
         return c;
+    }
+
+    public static Course parseDeleteReturnCourse(CourseList courses, String param) throws CEGStudyBuddyException {
+        String[] parts = param.trim().split("c/", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new CEGStudyBuddyException("Invalid format! Please use: delete c/CODE");
+        }
+
+        String code = parts[1].trim().toUpperCase();
+
+        for (Course course : courses.getCourses()) {
+            if (course.getCode().equalsIgnoreCase(code)) {
+                courses.getCourses().remove(course);
+                return course; // Return the deleted course for undo
+            }
+        }
+
+        throw new CEGStudyBuddyException("Course with code " + code + " not found.");
+    }
+
+    public static String[] parseReplace(String param) throws CEGStudyBuddyException {
+        String[] tokens = param.trim().split("\\s+");
+
+        if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
+            throw new CEGStudyBuddyException("Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
+        }
+
+        String oldCode = tokens[0].substring(2).toUpperCase();
+        String newCode = tokens[1].substring(2).toUpperCase();
+
+        if (oldCode.isEmpty() || newCode.isEmpty()) {
+            throw new CEGStudyBuddyException("Course codes cannot be empty.");
+        }
+
+        return new String[]{oldCode, newCode};
     }
 
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
@@ -118,25 +159,6 @@ public class Parser {
             return course;
         }
         return null;
-    }
-
-    public static String parseDelete(CourseList courses, String param) {
-        // Example input: c/CS2040
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2) {
-            return "Invalid format! Please use: delete c/CODE";
-        }
-        String code = parts[1].trim().toUpperCase();
-
-        boolean deleted = courses.getCourses().removeIf(course ->
-                course.getCode().equalsIgnoreCase(code)
-        );
-
-        if (deleted) {
-            return "Course with code " + code + " has been deleted.";
-        } else {
-            return "Course with code " + code + " not found.";
-        }
     }
 
     public static String[] parseEdit(String param) throws ArrayIndexOutOfBoundsException, NumberFormatException {

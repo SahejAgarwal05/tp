@@ -80,12 +80,12 @@ public class StorageManager {
         if (!dir.exists()) {
             dir.mkdirs();
         }
+
         String planFileName = CEGStudyBuddy.courses.getPlanName() + ".bin";
         File planFile = new File(dir, planFileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(planFile))) {
             oos.writeObject(CEGStudyBuddy.courses);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CEGStudyBuddyException("Error in saving");
         }
         return "Plan saved successfully.";
@@ -234,6 +234,8 @@ public class StorageManager {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
+
+        ui.displaySuccessfullyDeletedMessage();
     }
 
     /**
@@ -242,6 +244,10 @@ public class StorageManager {
      * @throws CEGStudyBuddyException
      */
     public void deletePlan(String planName) throws CEGStudyBuddyException {
+        if(!ui.isUserConfirm("Are you sure you want to delete " + planName)) {
+            ui.cancelMessage();
+            return;
+        }
         File dir = new File(directory);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -250,13 +256,30 @@ public class StorageManager {
         File planFile = new File(dir, planName + ".bin");
         if (planFile.exists()) {
             planFile.delete();
-            ui.displaySuccessfullyDeletedMessage();
-            if(CEGStudyBuddy.courses.getPlanName().equals(planName)) {
-                CEGStudyBuddy.courses = null;
-                this.initializePlan();
-            }
         } else {
             throw new CEGStudyBuddyException("Plan does not exist");
         }
+    }
+    public void renamePlan() throws CEGStudyBuddyException {
+        String[] plans = this.listPlans();
+        String planName = ui.getNewPlanName(plans);
+        if (!planName.matches("[a-zA-Z0-9]*")) {
+            throw new CEGStudyBuddyException("Invalid Plan Name");
+        }
+        File newPlanFile = new File(directory, planName + ".bin");
+        if(newPlanFile.exists()) {
+            throw new CEGStudyBuddyException("Plan already exists");
+        }
+        File planFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".bin");
+        if (planFile.exists()) {
+            planFile.delete();
+        }
+        CEGStudyBuddy.courses.setPlanName(planName);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(newPlanFile))) {
+            oos.writeObject(CEGStudyBuddy.courses);
+        } catch (Exception e) {
+            throw new CEGStudyBuddyException("Error in renaming plan");
+        }
+        ui.renameSuccessfulMessage();
     }
 }
