@@ -21,10 +21,21 @@ public class StorageManager {
      * Constructs a StorageManager with a specified directory for storing plans.
      *
      * @param directory The directory path where plans will be stored.
+     * @param scanner The scanner from main class.
      */
     public StorageManager(String directory, Scanner scanner) {
         this.directory = directory;
         this.ui = new Ui(scanner);
+    }
+
+    /**
+     * Constructs a StorageManager with a specified directory for testing.
+     *
+     * @param directory The directory path where plans will be stored.
+     */
+    public StorageManager(String directory) {
+        this.directory = directory;
+        this.ui = new Ui();
     }
 
     /**
