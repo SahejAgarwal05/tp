@@ -10,7 +10,7 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
-    public static final Ui ui = new Ui();
+    public static Ui ui = new Ui();
     public static final String TEST_CODE = "CS2103";
     public static final String TEST_TITLE = "Software Engineering";
     public static final String TEST_MC = "4";
