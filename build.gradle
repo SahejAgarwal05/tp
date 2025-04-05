@@ -33,11 +33,11 @@ application {
     mainClass.set("studybuddy.CEGStudyBuddy")
 }
 
-jar {
+task dukeJar(type: Jar) {
+    archiveBaseName.set("duke")
+    from sourceSets.main.output
     manifest {
-        attributes(
-                'Main-Class': 'seedu.duke.Duke'
-        )
+        attributes 'Main-Class': 'seedu.duke.Duke'
     }
 }
 
