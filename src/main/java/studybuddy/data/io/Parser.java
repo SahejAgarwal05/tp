@@ -6,19 +6,20 @@ import studybuddy.commands.DeleteCourse;
 import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
-import studybuddy.commands.HelpCommand;
-import studybuddy.commands.ListCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
+import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
-import studybuddy.commands.WorkloadBalanceCommand;
-import studybuddy.commands.WorkloadForCommand;
-import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.ListCommand;
 import studybuddy.commands.RenamePlanCommand;
-import studybuddy.commands.SavePlanCommand;
-import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.ReplaceCommand;
+import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SummaryCommand;
+import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.UndoCommand;
+import studybuddy.commands.WorkloadForCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
+import studybuddy.commands.WorkloadSummaryCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -95,6 +96,9 @@ public class Parser {
 
             case CommandNames.UNDO:
                 return new UndoCommand();
+
+            case CommandNames.SUMMARY:
+                return new SummaryCommand();
 
             default:
                 return new InvalidCommand();
