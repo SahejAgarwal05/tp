@@ -340,8 +340,3 @@ public class Ui {
         System.out.println("Successfully renamed");
     }
 }
-
-
-
-
-
