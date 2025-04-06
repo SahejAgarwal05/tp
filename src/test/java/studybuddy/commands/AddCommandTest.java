@@ -36,8 +36,8 @@ public class AddCommandTest {
     @Test
     public void testDuplicateCourse() {
         String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
-        execute(new AddCommand(input)); // Add once
-        String output = execute(new AddCommand(input)); // Try duplicate
+        execute(new AddCommand(input));
+        String output = execute(new AddCommand(input));
         assertEquals("This course is already added for the same year and semester.", output);
     }
 
@@ -54,19 +54,15 @@ public class AddCommandTest {
     public void testInvalidCourseCodeFormat() {
         String input = formatInput("1234CS", TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
         AddCommand cmd = new AddCommand(input);
-        assertEquals(
-                "Invalid course code format.Expected: CS2040, EE2026, CG2111A etc.",
-                execute(cmd)
-        );
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc."
+                , execute(cmd));
     }
 
     @Test
-    public void testInvalidNumberFormat() {
-        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/four y/two s/one");
-        assertEquals(
-                "Missing fields. Please follow the format:\nadd c/CODE t/TITLE mc/VALUE y/YEAR s/SEM",
-                execute(cmd)
-        );
+    public void testDecimalInputs() {
+        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/3.5 y/2.5 s/1.5");
+        assertEquals("Invalid input: MC, year, and semestermust be whole numbers, not decimals."
+                , execute(cmd));
     }
 
     @Test
@@ -75,12 +71,10 @@ public class AddCommandTest {
         assertEquals("Invalid MC value. MC must be between 1 and 12.", execute(cmd));
     }
 
-    // Helper to format course input string
     private String formatInput(String code, String title, String mc, String year, String sem) {
         return "c/" + code + " t/" + title + " mc/" + mc + " y/" + year + " s/" + sem;
     }
 
-    // Helper to execute command and return output
     private String execute(AddCommand cmd) {
         try {
             return cmd.execute(courses, storage);
@@ -89,12 +83,15 @@ public class AddCommandTest {
         }
     }
 
-    // Unified expected message for missing fields
     private String getMissingFieldsMsg() {
         return "Missing fields. Please follow the format:\n"
-                + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM";
+                + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n"
+                + "or the input is decimal :(";
     }
 }
+
+
+
 
 
 
