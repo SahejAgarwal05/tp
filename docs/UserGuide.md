@@ -6,7 +6,7 @@
 It helps to optimise workload, ensure graduation requirements, and keep students organised with ease, while managing multiple scenarios and possible schedules in their academic journey.
 
 This application is optimised for a **Command Line Interface (CLI)**.  
-If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same tim e!
+If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same time!
 
 ---
 
@@ -45,11 +45,11 @@ Refer to the **Features** section below for all available commands.
 At any time, in CEGStudyBuddy, you will be working on a plan, so in the start you will be asked to create a new plan or work on a pre-existing plan.
 You can save multiple course plans and switch between them (see Switch Plan Command below).
 
-Note that the current version of CEGStudyBuddy does not automatically save your course plan. Please remember to run the save command before you exit.
-
+Note: While autosave has been implemented for this version of CEGStudyBuddy it is still recommended to manually save and exit the programme to ensure there is no loss in progress.
 
 ### Notes about the Command Format
 
+- All commands are case sensitive in nature.
 - Words in `UPPER_CASE` are parameters to be supplied by the user.  
   Example: `add c/CS2113`
 - Square brackets `[]` indicate optional fields.  
@@ -224,7 +224,7 @@ Total workload: 20
 ### Workload Balance: `workload_balance`
 In order to gain a better understanding of the workload balance across all you semesters, you can use this command which
 displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
-
+Based on your workload balance, it will also advise you to modify your workload if it detects your workload is highly unbalanced.
 **Format:**
 ```
 workload_balance
@@ -232,10 +232,15 @@ workload_balance
 
 Example Output:
 ```
-Max: 6
-Min: 2
+Min: 22
+Max: 38
+You have a high variance in you workload, it can be very stressful and can negatively affect your CAP
 ```
-
+```
+Min: 20
+Max: 22
+You seem to have a pretty balanced workload
+```
 ---
 
 ### Graduation Requirement: `gradreq`
@@ -302,16 +307,27 @@ It does not take any parameters.
 switch_plan
 ```
 
+**Expected Output:**
+```
+Successfully renamed
+```
+
+
 ---n
 
 ### Delete Plan: `delete_plan`
-Allows you to delete a course plan. Using this command will allow you to select a plan to delete. Please , once you select a plan
+Allows you to delete a course plan. Using this command will allow you to select a plan to delete. Once you have selected a plan
 using the delete_plan command and confirm, you cannot abort the deletion. 
 This command does not take any parameters.
 
 **Format:**
 ```
 delete_plan
+```
+
+**Expected Output:**
+```
+Plan deleted successfully
 ```
 
 ---
@@ -324,6 +340,10 @@ It does not take any parameters.
 **Format:**
 ```
 exit
+```
+**Expected Output:**
+```
+Bye
 ```
 
 ---
@@ -389,3 +409,8 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 ### ❓ Q: What if I accidentally delete a plan?
 
 **A:** Currently, there is delete_plan is irreversible, and it is highly recommended to be 100% sure while deleting. 
+
+### ❓ Q: Is there autosave?
+
+**A:** Yes, after each and every command your progress in the current plan is backedup.
+
