@@ -219,6 +219,11 @@ insert description
 
 ---
 
+### Exceptions
+The studybuddy.data.exception package contains the CEGStudyBuddyException class. It handles exceptions that are special to CEGStudyBuddy and cannot be categorised by the exception classes in Java’s own packages, e.g. having no saved course plan at all, having a semester number greater than 2, etc. It is also used to print out a customised error message on screen.
+
+---
+
 ## Implementation
 
 Details of the implementation of a few noteworthy features of CEGStudyBuddy is listed in this section.
@@ -284,32 +289,6 @@ The `selectPlan()` method enables the user to choose an existing study plan or c
 
 5. **Confirmation:**
    - Once the plan is successfully loaded, a confirmation message is displayed via `ui.planSuccessfullyLoadedMessage()`.
-
----
-
-**`loadPlan()` Method Overview**
-
-The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
-
-***Detailed Overview***
-
-1. **Directory Verification:**
-   - Checks if the storage directory exists. If not, it creates the directory and throws an exception indicating that there are no saved plans.
-
-2. **Plan File Existence Check:**
-   - Constructs the file path for the plan (appending ".txt" to the plan name) and verifies its existence.
-   - If the file does not exist, an exception is thrown with the message "Invalid Plan Name".
-
-3. **Plan Data Loading:**
-   - Reads the plan file content and splits it by newline characters.
-   - Iterates through each non-empty line and parses it into course data using `Parser.parseCourse(line)`.
-   - Adds each parsed course to a new `CourseList` object initialized with the plan name.
-
-4. **Setting the Current Plan:**
-   - Updates the global current plan (`CEGStudyBuddy.courses`) with the newly loaded `CourseList`.
-
-5. **Error Handling:**
-   - If an exception occurs during file reading or parsing, it throws a "Data Source Corrupted" exception.
 
 ---
 
@@ -518,16 +497,15 @@ It is **cross-platform** and **free**.
 
 ## Appendix D: Glossary
 
-| Term             | Definition                                                    |
-|------------------|---------------------------------------------------------------|
-| Module Code      | Official code of an NUS course, e.g., `CS2040C`               |
-| MC               | Modular Credit – indicates course weight                      |
-| Course List      | The user’s personalized list of planned/taken courses         |
-| Command Parser   | Handles interpretation of typed commands                      |
-| Workload Tracker | Computes workload distribution across semesters               |
+| Term               | Definition                                                  |
+|--------------------|-------------------------------------------------------------|
+| CEG                | NUS Computer Engineering                                    |
+| Module Code        | Official code of an NUS course, e.g., `CS2040C`             |
+| MC                 | Modular Credits – indicates course weight                   |
+| Course List        | The user’s personalized list of planned/taken courses       |
+| Command Parser     | Handles interpretation of typed commands                    |
+| Workload Tracker   | Computes workload distribution across semesters             |
 | Graduation Checker | Validates whether graduation requirements (160 MCs) are met |
-| CLI              | Command-Line Interface – user types commands via text         |
-| Mainstream OS    | Windows, Linux, macOS                                         |
 
 ---
 
