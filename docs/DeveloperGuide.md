@@ -107,6 +107,8 @@ The Course class represents a single course.
 
 - `String toString`: Returns a string representing the course.
 
+![CourseClassDiagram.png](CourseClassDiagram.png)
+
 ---
 
 #### 2. CourseList
