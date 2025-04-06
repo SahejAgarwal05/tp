@@ -20,7 +20,7 @@ public class PlaceHolderCommand extends Command {
 
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
-        Course newCourse = Parser.parseCourse(param);
+        Course newCourse = Parser.parseDummy(param);
         courses.add(newCourse);
         return "Course added: " + newCourse.getCode()
                 + " - " + newCourse.getTitle() + " (" + newCourse.getMc() + " MCs)";
