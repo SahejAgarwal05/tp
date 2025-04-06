@@ -207,7 +207,9 @@ public class Parser {
         }
 
         // Parse and validate numbers
-        int mc, year, sem;
+        int mc; 
+        int year;
+        int sem;
         try {
             mc = Integer.parseInt(mcStr);
             year = Integer.parseInt(yearStr);
