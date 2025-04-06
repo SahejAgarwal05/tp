@@ -103,11 +103,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "(c/" + getCode() + " " +
-                "t/" + getTitle() + " " +
-                "mc/" + getMc() + " " +
-                "y/" + getTakeInYear() + " " +
-                "s/" + getTakeInSem() + ")";
+        return getCode() + " - " + getTitle() + " (" + getMc() + " MCs)";
     }
 
     /**
