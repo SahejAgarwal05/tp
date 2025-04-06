@@ -246,30 +246,6 @@ The `loadPlan()` method is responsible for loading a saved study plan by its nam
 5. **Error Handling:**
     - If an exception occurs during file reading or parsing, it throws a "Data Source Corrupted" exception.
 
-**`loadPlan()` Method Overview**
-
-The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
-
-***Detailed Overview***
-
-1. **Directory Verification:**
-    - Checks if the storage directory exists. If not, it creates the directory and throws an exception indicating that there are no saved plans.
-
-2. **Plan File Existence Check:**
-    - Constructs the file path for the plan (appending ".txt" to the plan name) and verifies its existence.
-    - If the file does not exist, an exception is thrown with the message "Invalid Plan Name".
-
-3. **Plan Data Loading:**
-    - Reads the plan file content and splits it by newline characters.
-    - Iterates through each non-empty line and parses it into course data using `Parser.parseCourse(line)`.
-    - Adds each parsed course to a new `CourseList` object initialized with the plan name.
-
-4. **Setting the Current Plan:**
-    - Updates the global current plan (`CEGStudyBuddy.courses`) with the newly loaded `CourseList`.
-
-5. **Error Handling:**
-    - If an exception occurs during file reading or parsing, it throws a "Data Source Corrupted" exception.
-
 ---
 
 **`listPlans()` Method Overview**
