@@ -15,6 +15,7 @@ public class ExitCommand extends Command {
     }
 
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
+        // get user confirmation to exit
         if(!ui.isUserConfirm("Are you sure you want to exit?")) {
             isRunning = true;
             return "Exit Cancelled";

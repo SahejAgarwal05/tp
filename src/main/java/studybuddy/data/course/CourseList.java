@@ -80,6 +80,11 @@ public class CourseList implements Serializable {
     public void clear(){
         courses.clear();
     }
+
+    /**
+     * Function to get the storage format string for the course list
+     * @return Sstorage format Sting
+     */
     public String toStoreFormat(){
         StringBuilder sb = new StringBuilder();
         for (Course course : courses) {
