@@ -227,27 +227,20 @@ public class Parser {
             throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
 
-        return new Course(code, title, mc, year, sem);
+        Course c = getDefinedCourse(code, year, sem);
+        if (c == null) {
+            return new Course(code, title, mc, year, sem);
+        }
+        return c;
     }
 
-    private static Course getDefinedCourse(String code, String param)
+    private static Course getDefinedCourse(String code, int year, int sem)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
-        String[] parts = param.split(" ");
-        Integer y = null;
-        Integer s = null;
 
-        for (String part : parts) {
-            if (part.startsWith("y/")) {
-                y = Integer.parseInt(part.substring(2));
-            } else if (part.startsWith("s/")) {
-                s = Integer.parseInt(part.substring(2));
-            }
-        }
         Course course = CourseManager.getCourse(code);
-        if (y != null && s != null) {
-            assert course != null;
-            course.setTakeInYear(y);
-            course.setTakeInSem(s);
+        if (course != null) {
+            course.setTakeInYear(year);
+            course.setTakeInSem(sem);
             return course;
         }
         return null;
