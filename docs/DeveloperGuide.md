@@ -106,7 +106,6 @@ The Course class represents a single course.
 **Methods:**
 
 - `String toString`: Returns a string representing the course.
-- `String toStoreFormat`: Return a string representing the course in a format meant for storage.
 
 ---
 
@@ -124,7 +123,6 @@ The CourseList class stores the list of courses and contains methods to modify t
 - `void addCourse`: Adds a course to the list. Takes in a Course object.
 - `ArrayList<Course> getCourses`: Returns the ArrayList of the courses.
 - `boolean isEmpty`: True if the list is empty.
-- `String toStoreFormat`: Return a string representing the CourseList in a format meant for storage.
 
 ---
 
@@ -402,9 +400,7 @@ When adding a new course into the schedule through AddCommand, AddCommand will s
   - If found, it uses that predefined information.
   - If not found, it accepts manual user input.
 
-![img_5.png](img_5.png)
-
-![img_6.png](img_6.png) 
+![predefinedListSequence.PNG](predefinedListSequence.PNG)
 
 For the developers, this list is essential for other enhancement functions such as checking graduation requirements by comparing the users’ course plans with the list of core courses. To conveniently save and load from the list, Json dependency is added to convert between courses and Json Strings.
 
