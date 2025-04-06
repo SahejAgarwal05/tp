@@ -47,11 +47,11 @@ public class AddCommandTest {
     @Test
     public void testMissingFields() {
         String[] invalidInputs = {
-           "c/CS2040 t/Data Structures mc/4 y/2", // missing s/
-           "t/Data Structures mc/4 y/2 s/1",       // missing c/
-           "c/CS2040 mc/4 y/2 s/1",                // missing t/
-           "c/CS2040 t/Data Structures y/2 s/1",   // missing mc/
-           "c/CS2040 t/Data Structures mc/4 s/1",  // missing y/
+        "c/CS2040 t/Data Structures mc/4 y/2", // missing s/
+        "t/Data Structures mc/4 y/2 s/1",       // missing c/
+        "c/CS2040 mc/4 y/2 s/1",                // missing t/
+        "c/CS2040 t/Data Structures y/2 s/1",   // missing mc/
+        "c/CS2040 t/Data Structures mc/4 s/1",  // missing y/
         };
 
         for (String input : invalidInputs) {
