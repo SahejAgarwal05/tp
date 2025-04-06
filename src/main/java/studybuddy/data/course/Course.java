@@ -9,7 +9,9 @@ import java.util.Arrays;
  * Editable info: take(n) in semester, is cleared/taken
  */
 public class Course implements Serializable {
-    protected String code;
+    protected static boolean[] dummies = new boolean[20];
+    public static final int DUMMYSIZE = 20;
+    public static final String DUMMYWORD = "DUM";    protected String code;
     protected String title;
     protected int mc;
     protected boolean offerInSem1;
@@ -17,15 +19,12 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected final String TBC = "To be confirmed";
-    protected static boolean[] dummies = new boolean[20];
-    public static final int DUMMYSIZE = 20;
-    public static final String DUMMYWORD = "DUM";
+    protected final String DUMMYTITLE = "To be confirmed";
 
-     static {
+    static {
         // false means this number is not used currently
         Arrays.fill(dummies, false);
-     }
+    }
 
     /**
      * Constructor for common creation of course
@@ -53,7 +52,7 @@ public class Course implements Serializable {
      */
     protected Course(String code, int mc, int takeInYear, int takeInSem) {
         this.code = code;
-        this.title = TBC;
+        this.title = DUMMYTITLE;
         this.mc = mc;
         this.takeInYear = takeInYear;
         this.takeInSem = takeInSem;
