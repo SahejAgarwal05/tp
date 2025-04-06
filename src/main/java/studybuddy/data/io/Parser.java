@@ -219,7 +219,7 @@ public class Parser {
                     "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
             throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.");
         }
 
@@ -362,7 +362,7 @@ public class Parser {
         return output;
     }
 
-    public static Course parseDummy(String param) throws CEGStudyBuddyException {
+    public static Course parseDummy(String param, CourseList courses) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
 
         String[] parts = param.split(" ");
@@ -371,6 +371,13 @@ public class Parser {
         }
         if (parts.length > 3) {
             throw new CEGStudyBuddyException(ui.extraInputErrorMessage());
+        }
+
+        Course.dummyInitialiseCheck(courses);
+        int codeNumber = Course.getAvailableDummyIndex();
+        // reach max number of dummies, no more dummy to be added
+        if (!Course.isValidDummyIndex(codeNumber)) {
+            throw new CEGStudyBuddyException(ui.showDummyFullMessage());
         }
 
         Integer mc = null;
@@ -390,6 +397,6 @@ public class Parser {
             throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
         }
 
-        return new Course(mc, y, s);
+        return Course.createDummyCourse(mc, y, s);
     }
 }

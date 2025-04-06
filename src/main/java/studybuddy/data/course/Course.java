@@ -1,12 +1,17 @@
 package studybuddy.data.course;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
 /**
  * Represents a course in NUS.
  * Pre-set info: code, title, module credit (mc), offered in semester 1/2, ...
  * Editable info: take(n) in semester, is cleared/taken
  */
 public class Course implements Serializable {
+    public static final int DUMMYSIZE = 20;
+    public static final String DUMMYWORD = "DUM";
+    protected static boolean[] dummies = new boolean[20];
     protected String code;
     protected String title;
     protected int mc;
@@ -15,7 +20,12 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected String placeHolder = "To be confirmed";
+    protected final String DUMMYTITLE = "To be confirmed";
+
+    static {
+        // false means this number is not used currently
+        Arrays.fill(dummies, false);
+    }
 
     /**
      * Constructor for common creation of course
@@ -36,19 +46,29 @@ public class Course implements Serializable {
     }
 
     /**
-     * Constructor for placeholder course
+     * Constructor for placeholder (dummy) course
      * @param mc Module credit of the course, e.g. 2, 4, 8.
      * @param takeInYear Take/Taken this course in which year, e.g. 1, 2, 3, 4.
      * @param takeInSem Take/Taken this course in which semester, e.g. 1, 2.
      */
-    public Course(int mc, int takeInYear, int takeInSem) {
-        this.code = placeHolder;
-        this.title = placeHolder;
+    protected Course(String code, int mc, int takeInYear, int takeInSem) {
+        this.code = code;
+        this.title = DUMMYTITLE;
         this.mc = mc;
         this.takeInYear = takeInYear;
         this.takeInSem = takeInSem;
         this.offerInSem1 = true;
         this.offerInSem2 = true;
+    }
+
+    public static Course createDummyCourse(int mc, int takeInYear, int takeInSem) {
+        int codeNumber = getAvailableDummyIndex();
+        if (!isValidDummyIndex(codeNumber)) {
+            return null;
+        }
+        String code = "DUM" + codeNumber;
+        dummies[codeNumber] = true;
+        return new Course(code, mc, takeInYear, takeInSem);
     }
 
     public String getCode() {
@@ -107,6 +127,10 @@ public class Course implements Serializable {
         this.takeInYear = takeInYear;
     }
 
+    public static boolean[] getDummies() {
+        return dummies;
+    }
+
     @Override
     public String toString() {
         return getCode() + " - " + getTitle() + " (" + getMc() + " MCs)";
@@ -122,5 +146,48 @@ public class Course implements Serializable {
                 "mc/" + getMc() + " " +
                 "y/" + getTakeInYear() + " " +
                 "s/" + getTakeInSem();
+    }
+
+    public static boolean isDummyFull() {
+        for (int i = 0; i < DUMMYSIZE; i++) {
+            if (!dummies[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isValidDummyIndex(int number) {
+        return (number >= 0 && number < DUMMYSIZE);
+    }
+
+    public static int getAvailableDummyIndex() {
+        for (int i = 0; i < DUMMYSIZE; i++) {
+            if (!dummies[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void dummyInitialiseCheck(CourseList list) {
+        Arrays.fill(dummies, false);
+        for (Course course: list.getCourses()) {
+            String courseCode = course.code;
+            if (courseCode.startsWith(DUMMYWORD)) {
+                courseCode = courseCode.replace(DUMMYWORD, "");
+                int index = -1;
+                try {
+                    index = Integer.parseInt(courseCode);
+                } catch (NumberFormatException e) {
+                    // there should not be any course code uses "DUM" but with invalid number
+                    list.getCourses().remove(course);
+                }
+                if (isValidDummyIndex(index)) {
+                    // this index is used
+                    dummies[index] = true;
+                }
+            }
+        }
     }
 }

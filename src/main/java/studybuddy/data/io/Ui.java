@@ -40,6 +40,10 @@ public class Ui {
         return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
     }
 
+    public String showDummyFullMessage() {
+        return "Reached maximum number of dummies, please delete dummies before adding";
+    }
+
     public String showCourseNotFoundInReplaceMessage(String code) {
         return "Could not find a course with the code \"" + code + "\" in your plan.";
     }
