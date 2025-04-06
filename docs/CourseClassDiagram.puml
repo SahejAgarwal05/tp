@@ -1,0 +1,20 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+class Course {
+    - String code
+    - String title
+    - int mc
+    - boolean offerInSem1
+    - boolean offerInSem2
+    - int takeInSem
+    - int takeInYear
+    - String placeHolder = "To be confirmed"
+
+    + Course(String code, String title, int mc, int takeInYear, int takeInSem)
+    + Course(int mc, int takeInYear, int takeInSem)
+
+    + String toString()
+    + String toStoreFormat()
+}
+@enduml
