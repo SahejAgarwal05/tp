@@ -191,7 +191,8 @@ public class Parser {
 
         // Validate course code format (e.g., CS2040, EE2026, CG2111A)
         if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
-            throw new CEGStudyBuddyException("Invalid course code format. Expected formats: CS2040, EE2026, CG2111A etc.");
+            throw new CEGStudyBuddyException("Invalid course code format."
+                    + "Expected formats: CS2040, EE2026, CG2111A etc.");
         }
 
         int mc, year, sem;
@@ -201,7 +202,8 @@ public class Parser {
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("Invalid number format. Please enter numeric values for MC, year, and semester.");
+            throw new CEGStudyBuddyException("Invalid number format."
+                    + "Please enter numeric values for MC, year, and semester.");
         }
 
         if (!Utils.isValidMC(mc)) {

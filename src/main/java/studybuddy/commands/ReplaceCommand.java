@@ -32,7 +32,8 @@ public class ReplaceCommand extends Command {
 
         // Validate course codes
         if (oldCode.isEmpty() || newCode.isEmpty()) {
-            throw new CEGStudyBuddyException("Course code(s) cannot be empty. Please use format: c/OLD_CODE c/NEW_CODE");
+            throw new CEGStudyBuddyException("Course code(s) cannot be empty."
+                    + "Please use format: c/OLD_CODE c/NEW_CODE");
         }
         if (!oldCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") || !newCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
             throw new CEGStudyBuddyException("Invalid course code format. Expected format: CS2040, EE2026, CG2111A");
@@ -51,7 +52,8 @@ public class ReplaceCommand extends Command {
         String semStr = paramParts[4].trim();
 
         if (title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
-            throw new CEGStudyBuddyException("One or more fields are empty.Complete all: t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("One or more fields are empty."
+                    + "Complete all: t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
         int mc, year, sem;
@@ -60,7 +62,8 @@ public class ReplaceCommand extends Command {
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("Invalid number format. Please enter numeric values for MC, year, and semester.");
+            throw new CEGStudyBuddyException("Invalid number format."
+                    + "Please enter numeric values for MC, year, and semester.");
         }
 
         if (!Utils.isValidMC(mc)) {
