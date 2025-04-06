@@ -4,7 +4,6 @@ import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
-import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class PlaceHolderCommand extends Command {
