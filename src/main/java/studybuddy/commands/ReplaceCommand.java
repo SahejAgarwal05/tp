@@ -56,7 +56,10 @@ public class ReplaceCommand extends Command {
                     + "Complete all: t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        int mc, year, sem;
+        int mc;
+        int year;
+        int sem;
+
         try {
             mc = Integer.parseInt(mcStr);
             year = Integer.parseInt(yearStr);

@@ -195,7 +195,9 @@ public class Parser {
                     + "Expected formats: CS2040, EE2026, CG2111A etc.");
         }
 
-        int mc, year, sem;
+        int mc;
+        int year;
+        int sem;
 
         try {
             mc = Integer.parseInt(mcStr);
