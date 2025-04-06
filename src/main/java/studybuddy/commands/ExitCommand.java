@@ -9,20 +9,21 @@ public class ExitCommand extends Command {
             exit
                 Exits the program.;""";
     private boolean isRunning = true;
+
     public ExitCommand() {
         super("");
         this.isRunning = true;
     }
 
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
-        if(!ui.isUserConfirm("Are you sure you want to exit?")) {
+        // get user confirmation to exit
+        if (!ui.isUserConfirm("Are you sure you want to exit?")) {
             isRunning = true;
-            return "Exit Cancelled";
+            return "Exit Cancelled.";
         }
-        isRunning = false; //to exit the program after confirmation
+        isRunning = false; // to exit the program after confirmation
         storage.saveCurrentPlan();
-        isRunning = false;
-        return "Bye"; // print proper message, put in Ui
+        return "Goodbye!";
     }
 
     public boolean isRunning() {

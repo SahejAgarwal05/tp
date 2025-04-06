@@ -6,7 +6,7 @@
 It helps to optimise workload, ensure graduation requirements, and keep students organised with ease, while managing multiple scenarios and possible schedules in their academic journey.
 
 This application is optimised for a **Command Line Interface (CLI)**.  
-If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same tim e!
+If you are a fast typer, you can plan and track your courses faster than NUSMods and boost you CLI skills at the same time!
 
 ---
 
@@ -45,11 +45,11 @@ Refer to the **Features** section below for all available commands.
 At any time, in CEGStudyBuddy, you will be working on a plan, so in the start you will be asked to create a new plan or work on a pre-existing plan.
 You can save multiple course plans and switch between them (see Switch Plan Command below).
 
-Note that the current version of CEGStudyBuddy does not automatically save your course plan. Please remember to run the save command before you exit.
-
+Note: While autosave has been implemented for this version of CEGStudyBuddy it is still recommended to manually save and exit the programme to ensure there is no loss in progress.
 
 ### Notes about the Command Format
 
+- All commands are case sensitive in nature.
 - Words in `UPPER_CASE` are parameters to be supplied by the user.  
   Example: `add c/CS2113`
 - Square brackets `[]` indicate optional fields.  
@@ -58,9 +58,42 @@ Note that the current version of CEGStudyBuddy does not automatically save your 
 
 ---
 
+### Notes about CEG Mandatory Courses
+
+CEGStudyBuddy comes with a full list of pre-defined courses that are mandatory in the NUS Computer Engineering curriculum.
+
+You may simply add these courses without having to specify the title and number of MCs (see Adding a Course below).
+
+---
+
 ### Adding a Course: `add`
 
-Adds a course to the planner.
+Adds a CEG required course to the planner.
+
+#### CEG Required Courses
+This applies to courses in the pre-defined list of CEG required courses.
+
+**Format:**
+```
+add c/CODE y/YEAR s/SEMESTER
+```
+
+**Examples:**
+```
+add c/CS1010 y/1 s/1
+```
+**Example Output:**
+```
+Course added: CS1010 Programming Methodology (4 MCs)
+```
+
+You may view the list of pre-defined courses [here](https://github.com/AY2425S2-CS2113-F14-2/tp/blob/master/src/main/resources/data/Defined_Courses).
+
+---
+
+#### Non-CEG Required Courses
+
+This applies to courses that are not in the pre-defined list of CEG required courses, e.g. GE-coded courses, unrestricted electives.
 
 **Format:**
 ```
@@ -69,10 +102,12 @@ add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
 
 **Examples:**
 ```
-add c/CS2040 t/Data Structures mc/4 y/2 s/1
-add c/MA1101 t/Linear Algebra mc/4 y/1 s/2
+add c/GEC1005 t/Cultural Borrowing: Japan and China mc/4 y/2 s/1
 ```
-
+**Example Output:**
+```
+Course added: GEC1005 Cultural Borrowing: Japan and China (4 MCs)
+```
 ---
 
 ### Deleting a Course: `delete`
@@ -148,6 +183,25 @@ edit c/MA1101 y/2 s/1
 
 ---
 
+### Replacing a Course: `replace`
+
+Replaces a course in the planner with a different course.\
+This may be helpful if you are switching between different course variants or GE modules.
+
+**Format:**
+```
+replace c/OLD CODE c/NEW CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
+```
+
+**Example:**
+```
+replace c/GESS1005 c/GESS1025 t/Singapore: Imagining the Next 50 Years mc/4 y/2 s/2
+```
+
+This command does not use the pre-defined list of CEG required courses. You must include all parameters when using this command.
+
+---
+
 ### Finding a Course: `find`
 
 Searches for a course by its code.
@@ -173,6 +227,22 @@ Year and Sem: Y2S2
 If not found:
 ```
 Course CS2040 not found in your course list.
+```
+
+---
+
+### Check Course Pre-requisites: `prereq`
+
+Lists the pre-requisites of a given course.
+
+**Format:**
+```
+prereq c/CODE
+```
+
+**Example:**
+```
+prereq c/CS2040C
 ```
 
 ---
@@ -223,19 +293,27 @@ Total workload: 20
 ---
 ### Workload Balance: `workload_balance`
 In order to gain a better understanding of the workload balance across all you semesters, you can use this command which
-displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
+displays the minimum and maximum number of courses in a semester out of all semesters.\
+This is intended to aid in balancing the workload between semesters.
+
+Based on your workload balance, it will also advise you to modify your workload if it detects your workload is highly unbalanced.
 
 **Format:**
 ```
 workload_balance
 ```
 
-Example Output:
+**Example Output:**
 ```
-Max: 6
-Min: 2
+Min: 22
+Max: 38
+You have a high variance in you workload. This can be very stressful and can negatively affect your CAP.
 ```
-
+```
+Min: 20
+Max: 22
+You seem to have a pretty balanced workload.
+```
 ---
 
 ### Graduation Requirement: `gradreq`
@@ -279,35 +357,44 @@ help
 
 ---
 
+### Undo Last Command: `undo`
+
+If you accidentally run a command that you would like to undo, you may run this command.
+
+**Format:**
+```
+undo
+```
+
+---
+
 ### Save Plan: `save`
-Saves the current course plan, similar to a simple save in most Microsoft Office applications. Since, there is no autosave, it is highly recommneded to use this before exiting. 
-This command works for both new plans and saving changes to a pre-existing plan. It does not take any parameters.
+Saves the current course plan, similar to a simple save in most Microsoft Office applications.\
+Since, there is no autosave, it is highly recommended to use this before exiting.
+
+This command works for both new plans and saving changes to a pre-existing plan.
 
 **Format:**
 ```
 save
 ```
-**Expected Output:**
-```
-Plan saved successfully.
-```
+
 ---
 
 ### Switch Plan: `switch_plan`
-Allows you to switch to a different course plan after following the prompted flow. This also autosaves your changes made to the plan. Still, it is recommended to save manually before exit.
+Allows you to switch to a different course plan after following the prompted flow. This also automatically saves your changes made to the plan. Still, it is recommended to save manually before exit.
 
-It does not take any parameters.
 **Format:**
 ```
 switch_plan
 ```
 
----n
+---
 
 ### Delete Plan: `delete_plan`
-Allows you to delete a course plan. Using this command will allow you to select a plan to delete. Please , once you select a plan
+Allows you to delete a course plan. Using this command will allow you to select a plan to delete.\
+Once you have selected a plan
 using the delete_plan command and confirm, you cannot abort the deletion. 
-This command does not take any parameters.
 
 **Format:**
 ```
@@ -317,7 +404,7 @@ delete_plan
 ---
 
 ### Exit Program: `exit`
-Exits the program after asking for confirmation. This also autosaves your changes made to the plan. Still, it is recommended to save manually before exit.
+Exits the program after asking for confirmation. This also automatically saves your changes made to the plan. Still, it is recommended to save manually before exit.
 
 It does not take any parameters.
 
@@ -389,3 +476,8 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 ### ❓ Q: What if I accidentally delete a plan?
 
 **A:** Currently, there is delete_plan is irreversible, and it is highly recommended to be 100% sure while deleting. 
+
+### ❓ Q: Is there autosave?
+
+**A:** Yes, after each and every command your progress in the current plan is backedup.
+

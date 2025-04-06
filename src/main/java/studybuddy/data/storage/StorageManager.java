@@ -1,6 +1,8 @@
 package studybuddy.data.storage;
 
 import java.io.File;
+import java.util.Scanner;
+
 import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
@@ -16,6 +18,17 @@ public class StorageManager {
 
     /**
      * Constructs a StorageManager with a specified directory for storing plans.
+     *
+     * @param directory The directory path where plans will be stored.
+     * @param scanner The scanner from main class.
+     */
+    public StorageManager(String directory, Scanner scanner) {
+        this.directory = directory;
+        this.ui = new Ui(scanner);
+    }
+
+    /**
+     * Constructs a StorageManager with a specified directory for testing.
      *
      * @param directory The directory path where plans will be stored.
      */
@@ -158,6 +171,7 @@ public class StorageManager {
         String planName = "";
         while (planName.isEmpty()) {
             planName = ui.newPlanInput();
+            // check that name does not have any special characters
             if (!planName.matches("[a-zA-Z0-9]*")) {
                 planName = "";
             }
@@ -204,7 +218,7 @@ public class StorageManager {
 
         String planNumber = ui.chooseOrCreateNewPlans(plans);
 
-        if (planNumber.equals("0")) {
+        if (planNumber.equals("0")) { // check for new plan creation
             this.newPlan();
             return;
         }
@@ -213,6 +227,9 @@ public class StorageManager {
             planNo = Integer.parseInt(planNumber);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number");
+        }
+        if(planNo < 0 || planNo > plans.length) {
+            throw new CEGStudyBuddyException("plan number out of range");
         }
         try{
             this.loadPlan(plans[planNo - 1]);
@@ -236,16 +253,21 @@ public class StorageManager {
             ui.noPreviousPlansMessage();
             return;
         }
-
         String planNumber = ui.chooseDeletePlan(plans);
+        int planNo = -1;
         try {
-            int planNo = Integer.parseInt(planNumber);
-            this.deletePlan(plans[planNo - 1]);
+            planNo = Integer.parseInt(planNumber);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
-
-        ui.displaySuccessfullyDeletedMessage();
+        if(planNo < 0 || planNo > plans.length) {
+            throw new CEGStudyBuddyException("plan nnumber out of range");
+        }
+        try{
+            this.deletePlan(plans[planNo - 1]);
+        } catch (Exception e){
+            throw new CEGStudyBuddyException("Error deleting plan");
+        }
     }
 
     /**
@@ -254,6 +276,7 @@ public class StorageManager {
      * @throws CEGStudyBuddyException
      */
     public void deletePlan(String planName) throws CEGStudyBuddyException {
+        // Get user confirmation to delete
         if(!ui.isUserConfirm("Are you sure you want to delete " + planName)) {
             ui.cancelMessage();
             return;
@@ -269,10 +292,16 @@ public class StorageManager {
         } else {
             throw new CEGStudyBuddyException("Plan does not exist");
         }
+        ui.displaySuccessfullyDeletedMessage();
         if(planName.equals(CEGStudyBuddy.courses.getPlanName())) {
             this.initializePlan();
         }
     }
+
+    /**
+     * This function starts the input sequence to rename the current plan
+     * @throws CEGStudyBuddyException
+     */
     public void renamePlan() throws CEGStudyBuddyException {
         String[] plans = this.listPlans();
         String planName = ui.getNewPlanName(plans);
@@ -284,24 +313,37 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Plan already exists");
         }
         File planFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".txt");
-        if (planFile.exists()) {
-            planFile.delete();
-        }
         CEGStudyBuddy.courses.setPlanName(planName);
-        try {
-            this.dumpToFile(newPlanFile, CEGStudyBuddy.courses.toStoreFormat());
-        } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error in renaming plan");
-        }
+        planFile.renameTo(newPlanFile);
         ui.renameSuccessfulMessage();
     }
-    public void dumpToFile(File file, String data) throws CEGStudyBuddyException {
+
+    /**
+     * This function writes the data into the file
+     * @param file File the data has to be stored in
+     * @param data data that has to be stored
+     * @throws CEGStudyBuddyException
+     */
+    private void dumpToFile(File file, String data) throws CEGStudyBuddyException {
         try{
             FileWriter fw = new FileWriter(file);
             fw.write(data);
             fw.close();
         } catch (Exception e){
             throw new CEGStudyBuddyException("Error in saving to file");
+        }
+    }
+
+    /**
+     * Function to autosave
+     * @throws CEGStudyBuddyException
+     */
+    public void autoSave() throws CEGStudyBuddyException {
+        File saveFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".txt");
+        try{
+            dumpToFile(saveFile, CEGStudyBuddy.courses.toStoreFormat());
+        } catch (Exception e){
+            throw new CEGStudyBuddyException("Error in autosaving");
         }
     }
 }
