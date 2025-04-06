@@ -256,7 +256,8 @@ public class Parser {
             return null;
         }
 
-        int year, sem;
+        int year;
+        int sem;
         try {
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
