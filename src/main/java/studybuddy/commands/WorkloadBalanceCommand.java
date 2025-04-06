@@ -30,6 +30,13 @@ public class WorkloadBalanceCommand extends Command {
                 min = i;
             }
         }
-        return "Max : " + max + "\nMin : " + min;
+        String output = "Min: " + min + "\nMax: " + max;
+        if (max - min > 8){
+            output = output + "\n You have a high variance in you workload, it can be very stressful and can " +
+                    "negatively affect your CAP";
+        } else{
+            output = output + "\nYou seem to have a pretty balanced workload";
+        }
+        return output;
     }
 }

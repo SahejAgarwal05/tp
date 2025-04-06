@@ -303,7 +303,7 @@ public class Ui {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
         }
-        System.out.print("These are your prexisting plans");
+        System.out.println("These are your existing plans");
         return this.newPlanInput();
     }
     public void renameSuccessfulMessage(){
