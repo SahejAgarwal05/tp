@@ -61,7 +61,7 @@ public class AddCommandTest {
     @Test
     public void testDecimalInputs() {
         AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/3.5 y/2.5 s/1.5");
-        assertEquals("Invalid input: MC, year, and semestermust be whole numbers, not decimals."
+        assertEquals("Invalid input: MC, year, and semester must be whole numbers, not decimals."
                 , execute(cmd));
     }
 
