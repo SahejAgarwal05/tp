@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 test {
@@ -29,12 +30,25 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("studybuddy.CEGStudyBuddy")
+}
+
+task dukeJar(type: Jar) {
+    archiveBaseName.set("duke")
+    from sourceSets.main.output
+    manifest {
+        attributes 'Main-Class': 'seedu.duke.Duke'
+    }
 }
 
 shadowJar {
-    archiveBaseName.set("duke")
+    archiveBaseName.set("CEGStudyBuddy")
     archiveClassifier.set("")
+    manifest {
+        attributes(
+                'Main-Class': 'studybuddy.CEGStudyBuddy'
+        )
+    }
 }
 
 checkstyle {
@@ -44,8 +58,4 @@ checkstyle {
 run{
     standardInput = System.in
     enableAssertions = true
-}
-
-dependencies {
-    implementation 'com.google.code.gson:gson:2.10.1'
 }

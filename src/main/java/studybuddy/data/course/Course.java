@@ -15,7 +15,7 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected boolean isCleared;
+    protected String placeHolder = "To be confirmed";
 
     /**
      * Constructor for v1.0
@@ -31,10 +31,18 @@ public class Course implements Serializable {
         this.mc = mc;
         this.takeInYear = takeInYear;
         this.takeInSem = takeInSem;
-
         this.offerInSem1 = true;
         this.offerInSem2 = true;
-        this.isCleared = false;
+    }
+
+    public Course(int mc, int takeInYear, int takeInSem) {
+        this.code = placeHolder;
+        this.title = placeHolder;
+        this.mc = mc;
+        this.takeInYear = takeInYear;
+        this.takeInSem = takeInSem;
+        this.offerInSem1 = true;
+        this.offerInSem2 = true;
     }
 
     public String getCode() {
@@ -65,16 +73,8 @@ public class Course implements Serializable {
         return takeInYear;
     }
 
-    public boolean isCleared() {
-        return isCleared;
-    }
-
     public void setTakeInSem(int takeInSem) {
         this.takeInSem = takeInSem;
-    }
-
-    public void setCleared(boolean cleared) {
-        isCleared = cleared;
     }
 
     public void setCode(String code) {
@@ -108,5 +108,12 @@ public class Course implements Serializable {
                 "mc/" + getMc() + " " +
                 "y/" + getTakeInYear() + " " +
                 "s/" + getTakeInSem() + ")";
+    }
+    public String toStoreFormat(){
+        return "course : c/" + getCode() + " " +
+                "t/" + getTitle() + " " +
+                "mc/" + getMc() + " " +
+                "y/" + getTakeInYear() + " " +
+                "s/" + getTakeInSem();
     }
 }
