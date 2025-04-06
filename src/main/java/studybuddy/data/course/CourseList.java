@@ -6,15 +6,12 @@ import java.util.ArrayList;
 public class CourseList implements Serializable {
     private ArrayList<Course> courses; // List to store all courses
     private String planName;
-    // Initializes the Course List
     public CourseList(String planName) {
         this.courses = new ArrayList<Course>();
         this.planName = planName;
     }
-
     public Course setEditedParams(String[] editedParams, Course course) {
         if (editedParams.length != 5) {
-            // throw an exception here
             return course;
         }
         if (!editedParams[1].isEmpty()) {
@@ -83,8 +80,11 @@ public class CourseList implements Serializable {
     public void clear(){
         courses.clear();
     }
+    public String toStoreFormat(){
+        StringBuilder sb = new StringBuilder();
+        for (Course course : courses) {
+            sb.append(course.toStoreFormat()).append("\n");
+        }
+        return sb.toString();
+    }
 }
-
-
-
-
