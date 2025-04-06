@@ -7,6 +7,7 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.storage.UndoManager;
 
 /**
  * Replaces an existing course with a new one, preserving its time and MC attributes.

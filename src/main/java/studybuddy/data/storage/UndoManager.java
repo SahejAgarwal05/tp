@@ -1,4 +1,4 @@
-package studybuddy.commands;
+package studybuddy.data.storage;
 
 import java.util.Stack;
 
@@ -12,7 +12,7 @@ import studybuddy.data.course.CourseList;
 public class UndoManager {
 
     // Stack to store the history of user actions for undo
-    private static final Stack<Action> actionHistory = new Stack<>();
+    private static Stack<Action> actionHistory = new Stack<>();
 
     /**
      * Records an ADD action when a course is added.
@@ -88,9 +88,9 @@ public class UndoManager {
      * Represents a user action that can be undone.
      */
     private static class Action {
-        private final ActionType type;
-        private final Course course;      // For ADD and DELETE actions
-        private final Course newCourse;   // Only used for REPLACE actions
+        private ActionType type;
+        private Course course;      // For ADD and DELETE actions
+        private Course newCourse;   // Only used for REPLACE actions
 
         // Constructor for ADD and DELETE actions
         public Action(ActionType type, Course course) {

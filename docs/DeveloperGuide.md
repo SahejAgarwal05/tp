@@ -34,7 +34,7 @@ Run the tests to ensure they all pass.
 The classes in the studybuddy.command package handle commands.\
 All of CEGStudyBuddy’s commands have their own command class, which are subclasses of an abstract Command class.
 
-![CommandClassDiagram.png](CommandClassDiagram.png)
+![CommandClassDiagram.png](class_diagrams/CommandClassDiagram.png)
 
 **How it Works:**
 
@@ -52,7 +52,7 @@ The classes in the studybuddy.data.io package handle input/output functions.
 #### 1. Parser
 The Parser class is a utility class containing methods related to parsing command input.
 
-![ParserClassDiagram](ParserClassDiagram.png)
+![ParserClassDiagram](class_diagrams/ParserClassDiagram.png)
 
 **Methods:**
 
@@ -93,7 +93,7 @@ The studybuddy.data package not only contains the aforementioned io package, but
 #### 1. Course
 The Course class represents a single course.
 
-![CourseClassDiagram.png](CourseClassDiagram.png)
+![CourseClassDiagram.png](class_diagrams/CourseClassDiagram.png)
 
 **Attributes:**
 
@@ -115,7 +115,7 @@ The Course class represents a single course.
 #### 2. CourseList
 The CourseList class stores the list of courses and contains methods to modify this course list.
 
-![CourseListClassDiagram.png](CourseListClassDiagram.png)
+![CourseListClassDiagram.png](class_diagrams/CourseListClassDiagram.png)
 
 **Attributes:**
 
@@ -137,7 +137,7 @@ The CourseList class stores the list of courses and contains methods to modify t
 #### 3. CourseManager
 The CourseManager class handles reading from the Defined_Courses file and conversion between Course objects and JSON strings.
 
-![CourseManagerClassDiagram.png](CourseManagerClassDiagram.png)
+![CourseManagerClassDiagram.png](class_diagrams/CourseManagerClassDiagram.png)
 
 **Attributes:**
 
@@ -165,7 +165,7 @@ When adding a new course into the schedule through AddCommand, AddCommand will s
    - If found, it uses that predefined information.
    - If not found, it accepts manual user input.
 
-![PredefinedListSequence.png](PredefinedListSequence.png)
+![PredefinedListSequence.png](sequence_diagrams/PredefinedListSequence.png)
 
 For the developers, this list is essential for other enhancement functions such as checking graduation requirements by comparing the users’ course plans with the list of core courses. To conveniently save and load from the list, Json dependency is added to convert between courses and Json Strings.
 
@@ -182,7 +182,7 @@ The StorageManager class handles storage related tasks like creating new plans, 
 - It creates a `PlanData` folder to store data if one doesn’t already exist.
 - It loads the user’s course plan at startup and saves changes automatically.
 
-![StorageManagerClassDiagram](StorageManagerClassDiagram.png)
+![StorageManagerClassDiagram](class_diagrams/StorageManagerClassDiagram.png)
 
 **Attributes**
 - `Ui ui`: Ui object responsible for user interaction related operations.
@@ -206,7 +206,16 @@ The StorageManager class handles storage related tasks like creating new plans, 
 ---
 
 #### 2. CommandHistoryManager
+insert description
 
+![CommandHistoryClassDiagram.png](class_diagrams/CommandHistoryClassDiagram.png)
+
+---
+
+#### 3. UndoManager
+insert description
+
+![UndoManagerClassDiagram.png](class_diagrams/UndoManagerClassDiagram.png)
 
 ---
 
@@ -219,7 +228,7 @@ Details of the implementation of a few noteworthy features of CEGStudyBuddy is l
 ### Adding a Course
 A simplified sequence diagram of the AddCommand class implementation:
 
-![AddCommandSequence.png](AddCommandSequence.png)
+![AddCommandSequence.png](sequence_diagrams/AddCommandSequence.png)
 
 ---
 
