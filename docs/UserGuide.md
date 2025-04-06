@@ -232,10 +232,16 @@ workload_balance
 
 Example Output:
 ```
-Max: 38
 Min: 22
+Max: 38
+You have a high variance in you workload, it can be very stressful and can negatively affect your CAP
 ```
-
+```
+Min: 20
+Max: 22
+You seem to have a pretty balanced workload
+```
+```
 ---
 
 ### Graduation Requirement: `gradreq`
@@ -336,6 +342,10 @@ It does not take any parameters.
 ```
 exit
 ```
+**Expected Output:**
+```
+Bye
+```
 
 ---
 
@@ -400,3 +410,8 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 ### ❓ Q: What if I accidentally delete a plan?
 
 **A:** Currently, there is delete_plan is irreversible, and it is highly recommended to be 100% sure while deleting. 
+
+### ❓ Q: Is there autosave?
+
+**A:** Yes, after each and every command your progress in the current plan is backedup.
+
