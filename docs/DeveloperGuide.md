@@ -406,6 +406,11 @@ For the developers, this list is essential for other enhancement functions such 
 
 ---
 
+### Exceptions
+The studybuddy.data.exception package contains the CEGStudyBuddyException class. It handles exceptions that are special to CEGStudyBuddy and cannot be categorised by the exception classes in Java’s own packages, e.g. having no saved course plan at all, having a semester number greater than 2, etc. It is also used to print out a customised error message on screen. 
+
+---
+
 ## Implementation
 
 ### Adding a Course
