@@ -586,6 +586,18 @@ gradreq
 - 160 MCs or more → celebratory message + graduation ASCII/emoji
 
 ---
+
+### Adding a Dummy Course
+
+Command:
+```
+dummy mc/4 y/2 s/1
+```
+
+**Test Cases:**
+- Extra input parameters (e.g., `dummy t/Dummy mc/4 y/2 s/1`)
+- Fail to add a dummy after dummy number reaches 20
+- Valid case: Adding a new dummy course with correct parameters (e.g., `dummy mc/4 y/2 s/1`)
 ```
 
 
