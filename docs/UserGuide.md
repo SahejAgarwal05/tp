@@ -241,7 +241,6 @@ Min: 20
 Max: 22
 You seem to have a pretty balanced workload
 ```
-```
 ---
 
 ### Graduation Requirement: `gradreq`
