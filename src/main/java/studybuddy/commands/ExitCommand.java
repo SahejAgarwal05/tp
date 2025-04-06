@@ -21,6 +21,7 @@ public class ExitCommand extends Command {
             return "Exit Cancelled";
         }
         storage.saveCurrentPlan();
+        isRunning = false;
         return "Bye"; // print proper message, put in Ui
     }
 
