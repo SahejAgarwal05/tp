@@ -28,11 +28,9 @@ public class CEGStudyBuddy {
                 Command c = Parser.parseCommand(userInput);
                 String output = c.execute(courses, storage);
                 ui.showMessage(output);
-
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
                 }
-
                 isRunning = c.isRunning();
             } catch (Exception e) {
                 if (!isSummary) {
