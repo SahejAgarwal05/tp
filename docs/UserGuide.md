@@ -58,19 +58,45 @@ Note that the current version of CEGStudyBuddy does not automatically save your 
 
 ---
 
+### Notes about CEG Mandatory Courses
+
+CEGStudyBuddy comes with a full list of pre-defined courses that are mandatory in the NUS Computer Engineering curriculum.
+
+You may simply add these courses without having to specify the title and number of MCs (see Adding a Course below).
+
+---
+
 ### Adding a Course: `add`
 
 Adds a course to the planner.
 
-**Format:**
+**Format:**\
+For non-CEG required courses:
 ```
 add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
 ```
-
-**Examples:**
+For CEG required courses:
 ```
-add c/CS2040 t/Data Structures mc/4 y/2 s/1
+add c/CODE y/YEAR s/SEMESTER
+```
+
+**Examples:**\
+For non-CEG required courses:
+```
 add c/MA1101 t/Linear Algebra mc/4 y/1 s/2
+```
+Example Output:
+```
+Course added: MA1101 Linear Algebra (4 MCs)
+```
+
+For CEG required courses:
+```
+add c/CS1010 y/1 s/1
+```
+Example Output:
+```
+Course added: CS1010 Programming Methodology (4 MCs)
 ```
 
 ---
