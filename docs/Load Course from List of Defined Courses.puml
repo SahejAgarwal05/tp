@@ -1,0 +1,35 @@
+@startuml
+participant ":AddCommand" as AC
+participant ":Parser" as P
+participant ":CourseManager" as CM
+participant "Defined_Courses: File" as File
+
+AC -> P : calls parseCourse(param)
+activate P
+
+P -> CM : ifDefined(code)
+activate CM
+
+CM -> File : scan for "code"
+activate File
+File --> CM : returns true/false
+deactivate File
+CM --> P: returns true/false
+
+alt ifDefined(code)
+    P -> CM : getCourse(code)
+    CM -> File : retrieve course JSON
+    activate File
+    File --> CM : returns JSON string
+    deactivate File
+    CM -> CM : jsonToCourse(JSON string)
+    CM --> P : returns Course object
+else else
+    P -> P : new Course(code, title, mc, takeInYear, takeInSem)
+end
+deactivate CM
+
+P --> AC : Course object returned
+deactivate P
+
+@enduml
