@@ -153,19 +153,16 @@ public class Parser {
         throw new CEGStudyBuddyException("Course with code " + code + " not found.");
     }
 
-    public static String[] parseReplace(String param) throws CEGStudyBuddyException {
+    public static String[] parseReplace(String param) {
         String[] tokens = param.trim().split("\\s+");
 
+        // Only parse and return the codes — don't validate formatting here
         if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
-            throw new CEGStudyBuddyException("Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
+            return new String[]{"", ""}; // Allow ReplaceCommand to handle the formatting issues
         }
 
         String oldCode = tokens[0].substring(2).toUpperCase();
         String newCode = tokens[1].substring(2).toUpperCase();
-
-        if (oldCode.isEmpty() || newCode.isEmpty()) {
-            throw new CEGStudyBuddyException("Course codes cannot be empty.");
-        }
 
         return new String[]{oldCode, newCode};
     }
@@ -185,7 +182,8 @@ public class Parser {
 
         if (!matcher.find()) {
             throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n"
-                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n"
+                    + "or the input is decimal :(");
         }
 
         String code = matcher.group("code").trim();
