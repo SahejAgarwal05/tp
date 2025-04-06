@@ -158,7 +158,7 @@ public class StorageManager {
         String planName = "";
         while (planName.isEmpty()) {
             planName = ui.newPlanInput();
-            // check that name does not have any special charecters
+            // check that name does not have any special characters
             if (!planName.matches("[a-zA-Z0-9]*")) {
                 planName = "";
             }
