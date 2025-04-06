@@ -1,5 +1,6 @@
 package studybuddy.commands;
 
+import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
@@ -20,20 +21,27 @@ public class WorkloadForCommand extends Command {
         int[] paramParts = Parser.parseWorkloadFor(param);
         int sem = paramParts[0];
         int year = paramParts[1];
-        String output = "These are the courses you will be taking:";
+        if (!Utils.isValidSem(sem) || !Utils.isValidYear(year)) {
+            throw new CEGStudyBuddyException("Invalid input. Year must be from 1 to 4 and sem must be either 1 or 2.");
+        }
+
+        StringBuilder output = new StringBuilder("These are the courses you will be taking:");
         int totalWorkLoad = 0;
         int index = 1;
+
         for (Course course : courses.getCourses()) {
             if (course.getTakeInSem() == sem && course.getTakeInYear() == year) {
                 totalWorkLoad += course.getMc();
-                output = output + "\n" + index + "." + course.toString();
+                output.append("\n").append(index).append(". ").append(course);
                 index++;
             }
         }
-        if (index == 1){
-            return "You have are not taking any courses yet";
+
+        if (index == 1) {
+            return "You are not taking any courses yet.";
         }
-        output = output + "\nTotal workload: " + totalWorkLoad;
-        return output;
+
+        output.append("\nTotal workload: ").append(totalWorkLoad);
+        return output.toString();
     }
 }

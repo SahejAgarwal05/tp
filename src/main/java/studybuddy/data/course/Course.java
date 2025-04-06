@@ -15,7 +15,7 @@ public class Course implements Serializable {
     // Editable to user
     protected int takeInSem;
     protected int takeInYear;
-    protected final String PLACEHOLDER = "To be confirmed";
+    protected String placeHolder = "To be confirmed";
 
     /**
      * Constructor for common creation of course
@@ -42,8 +42,8 @@ public class Course implements Serializable {
      * @param takeInSem Take/Taken this course in which semester, e.g. 1, 2.
      */
     public Course(int mc, int takeInYear, int takeInSem) {
-        this.code = PLACEHOLDER;
-        this.title = PLACEHOLDER;
+        this.code = placeHolder;
+        this.title = placeHolder;
         this.mc = mc;
         this.takeInYear = takeInYear;
         this.takeInSem = takeInSem;
@@ -109,10 +109,18 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "(c/" + getCode() + " " +
+        return getCode() + " - " + getTitle() + " (" + getMc() + " MCs)";
+    }
+
+    /**
+     * Function to convert the course in to its storage format
+     * @return String of the storage formatted course
+     */
+    public String toStoreFormat(){
+        return "course : c/" + getCode() + " " +
                 "t/" + getTitle() + " " +
                 "mc/" + getMc() + " " +
                 "y/" + getTakeInYear() + " " +
-                "s/" + getTakeInSem() + ")";
+                "s/" + getTakeInSem();
     }
 }

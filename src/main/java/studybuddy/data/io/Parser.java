@@ -1,5 +1,8 @@
 package studybuddy.data.io;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.Command;
 import studybuddy.commands.DeleteCourse;
@@ -12,11 +15,16 @@ import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.ListCommand;
 import studybuddy.commands.PlaceHolderCommand;
+import studybuddy.commands.RenamePlanCommand;
+import studybuddy.commands.ReplaceCommand;
 import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SummaryCommand;
 import studybuddy.commands.SwitchPlanCommand;
-import studybuddy.commands.WorkloadBalanceCommand;
+import studybuddy.commands.UndoCommand;
 import studybuddy.commands.WorkloadForCommand;
+import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.PrereqCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -33,112 +41,218 @@ public class Parser {
      * @throws IndexOutOfBoundsException If parameters are not included (inputParts.len() = 1).
      */
     public static Command parseCommand(String[] inputParts) throws CEGStudyBuddyException {
-        Command c;
         try {
-            switch (inputParts[0]) {
-            case CommandNames.ADD -> c = new AddCommand(inputParts[1]);
-            case CommandNames.EDIT -> c = new EditCommand(inputParts[1]);
-            case CommandNames.LIST -> c = new ListCommand();
-            case CommandNames.FIND -> c = new FindCommand(inputParts[1]);
-            case CommandNames.DELETE -> c = new DeleteCourse(inputParts[1]);
-            case CommandNames.GRADREQ -> c = new GradRequirementCommand();
-            case CommandNames.WORKLOAD_SUMMARY -> c = new WorkloadSummaryCommand();
-            case CommandNames.WORKLOAD_FOR -> c = new WorkloadForCommand(inputParts[1]);
-            case CommandNames.WORKLOAD_BALANCE -> c = new WorkloadBalanceCommand();
-            case CommandNames.SAVE -> c = new SavePlanCommand();
-            case CommandNames.SWITCH_PLAN -> c = new SwitchPlanCommand();
-            case CommandNames.HELP -> c = new HelpCommand();
-            case CommandNames.EXIT -> c = new ExitCommand();
-            case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
-            case CommandNames.PLACEHOLDER -> c = new PlaceHolderCommand(inputParts[1]);
-            default -> c = new InvalidCommand();
+            //Logic to solve Exception message for command inputs without space and with space (no information)
+            String command = inputParts[0].toLowerCase();
+            switch (command) {
+            case CommandNames.ADD:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters!"
+                            + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
+                }
+                return new AddCommand(inputParts[1]);
+
+            case CommandNames.EDIT:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters!" +
+                            "Format: edit c/CODE t/Title mc/MCs y/Year s/Sem");
+                }
+                return new EditCommand(inputParts[1]);
+
+            case CommandNames.REPLACE:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters!" +
+                            "Format: replace c/OLD CODE c/NEW CODE t/Title mc/MCs y/Year s/Sem");
+                }
+                return new ReplaceCommand(inputParts[1]);
+
+            case CommandNames.DELETE:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
+                }
+                return new DeleteCourse(inputParts[1]);
+
+            case CommandNames.FIND:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
+                }
+                return new FindCommand(inputParts[1]);
+
+            case CommandNames.PREREQ:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: prereq c/CODE");
+                }
+                return new PrereqCommand(inputParts[1]);
+
+            case CommandNames.WORKLOAD_FOR:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
+                }
+                return new WorkloadForCommand(inputParts[1]);
+
+            case CommandNames.PLACEHOLDER:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: dummy mc/MCs y/YEAR s/SEM");
+                }
+                return new PlaceHolderCommand(inputParts[1]);
+
+            case CommandNames.LIST:
+                return new ListCommand();
+
+            case CommandNames.GRADREQ:
+                return new GradRequirementCommand();
+
+            case CommandNames.WORKLOAD_SUMMARY:
+                return new WorkloadSummaryCommand();
+
+            case CommandNames.WORKLOAD_BALANCE:
+                return new WorkloadBalanceCommand();
+
+            case CommandNames.SAVE:
+                return new SavePlanCommand();
+
+            case CommandNames.SWITCH_PLAN:
+                return new SwitchPlanCommand();
+
+            case CommandNames.DELETE_PLAN:
+                return new DeletePlanCommand();
+
+            case CommandNames.RENAME_PLAN:
+                return new RenamePlanCommand();
+
+            case CommandNames.HELP:
+                return new HelpCommand();
+
+            case CommandNames.EXIT:
+                return new ExitCommand();
+
+            case CommandNames.UNDO:
+                return new UndoCommand();
+
+            case CommandNames.SUMMARY:
+                return new SummaryCommand();
+
+            default:
+                return new InvalidCommand();
             }
+
+        } catch (CEGStudyBuddyException e) {
+            throw e;
         } catch (Exception e) {
-            throw new CEGStudyBuddyException(e.getMessage());
+            throw new CEGStudyBuddyException("An unknown error occurred while parsing the command.");
         }
-        return c;
+    }
+
+    public static Course parseDeleteReturnCourse(CourseList courses, String param) throws CEGStudyBuddyException {
+        String[] parts = param.trim().split("c/", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new CEGStudyBuddyException("Invalid format! Please use: delete c/CODE");
+        }
+
+        String code = parts[1].trim().toUpperCase();
+
+        for (Course course : courses.getCourses()) {
+            if (course.getCode().equalsIgnoreCase(code)) {
+                courses.getCourses().remove(course);
+                return course; // Return the deleted course for undo
+            }
+        }
+
+        throw new CEGStudyBuddyException("Course with code " + code + " not found.");
+    }
+
+    public static String[] parseReplace(String param) {
+        String[] tokens = param.trim().split("\\s+");
+
+        // Only parse and return the codes — don't validate formatting here
+        if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
+            return new String[]{"", ""}; // Allow ReplaceCommand to handle the formatting issues
+        }
+
+        String oldCode = tokens[0].substring(2).toUpperCase();
+        String newCode = tokens[1].substring(2).toUpperCase();
+
+        return new String[]{oldCode, newCode};
     }
 
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
-        String[] paramParts = param.split("c/| t/| mc/| y/| s/", 6);
 
-        String code;
-        String title;
+        // Early check for decimals using regex
+        if (param.matches(".*(mc/\\d+\\.\\d+|y/\\d+\\.\\d+|s/\\d+\\.\\d+).*")) {
+            throw new CEGStudyBuddyException("Invalid input: MC, year, and semester"
+                    + " must be whole numbers, not decimals.");
+        }
+
+        Pattern pattern = Pattern.compile(
+                "c/(?<code>\\S+)\\s+" +
+                        "t/(?<title>.*?)\\s+" +
+                        "mc/(?<mc>\\d+)\\s+" +
+                        "y/(?<year>\\d+)\\s+" +
+                        "s/(?<sem>\\d+)"
+        );
+        Matcher matcher = pattern.matcher(param);
+
+        if (!matcher.find()) {
+            throw new CEGStudyBuddyException("""
+                    Missing fields. Please follow the format:
+                    add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM
+                    or the input is decimal :(""");
+        }
+
+        String code = matcher.group("code").trim();
+        String title = matcher.group("title").trim();
+        String mcStr = matcher.group("mc").trim();
+        String yearStr = matcher.group("year").trim();
+        String semStr = matcher.group("sem").trim();
+
+        if (code.isEmpty() || title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
+            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n" +
+                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+        }
+
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.");
+        }
+
         int mc;
-        int takeInYear;
-        int takeInSem;
-
+        int year;
+        int sem;
         try {
-            code = paramParts[1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
-        }
-        if (CourseManager.ifDefined(code)) {
-            Course course = getDefinedCourse(code, param);
-            if (course != null) {
-                return course;
-            }
-        }
-
-        try {
-            title = paramParts[2];
-            mc = Integer.parseInt(paramParts[3]);
-            takeInYear = Integer.parseInt(paramParts[4]);
-            takeInSem = Integer.parseInt(paramParts[5]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
+            mc = Integer.parseInt(mcStr);
+            year = Integer.parseInt(yearStr);
+            sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+            throw new CEGStudyBuddyException("Invalid number format. MC, year, and semester must be integers.");
         }
 
-        if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
-            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+        if (!Utils.isValidMC(mc)) {
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be between 1 and 12.");
+        }
+        if (!Utils.isValidYear(year)) {
+            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
+        }
+        if (!Utils.isValidSem(sem)) {
+            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
 
-        return new Course(code, title, mc, takeInYear, takeInSem);
+        Course c = getDefinedCourse(code, year, sem);
+        if (c == null) {
+            return new Course(code, title, mc, year, sem);
+        }
+        return c;
     }
 
-    private static Course getDefinedCourse(String code, String param)
+    private static Course getDefinedCourse(String code, int year, int sem)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
-        String[] parts = param.split(" ");
-        Integer y = null;
-        Integer s = null;
 
-        for (String part : parts) {
-            if (part.startsWith("y/")) {
-                y = Integer.parseInt(part.substring(2));
-            } else if (part.startsWith("s/")) {
-                s = Integer.parseInt(part.substring(2));
-            }
-        }
         Course course = CourseManager.getCourse(code);
-        if (y != null && s != null) {
-            assert course != null;
-            course.setTakeInYear(y);
-            course.setTakeInSem(s);
+        if (course != null) {
+            course.setTakeInYear(year);
+            course.setTakeInSem(sem);
             return course;
         }
         return null;
-    }
-
-    public static String parseDelete(CourseList courses, String param) {
-        // Example input: c/CS2040
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2) {
-            return "Invalid format! Please use: delete c/CODE";
-        }
-        String code = parts[1].trim().toUpperCase();
-
-        boolean deleted = courses.getCourses().removeIf(course ->
-                course.getCode().equalsIgnoreCase(code)
-        );
-
-        if (deleted) {
-            return "Course with code " + code + " has been deleted.";
-        } else {
-            return "Course with code " + code + " not found.";
-        }
     }
 
     public static String[] parseEdit(String param) throws ArrayIndexOutOfBoundsException, NumberFormatException {
