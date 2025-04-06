@@ -351,4 +351,8 @@ public class Ui {
     public void renameSuccessfulMessage(){
         System.out.println("Successfully renamed");
     }
+
+    public String extraInputErrorMessage() {
+        return "There is extra input, please check your input";
+    }
 }

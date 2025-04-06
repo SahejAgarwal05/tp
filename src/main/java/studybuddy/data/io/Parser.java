@@ -14,6 +14,7 @@ import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
 import studybuddy.commands.RenamePlanCommand;
 import studybuddy.commands.ReplaceCommand;
 import studybuddy.commands.SavePlanCommand;
@@ -31,7 +32,7 @@ import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
-
+    private static Ui ui = new Ui();
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
@@ -88,6 +89,12 @@ public class Parser {
                     throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
                 }
                 return new WorkloadForCommand(inputParts[1]);
+
+            case CommandNames.PLACEHOLDER:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: dummy mc/MCs y/YEAR s/SEM");
+                }
+                return new PlaceHolderCommand(inputParts[1]);
 
             case CommandNames.LIST:
                 return new ListCommand();
@@ -293,6 +300,7 @@ public class Parser {
         if (!param.trim().toLowerCase().startsWith("c/")) {
             throw new CEGStudyBuddyException("Invalid find format! Use: find c/CODE");
         }
+
         // Extract course code
         String[] parts = param.trim().split("c/", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
@@ -311,6 +319,38 @@ public class Parser {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid year and/or sem");
         }
+
         return output;
+    }
+
+    public static Course parseDummy(String param) throws CEGStudyBuddyException {
+        assert (!param.isEmpty());
+
+        String[] parts = param.split(" ");
+        if (parts.length < 3) {
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
+        }
+        if (parts.length > 3) {
+            throw new CEGStudyBuddyException(ui.extraInputErrorMessage());
+        }
+
+        Integer mc = null;
+        Integer y = null;
+        Integer s = null;
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].startsWith("mc/")) {
+                mc = Integer.parseInt(parts[i].substring(3));
+            } else if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
+            }
+        }
+
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(y) || !Utils.isValidSem(s)) {
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+        }
+
+        return new Course(mc, y, s);
     }
 }

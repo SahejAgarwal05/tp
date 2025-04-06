@@ -18,7 +18,7 @@ public class Course implements Serializable {
     protected String placeHolder = "To be confirmed";
 
     /**
-     * Constructor for v1.0
+     * Constructor for common creation of course
      * @param code Code of the course, e.g. CS1231, CG1111As.
      * @param title Text title of the course, e.g. Programming Methodology.
      * @param mc Module credit of the course, e.g. 2, 4, 8.
@@ -35,6 +35,12 @@ public class Course implements Serializable {
         this.offerInSem2 = true;
     }
 
+    /**
+     * Constructor for placeholder course
+     * @param mc Module credit of the course, e.g. 2, 4, 8.
+     * @param takeInYear Take/Taken this course in which year, e.g. 1, 2, 3, 4.
+     * @param takeInSem Take/Taken this course in which semester, e.g. 1, 2.
+     */
     public Course(int mc, int takeInYear, int takeInSem) {
         this.code = placeHolder;
         this.title = placeHolder;
