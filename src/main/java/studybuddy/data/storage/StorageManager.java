@@ -292,6 +292,10 @@ public class StorageManager {
         } else {
             throw new CEGStudyBuddyException("Plan does not exist");
         }
+        ui.displaySuccessfullyDeletedMessage();
+        if(planName.equals(CEGStudyBuddy.courses.getPlanName())) {
+            this.initializePlan();
+        }
     }
 
     /**
