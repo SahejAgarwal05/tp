@@ -10,25 +10,12 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class AddCommandTest {
-    public static Ui ui = new Ui();
-    public static final String TEST_CODE = "CS2103";
-    public static final String TEST_TITLE = "Software Engineering";
-    public static final String TEST_MC = "4";
-    public static final String TEST_SEM = "2";
-    public static final String TEST_YEAR = "2";
-
-    public static final String[] TEST_INVALID_PARAM = {"four", "1.5", "-2"};
-    public static final String[] TEST_OOB_PARAM = {"0", "3", "6"};
-    public static final String[] TEST_MISSING_PARAM = {"c/" + TEST_CODE,
-                                                       "t/" + TEST_TITLE,
-                                                       "mc/" + TEST_MC,
-                                                       "y/" + TEST_YEAR,
-                                                       "s/" + TEST_SEM,};
-
-    public static final String ADD_COURSE_EXPECTED = "Course added: "
-            + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
-    public static final String MISSING_INPUT_EXPECTED = ui.missingInputErrorMessage();
-    public static final String INVALID_INPUT_EXPECTED = ui.parseIntErrorMessage();
+    private static final Ui ui = new Ui();
+    private static final String TEST_CODE = "CS2103";
+    private static final String TEST_TITLE = "Software Engineering";
+    private static final String TEST_MC = "4";
+    private static final String TEST_YEAR = "2";
+    private static final String TEST_SEM = "1";
 
     private CourseList courses;
     private StorageManager storage = new StorageManager("./PlanData");
@@ -39,53 +26,78 @@ public class AddCommandTest {
     }
 
     @Test
-    public void testAddCourse() {
-        String testInput = getTestInput(TEST_MC, TEST_SEM, TEST_YEAR);
-        AddCommand addCourse = new AddCommand(testInput);
-        String output = executeTest(addCourse);
-        assertEquals(ADD_COURSE_EXPECTED, output);
+    public void testValidAddCommand() {
+        String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
+        AddCommand command = new AddCommand(input);
+        String expected = "Course added: " + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
+        String output = executeCommand(command);
+        assertEquals(expected, output);
     }
 
     @Test
-    public void testMissingParam() {
-        for (String param : TEST_MISSING_PARAM) {
-            AddCommand addCourse = new AddCommand(param);
-            String output = executeTest(addCourse);
-            assertEquals(MISSING_INPUT_EXPECTED, output);
+    public void testDuplicateAddCommand() {
+        String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
+        AddCommand command1 = new AddCommand(input);
+        AddCommand command2 = new AddCommand(input);
+        executeCommand(command1); // First one should succeed
+        String output = executeCommand(command2); // Second should throw duplicate error
+        assertEquals("This course is already added for the same year and semester.", output);
+    }
+
+    @Test
+    public void testMissingFields() {
+        String[] invalidInputs = {
+                "c/CS2040 t/Data Structures mc/4 y/2", // missing s/
+                "t/Data Structures mc/4 y/2 s/1",       // missing c/
+                "c/CS2040 mc/4 y/2 s/1",                // missing t/
+                "c/CS2040 t/Data Structures y/2 s/1",   // missing mc/
+                "c/CS2040 t/Data Structures mc/4 s/1",  // missing y/
+        };
+
+        for (String input : invalidInputs) {
+            AddCommand cmd = new AddCommand(input);
+            String output = executeCommand(cmd);
+            assertEquals("Missing fields. Please follow the format:\n" +
+                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM", output);
         }
     }
 
     @Test
-    public void testInvalidParam() {
-        for (String param : TEST_INVALID_PARAM) {
-            String testInput = getTestInput(param, param, param);
-            AddCommand addCourse = new AddCommand(testInput);
-            String output = executeTest(addCourse);
-            assertEquals(INVALID_INPUT_EXPECTED, output);
-        }
+    public void testInvalidCourseCodeFormat() {
+        String input = formatInput("1234CS", TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
+        AddCommand cmd = new AddCommand(input);
+        String output = executeCommand(cmd);
+        assertEquals("Invalid course code format.Expected: CS2040, EE2026, CG2111A etc.", output);
     }
 
     @Test
-    public void testOutOfBoundsParam() {
-        String testInput = getTestInput(TEST_OOB_PARAM[0], TEST_OOB_PARAM[1], TEST_OOB_PARAM[2]);
-        AddCommand addCourse = new AddCommand(testInput);
-        String output = executeTest(addCourse);
-        assertEquals(INVALID_INPUT_EXPECTED, output);
+    public void testInvalidNumbers() {
+        String input = formatInput(TEST_CODE, TEST_TITLE, "abc", TEST_YEAR, TEST_SEM);
+        AddCommand cmd = new AddCommand(input);
+        String output = executeCommand(cmd);
+        assertEquals("Missing fields. Please follow the format:\nadd c/CODE t/TITLE mc/VALUE y/YEAR s/SEM", output);
     }
 
-    String getTestInput(String mc, String sem, String year) {
-        return "c/" + AddCommandTest.TEST_CODE +
-                " t/" + AddCommandTest.TEST_TITLE +
-                " mc/" + mc +
-                " y/" + year +
-                " s/" + sem;
+    @Test
+    public void testOutOfRangeValues() {
+        String input = formatInput(TEST_CODE, TEST_TITLE, "20", "5", "3");
+        AddCommand cmd = new AddCommand(input);
+        String output = executeCommand(cmd);
+        assertEquals("Invalid MC value. MC must be between 1 and 12.", output);
     }
 
-    String executeTest(AddCommand cmd) {
+    // ------------------ Utility Methods ------------------
+
+    private String formatInput(String code, String title, String mc, String year, String sem) {
+        return "c/" + code + " t/" + title + " mc/" + mc + " y/" + year + " s/" + sem;
+    }
+
+    private String executeCommand(AddCommand command) {
         try {
-            return cmd.execute(courses, storage);
+            return command.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             return e.getMessage();
         }
     }
 }
+

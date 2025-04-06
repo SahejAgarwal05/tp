@@ -207,7 +207,7 @@ public class Parser {
         }
 
         // Parse and validate numbers
-        int mc; 
+        int mc;
         int year;
         int sem;
         try {
