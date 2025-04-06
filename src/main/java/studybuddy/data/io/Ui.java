@@ -258,11 +258,11 @@ public class Ui {
     }
 
     public String indexOutOfBoundErrorMessage() {
-        return "Input is not a valid index, pleasae check your input";
+        return "Input is not a valid index, please check your input";
     }
 
     public String parseIntErrorMessage() {
-        return "Input cannot be converted to an valid number, please check your input";
+        return "Input cannot be converted to an valid number, please input a correct year, sem, or mc";
     }
 
     public String missingCodeErrorMessage() {

@@ -3,21 +3,20 @@ package studybuddy.commands;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
+import studybuddy.data.course.UndoManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
-import studybuddy.data.course.UndoManager;
 
 /**
- * The ReplaceCommand class replaces an existing course in the planner with a new one.
- * Usage: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
- * Example: replace c/CS2040 c/CS2100 t/Computer Organization mc/4 y/2 s/1
+ * Replaces an existing course with a new one, preserving its time and MC attributes.
+ * Format: replace c/OLD_CODE c/NEW_CODE t/TITLE mc/VALUE y/YEAR s/SEM
  */
 public class ReplaceCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
         replace c/OLD_CODE NEW_CODE mc/MODULAR_CREDITS y/YEAR s/SEMESTER t/TITLE
-            Replaces an existing course with a new one, preserving year/sem/mc.""";
+            Replaces an existing course with a new one.""";
 
     private final Ui ui = new Ui();
 
@@ -28,37 +27,53 @@ public class ReplaceCommand extends Command {
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         String[] codes = Parser.parseReplace(param);
-        String oldCode = codes[0];
-        String newCode = codes[1];
+        String oldCode = codes[0].trim();
+        String newCode = codes[1].trim();
 
+        // Validate course codes
+        if (oldCode.isEmpty() || newCode.isEmpty()) {
+            throw new CEGStudyBuddyException("Course code(s) cannot be empty. Please use format: c/OLD_CODE c/NEW_CODE");
+        }
+        if (!oldCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") || !newCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Expected format: CS2040, EE2026, CG2111A");
+        }
+
+        // Split and validate remaining parameters
         String[] paramParts = param.split("t/|mc/|y/|s/");
-        if (paramParts.length < 4) {
+        if (paramParts.length < 5) {
             throw new CEGStudyBuddyException("Missing required fields! Please use format: "
                     + "replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
         String title = paramParts[1].trim();
-        int mc;
-        int year;
-        int sem;
+        String mcStr = paramParts[2].trim();
+        String yearStr = paramParts[3].trim();
+        String semStr = paramParts[4].trim();
+
+        if (title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
+            throw new CEGStudyBuddyException("One or more fields are empty.Complete all: t/TITLE mc/VALUE y/YEAR s/SEM");
+        }
+
+        int mc, year, sem;
         try {
-            mc = Integer.parseInt(paramParts[2].trim());
-            year = Integer.parseInt(paramParts[3].trim());
-            sem = Integer.parseInt(paramParts[4].trim());
-        } catch (Exception e) {
-            throw new CEGStudyBuddyException("Invalid input format! Make sure mc/y/s are numbers.");
+            mc = Integer.parseInt(mcStr);
+            year = Integer.parseInt(yearStr);
+            sem = Integer.parseInt(semStr);
+        } catch (NumberFormatException e) {
+            throw new CEGStudyBuddyException("Invalid number format. Please enter numeric values for MC, year, and semester.");
         }
 
         if (!Utils.isValidMC(mc)) {
-            throw new CEGStudyBuddyException("Invalid MC value!");
+            throw new CEGStudyBuddyException("Invalid MC value! It should be between 1 and 12.");
         }
         if (!Utils.isValidYear(year)) {
-            throw new CEGStudyBuddyException("Invalid Year value!");
+            throw new CEGStudyBuddyException("Invalid Year value! It should be between 1 and 4.");
         }
         if (!Utils.isValidSem(sem)) {
-            throw new CEGStudyBuddyException("Invalid Semester value!");
+            throw new CEGStudyBuddyException("Invalid Semester value! It should be either 1 or 2.");
         }
 
+        // Find and remove the old course
         Course oldCourse = null;
         for (Course course : courses.getCourses()) {
             if (course.getCode().equalsIgnoreCase(oldCode)) {
@@ -71,14 +86,23 @@ public class ReplaceCommand extends Command {
             return ui.showCourseNotFoundInReplaceMessage(oldCode);
         }
 
-        courses.deleteCourseByCode(oldCode);
-
         Course newCourse = new Course(newCode, title, mc, year, sem);
-        courses.addCourse(newCourse);
 
+        if (oldCourse.getCode().equalsIgnoreCase(newCourse.getCode()) &&
+                oldCourse.getTitle().equalsIgnoreCase(newCourse.getTitle()) &&
+                oldCourse.getMc() == newCourse.getMc() &&
+                oldCourse.getTakeInYear() == newCourse.getTakeInYear() &&
+                oldCourse.getTakeInSem() == newCourse.getTakeInSem()) {
+            return "The course already exists :)";
+        }
+
+        courses.deleteCourseByCode(oldCode);
+        courses.addCourse(newCourse);
         UndoManager.recordReplace(oldCourse, newCourse);
 
         return ui.showCourseReplacedMessage(oldCode, newCode);
     }
 }
+
+
 

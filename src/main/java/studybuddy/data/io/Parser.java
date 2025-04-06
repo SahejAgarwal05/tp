@@ -20,6 +20,7 @@ import studybuddy.commands.UndoCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
+import studybuddy.commands.PrereqCommand;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
@@ -42,19 +43,22 @@ public class Parser {
             switch (command) {
             case CommandNames.ADD:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters!");
+                    throw new CEGStudyBuddyException("Missing parameters!"
+                    + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters!");
+                    throw new CEGStudyBuddyException("Missing parameters!" +
+                            "Format: edit c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new EditCommand(inputParts[1]);
 
             case CommandNames.REPLACE:
                 if (inputParts.length < 2){
-                    throw new CEGStudyBuddyException("Missing parameters!");
+                    throw new CEGStudyBuddyException("Missing parameters!" +
+                            "Format: replace c/OLD CODE c/NEW CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new ReplaceCommand(inputParts[1]);
 
@@ -69,6 +73,12 @@ public class Parser {
                     throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
                 }
                 return new FindCommand(inputParts[1]);
+
+            case CommandNames.PREREQ:
+                if (inputParts.length < 2){
+                    throw new CEGStudyBuddyException("Missing parameters! Format: prereq c/CODE");
+                }
+                return new PrereqCommand(inputParts[1]);
 
             case CommandNames.WORKLOAD_FOR:
                 if (inputParts.length < 2) {
@@ -160,42 +170,51 @@ public class Parser {
 
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
+
         String[] paramParts = param.split("c/| t/| mc/| y/| s/", 6);
 
-        String code;
-        String title;
-        int mc;
-        int takeInYear;
-        int takeInSem;
-
-        try {
-            code = paramParts[1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
-        }
-        if (CourseManager.ifDefined(code)) {
-            Course course = getDefinedCourse(code, param);
-            if (course != null) {
-                return course;
-            }
+        if (paramParts.length < 6) {
+            throw new CEGStudyBuddyException("Missing one or more required fields. Please use format:\n"
+                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
+        String code = paramParts[1].trim();
+        String title = paramParts[2].trim();
+        String mcStr = paramParts[3].trim();
+        String yearStr = paramParts[4].trim();
+        String semStr = paramParts[5].trim();
+
+        if (code.isEmpty() || title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
+            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n"
+                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+        }
+
+        // Validate course code format (e.g., CS2040, EE2026, CG2111A)
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Expected formats: CS2040, EE2026, CG2111A etc.");
+        }
+
+        int mc, year, sem;
+
         try {
-            title = paramParts[2];
-            mc = Integer.parseInt(paramParts[3]);
-            takeInYear = Integer.parseInt(paramParts[4]);
-            takeInSem = Integer.parseInt(paramParts[5]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
+            mc = Integer.parseInt(mcStr);
+            year = Integer.parseInt(yearStr);
+            sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+            throw new CEGStudyBuddyException("Invalid number format. Please enter numeric values for MC, year, and semester.");
         }
 
-        if (!Utils.isValidMC(mc) || !Utils.isValidYear(takeInYear) || !Utils.isValidSem(takeInSem)) {
-            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+        if (!Utils.isValidMC(mc)) {
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be between 1 and 12.");
+        }
+        if (!Utils.isValidYear(year)) {
+            throw new CEGStudyBuddyException("Invalid year. Year must be between 1 and 4.");
+        }
+        if (!Utils.isValidSem(sem)) {
+            throw new CEGStudyBuddyException("Invalid semester. Semester must be either 1 or 2.");
         }
 
-        return new Course(code, title, mc, takeInYear, takeInSem);
+        return new Course(code, title, mc, year, sem);
     }
 
     private static Course getDefinedCourse(String code, String param)
