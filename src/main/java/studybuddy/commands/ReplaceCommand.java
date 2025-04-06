@@ -56,7 +56,7 @@ public class ReplaceCommand extends Command {
                     + "Complete all: t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        int mc;
+        int mc; 
         int year;
         int sem;
 

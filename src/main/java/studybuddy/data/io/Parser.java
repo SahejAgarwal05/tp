@@ -1,4 +1,6 @@
 package studybuddy.data.io;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.Command;
@@ -171,55 +173,63 @@ public class Parser {
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
 
-        String[] paramParts = param.split("c/| t/| mc/| y/| s/", 6);
+        // Define a regex pattern to extract all fields safely
+        Pattern pattern = Pattern.compile(
+                "c/(?<code>[^\\s]+)\\s+" +
+                        "t/(?<title>.*?)\\s+" +
+                        "mc/(?<mc>\\d+)\\s+" +
+                        "y/(?<year>\\d+)\\s+" +
+                        "s/(?<sem>\\d+)"
+        );
+        Matcher matcher = pattern.matcher(param);
 
-        if (paramParts.length < 6) {
-            throw new CEGStudyBuddyException("Missing one or more required fields. Please use format:\n"
+        if (!matcher.find()) {
+            throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n"
                     + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        String code = paramParts[1].trim();
-        String title = paramParts[2].trim();
-        String mcStr = paramParts[3].trim();
-        String yearStr = paramParts[4].trim();
-        String semStr = paramParts[5].trim();
+        String code = matcher.group("code").trim();
+        String title = matcher.group("title").trim();
+        String mcStr = matcher.group("mc").trim();
+        String yearStr = matcher.group("year").trim();
+        String semStr = matcher.group("sem").trim();
 
+        // Validate required fields
         if (code.isEmpty() || title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
             throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n"
                     + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Validate course code format (e.g., CS2040, EE2026, CG2111A)
+        // Validate course code format (CS2040, CG2111A etc.)
         if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
             throw new CEGStudyBuddyException("Invalid course code format."
-                    + "Expected formats: CS2040, EE2026, CG2111A etc.");
+                    + "Expected: CS2040, EE2026, CG2111A etc.");
         }
 
-        int mc;
-        int year;
-        int sem;
-
+        // Parse and validate numbers
+        int mc, year, sem;
         try {
             mc = Integer.parseInt(mcStr);
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("Invalid number format."
-                    + "Please enter numeric values for MC, year, and semester.");
+            throw new CEGStudyBuddyException("Invalid number format." +
+                    "MC, year, and semester must be integers.");
         }
 
         if (!Utils.isValidMC(mc)) {
             throw new CEGStudyBuddyException("Invalid MC value. MC must be between 1 and 12.");
         }
         if (!Utils.isValidYear(year)) {
-            throw new CEGStudyBuddyException("Invalid year. Year must be between 1 and 4.");
+            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
         }
         if (!Utils.isValidSem(sem)) {
-            throw new CEGStudyBuddyException("Invalid semester. Semester must be either 1 or 2.");
+            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
 
         return new Course(code, title, mc, year, sem);
     }
+
 
     private static Course getDefinedCourse(String code, String param)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
