@@ -53,61 +53,68 @@ public class Ui {
 
     public String printGradReq(int completedMCs) {
         StringBuilder sb = new StringBuilder();
-        int remaining = Utils.GRADUATION_MCS - completedMCs;
+        int requiredMCs = Utils.GRADUATION_MCS;
+        int remaining = requiredMCs - completedMCs;
 
         sb.append("Current MCs Completed: ").append(completedMCs).append(" MCs\n");
-        sb.append("Graduation Requirement: ").append(Utils.GRADUATION_MCS).append(" MCs\n");
-        sb.append("Remaining MCs: ").append(remaining).append(" MCs\n\n");
+        sb.append("Graduation Requirement: ").append(requiredMCs).append(" MCs\n");
 
         if (remaining > 0) {
+            sb.append("Remaining MCs: ").append(remaining).append(" MCs\n\n");
             sb.append("Oh no! You don't meet graduation requirement yet, you need to finish ")
                     .append(remaining).append(" more units of courses in order to graduate\n");
             sb.append("Keep on going Champ! You got this!\n");
-            // Thumbs up made of hashtags
-            sb.append("      ####\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("     ######\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("   ################\n");
-            sb.append("    ##############\n");
+
+            // Thumbs up ASCII art
+            sb.append("      #####\n");
+            sb.append("     #######\n");
+            sb.append("     #######\n");
+            sb.append("     #######\n");
+            sb.append("     #######\n");
+            sb.append("     #######\n");
+            sb.append("   #################\n");
+            sb.append("   #################\n");
+            sb.append("   #################\n");
+            sb.append("   #################\n");
+            sb.append("   #################\n");
+            sb.append("   #################\n");
+            sb.append("    ###############\n");
+
         } else {
-            sb.append("Congratulations! You have met the graduation requirement!");
-            // Your uploaded graduation ASCII art
+            sb.append("Remaining MCs: 0 MCs\n\n");
+            sb.append("🎓 Congratulations! You have met the graduation requirement!\n");
+
+            // Graduation ASCII art
             sb.append("     ##                             \n");
-            sb.append("                           #######                          \n");
-            sb.append("                        #############                       \n");
-            sb.append("                         ###########                        \n");
-            sb.append("                           #######                          \n");
-            sb.append("                           ####### #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                           ######  #                        \n");
-            sb.append("                            ####                             \n");
-            sb.append("                            ####                             \n");
-            sb.append("                            ####                             \n");
-            sb.append("                         ### ##  ###                         \n");
-            sb.append("                       ####  # ######                       \n");
-            sb.append("                      ####### ########                      \n");
-            sb.append("                     ##################                     \n");
-            sb.append("                     ###################                    \n");
-            sb.append("                     ###################                    \n");
-            sb.append("                    ####################                    \n");
-            sb.append("                    ####################                    \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
-            sb.append("                    #####################                   \n");
+            sb.append("                           ########                          \n");
+            sb.append("                        ##############                       \n");
+            sb.append("                         ############                        \n");
+            sb.append("                           ########                          \n");
+            sb.append("                           ######## #                        \n");
+            sb.append("                           #######  #                        \n");
+            sb.append("                           #######  #                        \n");
+            sb.append("                           #######  #                        \n");
+            sb.append("                           #######  #                        \n");
+            sb.append("                            #####                             \n");
+            sb.append("                            #####                             \n");
+            sb.append("                            #####                             \n");
+            sb.append("                         #### ##  ###                         \n");
+            sb.append("                       #####  # ######                       \n");
+            sb.append("                      ######## ########                      \n");
+            sb.append("                     ###################                     \n");
+            sb.append("                     ####################                    \n");
+            sb.append("                     ####################                    \n");
+            sb.append("                    #####################                    \n");
+            sb.append("                    #####################                    \n");
+            sb.append("                    ######################                   \n");
+            sb.append("                    ######################                   \n");
+            sb.append("                    ######################                   \n");
+            sb.append("                    ######################                   \n");
         }
+
         return sb.toString();
     }
+
 
     public String printCommandList() {
         return "List of Commands:" + System.lineSeparator() +
@@ -326,7 +333,7 @@ public class Ui {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
         }
-        System.out.print("These are your prexisting plans");
+        System.out.println("These are your existing plans");
         return this.newPlanInput();
     }
     public void renameSuccessfulMessage(){

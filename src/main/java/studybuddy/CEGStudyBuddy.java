@@ -33,11 +33,10 @@ public class CEGStudyBuddy {
                 Command c = Parser.parseCommand(userInput);
                 String output = c.execute(courses, storage);
                 ui.showMessage(output);
-
+                storage.autoSave();
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
                 }
-
                 isRunning = c.isRunning();
                 if (isRunning) {
                     ui.showEnterCommand();
