@@ -252,4 +252,8 @@ public class Ui {
     public void disaplayCancelMessage() {
         System.out.println("Cancelled");
     }
+
+    public String extraInputErrorMessage() {
+        return "There is extra input, please check your input";
+    }
 }

@@ -11,6 +11,7 @@ import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
 import studybuddy.commands.SavePlanCommand;
 import studybuddy.commands.SwitchPlanCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
@@ -49,6 +50,7 @@ public class Parser {
             case CommandNames.HELP -> c = new HelpCommand();
             case CommandNames.EXIT -> c = new ExitCommand();
             case CommandNames.DELETE_PLAN -> c = new DeletePlanCommand();
+            case CommandNames.PLACEHOLDER -> c = new PlaceHolderCommand(inputParts[1]);
             default -> c = new InvalidCommand();
             }
         } catch (Exception e) {
@@ -207,17 +209,34 @@ public class Parser {
         return output;
     }
 
-    public static String[] parseFill(String param) throws CEGStudyBuddyException {
-        // Ensure the command has proper format
-        if (!param.trim().toLowerCase().startsWith("c/")) {
-            throw new CEGStudyBuddyException("Invalid find format! Use: find c/CODE");
+    public static Course parseDummy(String param) throws CEGStudyBuddyException {
+        assert (!param.isEmpty());
+
+        String[] parts = param.split(" ");
+        if (parts.length < 3) {
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
+        }
+        if (parts.length > 3) {
+            throw new CEGStudyBuddyException(ui.extraInputErrorMessage());
         }
 
-        // Extract course code
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new CEGStudyBuddyException("Please provide a course code after c/");
+        Integer mc = null;
+        Integer y = null;
+        Integer s = null;
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].startsWith("mc/")) {
+                mc = Integer.parseInt(parts[i].substring(3));
+            } else if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
+            }
         }
-        return parts;
+
+        if (!Utils.isValidMC(mc) || !Utils.isValidYear(y) || !Utils.isValidSem(s)) {
+            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+        }
+
+        return new Course(mc, y, s);
     }
 }
