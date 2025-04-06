@@ -30,68 +30,72 @@ public class AddCommandTest {
         String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
         AddCommand command = new AddCommand(input);
         String expected = "Course added: " + TEST_CODE + " - " + TEST_TITLE + " (" + TEST_MC + " MCs)";
-        String output = executeCommand(command);
-        assertEquals(expected, output);
+        assertEquals(expected, execute(command));
     }
 
     @Test
-    public void testDuplicateAddCommand() {
+    public void testDuplicateCourse() {
         String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
-        AddCommand command1 = new AddCommand(input);
-        AddCommand command2 = new AddCommand(input);
-        executeCommand(command1); // First one should succeed
-        String output = executeCommand(command2); // Second should throw duplicate error
+        execute(new AddCommand(input)); // Add once
+        String output = execute(new AddCommand(input)); // Try duplicate
         assertEquals("This course is already added for the same year and semester.", output);
     }
 
     @Test
     public void testMissingFields() {
-        String[] invalidInputs = {"c/CS2040 t/Data Structures mc/4 y/2", "t/Data Structures mc/4 y/2 s/1", "c/CS2040 mc/4 y/2 s/1", "c/CS2040 t/Data Structures y/2 s/1", "c/CS2040 t/Data Structures mc/4 s/1",};
-
-        for (String input : invalidInputs) {
-            AddCommand cmd = new AddCommand(input);
-            String output = executeCommand(cmd);
-            assertEquals("Missing fields. Please follow the format:\n" +
-                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM", output);
-        }
+        assertEquals(getMissingFieldsMsg(), execute(new AddCommand("t/Title mc/4 y/2 s/1")));
+        assertEquals(getMissingFieldsMsg(), execute(new AddCommand("c/CS2040 mc/4 y/2 s/1")));
+        assertEquals(getMissingFieldsMsg(), execute(new AddCommand("c/CS2040 t/Title y/2 s/1")));
+        assertEquals(getMissingFieldsMsg(), execute(new AddCommand("c/CS2040 t/Title mc/4 s/1")));
+        assertEquals(getMissingFieldsMsg(), execute(new AddCommand("c/CS2040 t/Title mc/4 y/2")));
     }
 
     @Test
     public void testInvalidCourseCodeFormat() {
         String input = formatInput("1234CS", TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
         AddCommand cmd = new AddCommand(input);
-        String output = executeCommand(cmd);
-        assertEquals("Invalid course code format.Expected: CS2040, EE2026, CG2111A etc.", output);
+        assertEquals(
+                "Invalid course code format.Expected: CS2040, EE2026, CG2111A etc.",
+                execute(cmd)
+        );
     }
 
     @Test
-    public void testInvalidNumbers() {
-        String input = formatInput(TEST_CODE, TEST_TITLE, "abc", TEST_YEAR, TEST_SEM);
-        AddCommand cmd = new AddCommand(input);
-        String output = executeCommand(cmd);
-        assertEquals("Missing fields. Please follow the format:\nadd c/CODE t/TITLE mc/VALUE y/YEAR s/SEM", output);
+    public void testInvalidNumberFormat() {
+        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/four y/two s/one");
+        assertEquals(
+                "Missing fields. Please follow the format:\nadd c/CODE t/TITLE mc/VALUE y/YEAR s/SEM",
+                execute(cmd)
+        );
     }
 
     @Test
     public void testOutOfRangeValues() {
-        String input = formatInput(TEST_CODE, TEST_TITLE, "20", "5", "3");
-        AddCommand cmd = new AddCommand(input);
-        String output = executeCommand(cmd);
-        assertEquals("Invalid MC value. MC must be between 1 and 12.", output);
+        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/20 y/6 s/3");
+        assertEquals("Invalid MC value. MC must be between 1 and 12.", execute(cmd));
     }
 
-    // ------------------ Utility Methods ------------------
-
+    // Helper to format course input string
     private String formatInput(String code, String title, String mc, String year, String sem) {
         return "c/" + code + " t/" + title + " mc/" + mc + " y/" + year + " s/" + sem;
     }
 
-    private String executeCommand(AddCommand command) {
+    // Helper to execute command and return output
+    private String execute(AddCommand cmd) {
         try {
-            return command.execute(courses, storage);
+            return cmd.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             return e.getMessage();
         }
     }
+
+    // Unified expected message for missing fields
+    private String getMissingFieldsMsg() {
+        return "Missing fields. Please follow the format:\n"
+                + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM";
+    }
 }
+
+
+
 
