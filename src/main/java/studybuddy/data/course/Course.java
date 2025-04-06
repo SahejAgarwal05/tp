@@ -109,11 +109,4 @@ public class Course implements Serializable {
                 "y/" + getTakeInYear() + " " +
                 "s/" + getTakeInSem() + ")";
     }
-    public String toStoreFormat(){
-        return "course : c/" + getCode() + " " +
-                "t/" + getTitle() + " " +
-                "mc/" + getMc() + " " +
-                "y/" + getTakeInYear() + " " +
-                "s/" + getTakeInSem();
-    }
 }

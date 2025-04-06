@@ -40,7 +40,7 @@ public class SavePlanCommandTest {
         CEGStudyBuddy.courses = new CourseList("MyPlan");
         String output = command.execute(CEGStudyBuddy.courses, storage);
         assertTrue(output.contains("Plan saved successfully"));
-        File file = new File(TEST_DIR + "MyPlan.txt");
+        File file = new File(TEST_DIR + "MyPlan.bin");
         assertTrue(file.exists());
     }
 
@@ -52,7 +52,7 @@ public class SavePlanCommandTest {
         CEGStudyBuddy.courses.addCourse(new Course("EE2026", "Digital Design", 4,2,1));
         String output = command.execute(CEGStudyBuddy.courses, storage);
         assertTrue(output.contains("Plan saved successfully"));
-        File file = new File(TEST_DIR + "MyPlan2.txt");
+        File file = new File(TEST_DIR + "MyPlan2.bin");
         assertTrue(file.exists());
     }
 

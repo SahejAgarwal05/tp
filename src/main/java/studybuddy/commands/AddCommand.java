@@ -19,23 +19,9 @@ public class AddCommand extends Command {
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         Course newCourse = Parser.parseCourse(param);
-
-        // Check for duplicates based on code + year + semester
-        for (Course existing : courses.getCourses()) {
-            if (existing.getCode().equalsIgnoreCase(newCourse.getCode())
-                    && existing.getTakeInYear() == newCourse.getTakeInYear()
-                    && existing.getTakeInSem() == newCourse.getTakeInSem()) {
-                throw new CEGStudyBuddyException("This course already exists for Y" +
-                        newCourse.getTakeInYear() + "S" + newCourse.getTakeInSem() + ".");
-            }
-        }
-
-        // Add course and record for undo
         courses.add(newCourse);
         UndoManager.recordAdd(newCourse);
-
         return "Course added: " + newCourse.getCode()
                 + " - " + newCourse.getTitle() + " (" + newCourse.getMc() + " MCs)";
     }
 }
-

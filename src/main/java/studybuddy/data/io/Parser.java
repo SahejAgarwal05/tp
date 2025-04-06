@@ -266,6 +266,7 @@ public class Parser {
         if (!param.trim().toLowerCase().startsWith("c/")) {
             throw new CEGStudyBuddyException("Invalid find format! Use: find c/CODE");
         }
+
         // Extract course code
         String[] parts = param.trim().split("c/", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
@@ -284,6 +285,7 @@ public class Parser {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid year and/or sem");
         }
+
         return output;
     }
 }
