@@ -1,6 +1,9 @@
-package studybuddy.data.course;
+package studybuddy.commands;
 
 import java.util.Stack;
+
+import studybuddy.data.course.Course;
+import studybuddy.data.course.CourseList;
 
 /**
  * Manages undo operations for modifying course plans.
@@ -60,13 +63,13 @@ public class UndoManager {
 
         case DELETE:
             // Undoing a delete means restoring the course
-            courses.addCourse(lastAction.getCourse());
+            courses.add(lastAction.getCourse());
             return "Undo: Deleted course \"" + lastAction.getCourse().getCode() + "\" has been restored.";
 
         case REPLACE:
             // Undoing a replace means removing the new course and restoring the old one
             courses.deleteCourseByCode(lastAction.getNewCourse().getCode());
-            courses.addCourse(lastAction.getCourse());
+            courses.add(lastAction.getCourse());
             return "Undo: Module changes for \"" + lastAction.getCourse().getCode() + "\" have been reverted.";
 
         default:

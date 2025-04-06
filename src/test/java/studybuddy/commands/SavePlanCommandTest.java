@@ -48,8 +48,8 @@ public class SavePlanCommandTest {
     public void testSavePlanCommandWithCourses() throws Exception {
         Command command = new SavePlanCommand();
         CEGStudyBuddy.courses = new CourseList("MyPlan2");
-        CEGStudyBuddy.courses.addCourse(new Course("CS2113", "Software Engineering", 4,2,2));
-        CEGStudyBuddy.courses.addCourse(new Course("EE2026", "Digital Design", 4,2,1));
+        CEGStudyBuddy.courses.add(new Course("CS2113", "Software Engineering", 4,2,2));
+        CEGStudyBuddy.courses.add(new Course("EE2026", "Digital Design", 4,2,1));
         String output = command.execute(CEGStudyBuddy.courses, storage);
         assertTrue(output.contains("Plan saved successfully"));
         File file = new File(TEST_DIR + "MyPlan2.txt");
