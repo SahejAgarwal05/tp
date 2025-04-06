@@ -1,7 +1,5 @@
 package studybuddy.data.storage;
 
-import java.io.*;
-
 import studybuddy.CEGStudyBuddy;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.course.CourseList;
