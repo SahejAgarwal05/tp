@@ -19,6 +19,7 @@ public class ExitCommand extends Command {
             isRunning = true;
             return "Exit Cancelled";
         }
+        isRunning = false; //to exit the program after confirmation
         storage.saveCurrentPlan();
         return "Bye"; // print proper message, put in Ui
     }
