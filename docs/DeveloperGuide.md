@@ -467,7 +467,7 @@ The `deletePlan(String planName)` method is responsible for deleting a specified
 
 - Undergraduate students studying **Computer Engineering** at **NUS**
 - Prefer desktop applications over mobile/web apps
-- Comfortable with using **Command-Line Interfaces (CLI)**
+- Comfortable using **Command-Line Interfaces (CLI)**
 - Can type quickly and accurately
 - Want fast, structured ways to plan academic roadmaps
 - Want to track courses, balance workload, and ensure graduation requirements are met
