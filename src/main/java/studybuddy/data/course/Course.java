@@ -9,9 +9,10 @@ import java.util.Arrays;
  * Editable info: take(n) in semester, is cleared/taken
  */
 public class Course implements Serializable {
-    protected static boolean[] dummies = new boolean[20];
     public static final int DUMMYSIZE = 20;
-    public static final String DUMMYWORD = "DUM";    protected String code;
+    public static final String DUMMYWORD = "DUM";
+    protected static boolean[] dummies = new boolean[20];
+    protected String code;
     protected String title;
     protected int mc;
     protected boolean offerInSem1;
