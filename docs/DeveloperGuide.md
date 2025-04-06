@@ -8,6 +8,7 @@ This project builds upon the work of:
 - [Rishi7830/ip](https://github.com/Rishi7830/ip)  
 - [syCHEN1645/ip](https://github.com/syCHEN1645/ip)
 - [HightechTR/ip](https://github.com/HightechTR/ip)
+- [SahejAgarwal05/ip](https://github.com/SahejAgarwal05/ip)
 
 ---
 
@@ -105,6 +106,7 @@ The Course class represents a single course.
 **Methods:**
 
 - `String toString`: Returns a string representing the course.
+- `String toStoreFormat`: Return a string representing the course in a format meant for storage.
 
 ---
 
@@ -122,6 +124,7 @@ The CourseList class stores the list of courses and contains methods to modify t
 - `void addCourse`: Adds a course to the list. Takes in a Course object.
 - `ArrayList<Course> getCourses`: Returns the ArrayList of the courses.
 - `boolean isEmpty`: True if the list is empty.
+- `String toStoreFormat`: Return a string representing the CourseList in a format meant for storage.
 
 ---
 
@@ -153,14 +156,240 @@ The StorageManager class handles storage related tasks like creating new plans, 
 - It creates a `PlanData` folder to store data if one doesn’t already exist.
 - It loads the user’s course plan at startup and saves changes automatically.
 
-![img_7.png](img_7.png)
+**Attributes**
+- `Ui ui`: Ui object responsible for user interaction related operations.
+- `String directory`: Directory in which the plans are stored and read from.
 
-**switch_plan**
+**Methods:**
 
-This feature allows users to select or switch between course plans on startup.
+- `String getDirectory()`: Returns the current directory path used for storing plans.
+- `void setDirectory(String directory)`: Sets a new directory path for storing plans.
+- `void saveNewPlan(String plan) throws CEGStudyBuddyException`: Creates and saves a new plan. If a plan with the same name exists or an error occurs, it throws an exception.
+- `String saveCurrentPlan() throws CEGStudyBuddyException`: Saves the currently loaded plan to storage and returns a success message.
+- `void loadPlan(String planName) throws CEGStudyBuddyException`: Loads a saved plan by its name and sets it as the current plan; throws an exception if the plan does not exist or the data is corrupted.
+- `String[] listPlans() throws CEGStudyBuddyException`: Returns an array of saved plan names (without the ".txt" extension); throws an exception if no plans are found.
+- `void newPlan() throws CEGStudyBuddyException`: Prompts the user to input a valid alphanumeric name for a new plan and saves it.
+- `void initializePlan()`: Initiates the plan selection process, repeating on error until a valid plan is selected.
+- `void selectPlan() throws CEGStudyBuddyException`: Allows the user to either choose an existing plan or create a new one, throwing an exception for invalid selections.
+- `void deletePlanWithSelection() throws CEGStudyBuddyException`: Enables the user to select a plan from the list and delete it, handling errors appropriately.
+- `void deletePlan(String planName) throws CEGStudyBuddyException`: Deletes the specified plan after obtaining user confirmation; if the plan doesn't exist, an exception is thrown.
+- `void renamePlan() throws CEGStudyBuddyException`: Renames the current plan after validating the new plan name; throws an exception if the new name is invalid or already in use.
+- `void autoSave() throws CEGStudyBuddyException`: Automatically saves the current plan by writing its data to storage.
+- `private void dumpToFile(File file, String data) throws CEGStudyBuddyException`: Writes the given data to the specified file; used internally by various save methods and throws an exception if an error occurs.
+---
+**`initializePlan()` Method Overview**
+
+The `initializePlan()` method guarantees that a valid study plan is loaded before the application continues. It repeatedly prompts the user to select or create a plan until a successful selection is made.
+
+***Detailed Process***
+
+1. **Setup:**
+    - Initializes a control flag (`initRun`) to manage the plan initialization loop.
+
+2. **Plan Selection Loop:**
+    - Enters a loop that calls the `selectPlan()` method to load or create a study plan.
+    - Before each iteration, it assumes success by setting `initRun` to `false`.
+
+3. **Error Handling:**
+    - If `selectPlan()` fails (e.g., due to an invalid selection or corrupted data), an exception is thrown.
+    - The exception is caught, an error message is displayed via `ui.showError()`, and the loop restarts by setting `initRun` back to `true`.
+
+4. **Successful Initialization:**
+    - The loop terminates once a plan is successfully loaded without exceptions.
+    - At this point, the application has a valid study plan and can proceed safely.
+---
+**`selectPlan()` Method Overview**
+
+The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
+
+***Detailed Overview***
+
+1. **Retrieve Existing Plans:**
+    - Attempts to list saved plans using `listPlans()`.
+    - If no plans are available, it displays a message via `ui.noPreviousPlansMessage()` and then calls `newPlan()` to create a new plan.
+
+2. **User Prompt for Selection:**
+    - Presents the available plans as a numbered list through `ui.chooseOrCreateNewPlans(plans)`.
+    - The user can select an existing plan by its number or opt to create a new plan by entering "0".
+
+3. **Input Validation and Processing:**
+    - If the user enters "0", the `newPlan()` method is invoked to create a new plan.
+    - Otherwise, the input is parsed as an integer to identify the selected plan.
+    - If the input is non-numeric or falls outside the valid range, an exception is thrown.
+
+4. **Plan Loading:**
+    - Loads the chosen plan by calling `loadPlan()` with the corresponding plan name.
+    - If an error occurs during loading (e.g., due to corrupted data), an exception is thrown.
+
+5. **Confirmation:**
+    - Once the plan is successfully loaded, a confirmation message is displayed via `ui.planSuccessfullyLoadedMessage()`.
+---
+**`loadPlan()` Method Overview**
+
+The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
+
+***Detailed Overview***
+
+1. **Directory Verification:**
+    - Checks if the storage directory exists. If not, it creates the directory and throws an exception indicating that there are no saved plans.
+
+2. **Plan File Existence Check:**
+    - Constructs the file path for the plan (appending ".txt" to the plan name) and verifies its existence.
+    - If the file does not exist, an exception is thrown with the message "Invalid Plan Name".
+
+3. **Plan Data Loading:**
+    - Reads the plan file content and splits it by newline characters.
+    - Iterates through each non-empty line and parses it into course data using `Parser.parseCourse(line)`.
+    - Adds each parsed course to a new `CourseList` object initialized with the plan name.
+
+4. **Setting the Current Plan:**
+    - Updates the global current plan (`CEGStudyBuddy.courses`) with the newly loaded `CourseList`.
+
+5. **Error Handling:**
+    - If an exception occurs during file reading or parsing, it throws a "Data Source Corrupted" exception.
+
+**`loadPlan()` Method Overview**
+
+The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
+
+***Detailed Overview***
+
+1. **Directory Verification:**
+    - Checks if the storage directory exists. If not, it creates the directory and throws an exception indicating that there are no saved plans.
+
+2. **Plan File Existence Check:**
+    - Constructs the file path for the plan (appending ".txt" to the plan name) and verifies its existence.
+    - If the file does not exist, an exception is thrown with the message "Invalid Plan Name".
+
+3. **Plan Data Loading:**
+    - Reads the plan file content and splits it by newline characters.
+    - Iterates through each non-empty line and parses it into course data using `Parser.parseCourse(line)`.
+    - Adds each parsed course to a new `CourseList` object initialized with the plan name.
+
+4. **Setting the Current Plan:**
+    - Updates the global current plan (`CEGStudyBuddy.courses`) with the newly loaded `CourseList`.
+
+5. **Error Handling:**
+    - If an exception occurs during file reading or parsing, it throws a "Data Source Corrupted" exception.
 
 ---
 
+**`listPlans()` Method Overview**
+
+The `listPlans()` method retrieves all saved study plans from the designated storage directory and returns an array of plan names without their file extensions.
+
+***Detailed Overview***
+
+1. **Directory Verification:**
+    - Checks if the storage directory exists.
+    - If the directory does not exist, it creates the directory and throws an exception indicating that there are no saved plans.
+
+2. **Listing Plan Files:**
+    - Searches the directory for files ending with ".txt".
+    - If no such files are found or the list is null, an exception is thrown indicating that there are no saved plans.
+
+3. **Processing File Names:**
+    - Iterates over the list of plan files.
+    - Removes the ".txt" extension from each file name to produce a clean list of plan names.
+
+4. **Returning the Plan List:**
+    - Returns an array of plan names without the file extensions for further use in the application.
+
+
+---
+**`newPlan()` Method Overview**
+
+The `newPlan()` method facilitates the creation of a new study plan by prompting the user to input a valid, alphanumeric plan name and then saving the plan.
+
+***Detailed Overview***
+
+1. **User Input for New Plan:**
+    - The method repeatedly prompts the user for a new plan name until a non-empty, valid name is provided.
+
+2. **Validation:**
+    - Validates the input to ensure it contains only alphanumeric characters (rejecting any special characters).
+    - If the input does not match the required pattern, the prompt is repeated.
+
+3. **Saving the New Plan:**
+    - Once a valid plan name is obtained, the method calls `saveNewPlan(planName)` to create and save the new plan.
+    - If a plan with the same name already exists or if an error occurs during saving, an exception is thrown.
+
+4. **User Feedback:**
+    - On successful creation, a confirmation message is displayed via `ui.createNewPlanMessage()`.
+    - If any error occurs, the corresponding error message is shown using `ui.showError(e.getMessage())`.
+---
+
+**`selectPlan()` Method Overview**
+
+The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
+
+***Detailed Overview***
+
+1. **Retrieve Existing Plans:**
+    - Attempts to list saved plans using `listPlans()`.
+    - If no plans are available, it displays a message via `ui.noPreviousPlansMessage()` and then calls `newPlan()` to create a new plan.
+
+2. **User Prompt for Selection:**
+    - Presents the available plans as a numbered list through `ui.chooseOrCreateNewPlans(plans)`.
+    - The user can select an existing plan by its number or opt to create a new plan by entering "0".
+
+3. **Input Validation and Processing:**
+    - If the user enters "0", the `newPlan()` method is invoked to create a new plan.
+    - Otherwise, the input is parsed as an integer to identify the selected plan.
+    - If the input is non-numeric or falls outside the valid range, an exception is thrown.
+
+4. **Plan Loading:**
+    - Loads the chosen plan by calling `loadPlan()` with the corresponding plan name.
+    - If an error occurs during loading (e.g., due to corrupted data), an exception is thrown.
+
+5. **Confirmation:**
+    - Once the plan is successfully loaded, a confirmation message is displayed via `ui.planSuccessfullyLoadedMessage()`.
+
+---
+**`deletePlanWithSelection()` Method Overview**
+
+The `deletePlanWithSelection()` method allows the user to select and delete an existing study plan. It handles the process of listing available plans, validating the user's selection, and delegating the deletion to the appropriate method.
+
+***Detailed Overview***
+
+1. **Retrieving Available Plans:**
+    - Attempts to fetch the list of saved plans using `listPlans()`.
+    - If no plans are found, it displays a message via `ui.noPreviousPlansMessage()` and exits the method.
+
+2. **User Prompt for Deletion:**
+    - Displays a numbered list of plans and prompts the user to choose which plan to delete using `ui.chooseDeletePlan(plans)`.
+
+3. **Input Validation:**
+    - Parses the user's input as an integer to determine the selected plan.
+    - If parsing fails, throws an exception with the message "Invalid plan number".
+    - Validates that the number is within the acceptable range; if not, throws an exception with the message "plan number out of range".
+
+4. **Plan Deletion:**
+    - Calls the `deletePlan()` method with the chosen plan name to perform the deletion.
+    - If an error occurs during deletion, an exception with the message "Error deleting plan" is thrown.
+---
+**`deletePlan(String planName)` Method Overview**
+
+The `deletePlan(String planName)` method is responsible for deleting a specified study plan from storage. It ensures that the deletion is intentional by prompting the user for confirmation and handles file removal safely.
+
+***Detailed Overview***
+
+1. **User Confirmation:**
+    - Prompts the user with a confirmation message using `ui.isUserConfirm("Are you sure you want to delete " + planName)`.
+    - If the user does not confirm, displays a cancellation message via `ui.cancelMessage()` and exits without deleting the plan.
+
+2. **Directory and File Verification:**
+    - Verifies that the storage directory exists; if it does not, the directory is created.
+    - Constructs the file path by appending ".txt" to the provided `planName` and checks if the corresponding plan file exists.
+    - If the plan file does not exist, throws an exception with the message "Plan does not exist".
+
+3. **Deletion Process:**
+    - If the plan file exists, it is deleted from the storage directory.
+
+4. **Post-Deletion Handling:**
+    - Upon successful deletion, displays a success message using `ui.displaySuccessfullyDeletedMessage()`.
+    - If the deleted plan was the currently loaded plan, it calls `initializePlan()` to prompt the user to select or create a new plan.
+---
 #### 2. Predefined List of Courses
 Since there is a fixed group of courses which must be completed to fulfill graduation requirements, users can just search for the course codes and load/import these courses from the database (a .txt file) with accurate and complete information. This prevents users from defining these courses themselves using inaccurate information or making careless mistakes such as typos. It also improves user experience by simplifying user input.
 
@@ -174,6 +403,7 @@ When adding a new course into the schedule through AddCommand, AddCommand will s
   - If not found, it accepts manual user input.
 
 ![img_5.png](img_5.png)
+
 ![img_6.png](img_6.png) 
 
 For the developers, this list is essential for other enhancement functions such as checking graduation requirements by comparing the users’ course plans with the list of core courses. To conveniently save and load from the list, Json dependency is added to convert between courses and Json Strings.
