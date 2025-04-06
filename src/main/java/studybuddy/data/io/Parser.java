@@ -173,7 +173,7 @@ public class Parser {
         // Early check for decimals using regex
         if (param.matches(".*(mc/\\d+\\.\\d+|y/\\d+\\.\\d+|s/\\d+\\.\\d+).*")) {
             throw new CEGStudyBuddyException("Invalid input: MC, year, and semester"
-                    + "must be whole numbers, not decimals.");
+                    + " must be whole numbers, not decimals.");
         }
 
         Pattern pattern = Pattern.compile(
