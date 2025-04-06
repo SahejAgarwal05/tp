@@ -153,19 +153,16 @@ public class Parser {
         throw new CEGStudyBuddyException("Course with code " + code + " not found.");
     }
 
-    public static String[] parseReplace(String param) throws CEGStudyBuddyException {
+    public static String[] parseReplace(String param) {
         String[] tokens = param.trim().split("\\s+");
 
+        // Only parse and return the codes — don't validate formatting here
         if (tokens.length < 2 || !tokens[0].startsWith("c/") || !tokens[1].startsWith("c/")) {
-            throw new CEGStudyBuddyException("Format: replace c/OLD c/NEW t/TITLE mc/VALUE y/YEAR s/SEM");
+            return new String[]{"", ""}; // Allow ReplaceCommand to handle the formatting issues
         }
 
         String oldCode = tokens[0].substring(2).toUpperCase();
         String newCode = tokens[1].substring(2).toUpperCase();
-
-        if (oldCode.isEmpty() || newCode.isEmpty()) {
-            throw new CEGStudyBuddyException("Course codes cannot be empty.");
-        }
 
         return new String[]{oldCode, newCode};
     }
@@ -173,19 +170,25 @@ public class Parser {
     public static Course parseCourse(String param) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
 
-        // Define a regex pattern to extract all fields safely
+        // Early check for decimals using regex
+        if (param.matches(".*(mc/\\d+\\.\\d+|y/\\d+\\.\\d+|s/\\d+\\.\\d+).*")) {
+            throw new CEGStudyBuddyException("Invalid input: MC, year, and semester"
+                    + "must be whole numbers, not decimals.");
+        }
+
         Pattern pattern = Pattern.compile(
                 "c/(?<code>[^\\s]+)\\s+" +
-                        "t/(?<title>.*?)\\s+" +
-                        "mc/(?<mc>\\d+)\\s+" +
-                        "y/(?<year>\\d+)\\s+" +
-                        "s/(?<sem>\\d+)"
+                "t/(?<title>.*?)\\s+" +
+                "mc/(?<mc>\\d+)\\s+" +
+                "y/(?<year>\\d+)\\s+" +
+                "s/(?<sem>\\d+)"
         );
         Matcher matcher = pattern.matcher(param);
 
         if (!matcher.find()) {
-            throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n"
-                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n" +
+                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n" +
+                    "or the input is decimal :(");
         }
 
         String code = matcher.group("code").trim();
@@ -194,19 +197,15 @@ public class Parser {
         String yearStr = matcher.group("year").trim();
         String semStr = matcher.group("sem").trim();
 
-        // Validate required fields
         if (code.isEmpty() || title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
-            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n"
-                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n" +
+                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Validate course code format (CS2040, CG2111A etc.)
         if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
-            throw new CEGStudyBuddyException("Invalid course code format."
-                    + "Expected: CS2040, EE2026, CG2111A etc.");
+            throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.");
         }
 
-        // Parse and validate numbers
         int mc;
         int year;
         int sem;
@@ -215,8 +214,7 @@ public class Parser {
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("Invalid number format." +
-                    "MC, year, and semester must be integers.");
+            throw new CEGStudyBuddyException("Invalid number format. MC, year, and semester must be integers.");
         }
 
         if (!Utils.isValidMC(mc)) {
@@ -231,7 +229,6 @@ public class Parser {
 
         return new Course(code, title, mc, year, sem);
     }
-
 
     private static Course getDefinedCourse(String code, String param)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
