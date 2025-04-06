@@ -224,8 +224,7 @@ Total workload: 20
 ### Workload Balance: `workload_balance`
 In order to gain a better understanding of the workload balance across all you semesters, you can use this command which
 displays the minimum and maximum number of courses in a semester out of all semesters. This is intended to aid in balancing the workload between semesters.
-Based on your workload balance, it willa lso advise you to modify your workload if it detects your workload is highly unbalanced.
-
+Based on your workload balance, it will also advise you to modify your workload if it detects your workload is highly unbalanced.
 **Format:**
 ```
 workload_balance
