@@ -175,13 +175,12 @@ public class Parser {
             throw new CEGStudyBuddyException("Invalid input: MC, year, and semester must be whole numbers, not decimals.");
         }
 
-        // Your existing pattern
         Pattern pattern = Pattern.compile(
                 "c/(?<code>[^\\s]+)\\s+" +
-                        "t/(?<title>.*?)\\s+" +
-                        "mc/(?<mc>\\d+)\\s+" +
-                        "y/(?<year>\\d+)\\s+" +
-                        "s/(?<sem>\\d+)"
+                "t/(?<title>.*?)\\s+" +
+                "mc/(?<mc>\\d+)\\s+" +
+                "y/(?<year>\\d+)\\s+" +
+                "s/(?<sem>\\d+)"
         );
         Matcher matcher = pattern.matcher(param);
 
@@ -229,8 +228,6 @@ public class Parser {
 
         return new Course(code, title, mc, year, sem);
     }
-
-
 
     private static Course getDefinedCourse(String code, String param)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
