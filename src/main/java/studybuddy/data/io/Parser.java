@@ -1,4 +1,5 @@
 package studybuddy.data.io;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +31,7 @@ import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
-    private static Ui ui = new Ui();
+
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
@@ -44,40 +45,40 @@ public class Parser {
             String command = inputParts[0].toLowerCase();
             switch (command) {
             case CommandNames.ADD:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!"
-                    + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
+                            + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!" +
                             "Format: edit c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new EditCommand(inputParts[1]);
 
             case CommandNames.REPLACE:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!" +
                             "Format: replace c/OLD CODE c/NEW CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new ReplaceCommand(inputParts[1]);
 
             case CommandNames.DELETE:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
                 }
                 return new DeleteCourse(inputParts[1]);
 
             case CommandNames.FIND:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
                 }
                 return new FindCommand(inputParts[1]);
 
             case CommandNames.PREREQ:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: prereq c/CODE");
                 }
                 return new PrereqCommand(inputParts[1]);
@@ -177,18 +178,19 @@ public class Parser {
         }
 
         Pattern pattern = Pattern.compile(
-                "c/(?<code>[^\\s]+)\\s+" +
-                "t/(?<title>.*?)\\s+" +
-                "mc/(?<mc>\\d+)\\s+" +
-                "y/(?<year>\\d+)\\s+" +
-                "s/(?<sem>\\d+)"
+                "c/(?<code>\\S+)\\s+" +
+                        "t/(?<title>.*?)\\s+" +
+                        "mc/(?<mc>\\d+)\\s+" +
+                        "y/(?<year>\\d+)\\s+" +
+                        "s/(?<sem>\\d+)"
         );
         Matcher matcher = pattern.matcher(param);
 
         if (!matcher.find()) {
-            throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n" +
-                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n" +
-                    "or the input is decimal :(");
+            throw new CEGStudyBuddyException("""
+                    Missing fields. Please follow the format:
+                    add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM
+                    or the input is decimal :(""");
         }
 
         String code = matcher.group("code").trim();

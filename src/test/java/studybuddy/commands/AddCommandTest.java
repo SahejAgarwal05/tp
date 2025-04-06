@@ -84,9 +84,10 @@ public class AddCommandTest {
     }
 
     private String getMissingFieldsMsg() {
-        return "Missing fields. Please follow the format:\n"
-                + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n"
-                + "or the input is decimal :(";
+        return """
+                Missing fields. Please follow the format:
+                add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM
+                or the input is decimal :(""";
     }
 }
 

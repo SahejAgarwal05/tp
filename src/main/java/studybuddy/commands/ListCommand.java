@@ -40,9 +40,7 @@ public class ListCommand extends Command {
                     sb.append(label).append(" Courses\n");
                     int count = 1;
                     for (Course course : filtered) {
-                        sb.append(count).append(". ")
-                                .append(course.getCode()).append(" - ").append(course.getTitle())
-                                .append(" (").append(course.getMc()).append(" MCs)\n");
+                        sb.append(count).append(". ").append(course.toString()).append("\n");
                         count++;
                     }
                     sb.append("\n");

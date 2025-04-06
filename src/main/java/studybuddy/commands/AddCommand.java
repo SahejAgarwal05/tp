@@ -36,9 +36,7 @@ public class AddCommand extends Command {
         UndoManager.recordAdd(newCourse);
 
         // Return confirmation message
-        return "Course added: " + newCourse.getCode()
-                + " - " + newCourse.getTitle()
-                + " (" + newCourse.getMc() + " MCs)";
+        return "Course added: " + newCourse;
     }
 }
 
