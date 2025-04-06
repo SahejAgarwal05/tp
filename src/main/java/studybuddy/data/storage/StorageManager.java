@@ -213,8 +213,7 @@ public class StorageManager {
              planNo = Integer.parseInt(planNumber);
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number");
-        }
-        try{
+        } try{
             this.loadPlan(plans[planNo - 1]);
         } catch (Exception e){
             throw new CEGStudyBuddyException("Error loading plan");
