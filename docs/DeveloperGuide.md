@@ -403,6 +403,7 @@ When adding a new course into the schedule through AddCommand, AddCommand will s
   - If not found, it accepts manual user input.
 
 ![img_5.png](img_5.png)
+
 ![img_6.png](img_6.png) 
 
 For the developers, this list is essential for other enhancement functions such as checking graduation requirements by comparing the users’ course plans with the list of core courses. To conveniently save and load from the list, Json dependency is added to convert between courses and Json Strings.
