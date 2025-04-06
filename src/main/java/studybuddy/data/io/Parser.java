@@ -184,6 +184,14 @@ public class Parser {
                     + " must be whole numbers, not decimals.");
         }
 
+        Pattern predefinedCoursePattern = Pattern.compile(
+                "c/(?<code>[^\\s]+).*?y/(?<year>\\d+).*?s/(?<sem>\\d+)");
+        Matcher predefinedCourseMatcher = predefinedCoursePattern.matcher(param);
+        Course c = parseDefinedCourse(predefinedCourseMatcher);
+        if (c != null) {
+            return c;
+        }
+
         Pattern pattern = Pattern.compile(
                 "c/(?<code>\\S+)\\s+" +
                         "t/(?<title>.*?)\\s+" +
@@ -236,11 +244,42 @@ public class Parser {
             throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
 
-        Course c = getDefinedCourse(code, year, sem);
-        if (c == null) {
-            return new Course(code, title, mc, year, sem);
+        return new Course(code, title, mc, year, sem);
+    }
+
+
+    private static Course parseDefinedCourse(Matcher predefinedCourseMatcher) {
+        if (!predefinedCourseMatcher.find()) {
+            return null;
         }
-        return c;
+
+        String code = predefinedCourseMatcher.group("code").trim();
+        String yearStr = predefinedCourseMatcher.group("year").trim();
+        String semStr = predefinedCourseMatcher.group("sem").trim();
+
+        if (code.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
+            return null;
+        }
+
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            return null;
+        }
+
+        int year;
+        int sem;
+        try {
+            year = Integer.parseInt(yearStr);
+            sem = Integer.parseInt(semStr);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        if (!Utils.isValidYear(year)) {
+            return null;
+        }
+        if (!Utils.isValidSem(sem)) {
+            return null;
+        }
+        return getDefinedCourse(code, year, sem);
     }
 
     private static Course getDefinedCourse(String code, int year, int sem)
