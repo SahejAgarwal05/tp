@@ -36,8 +36,8 @@ public class AddCommandTest {
     @Test
     public void testDuplicateCourse() {
         String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
-        execute(new AddCommand(input)); // Add once
-        String output = execute(new AddCommand(input)); // Try duplicate
+        execute(new AddCommand(input));
+        String output = execute(new AddCommand(input));
         assertEquals("This course is already added for the same year and semester.", output);
     }
 
@@ -54,13 +54,15 @@ public class AddCommandTest {
     public void testInvalidCourseCodeFormat() {
         String input = formatInput("1234CS", TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
         AddCommand cmd = new AddCommand(input);
-        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.", execute(cmd));
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc."
+                , execute(cmd));
     }
 
     @Test
     public void testDecimalInputs() {
         AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/3.5 y/2.5 s/1.5");
-        assertEquals("Invalid input: MC, year, and semestermust be whole numbers, not decimals.", execute(cmd));
+        assertEquals("Invalid input: MC, year, and semestermust be whole numbers, not decimals."
+                , execute(cmd));
     }
 
     @Test
@@ -87,6 +89,7 @@ public class AddCommandTest {
                 + "or the input is decimal :(";
     }
 }
+
 
 
 
