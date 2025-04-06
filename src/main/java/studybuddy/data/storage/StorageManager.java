@@ -216,7 +216,7 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Invalid plan number");
         }
         if(planNo < 0 || planNo > plans.length) {
-            throw new CEGStudyBuddyException("plan nnumber out of range");
+            throw new CEGStudyBuddyException("plan number out of range");
         }
         try{
             this.loadPlan(plans[planNo - 1]);
