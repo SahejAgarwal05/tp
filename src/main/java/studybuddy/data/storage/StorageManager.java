@@ -328,7 +328,7 @@ public class StorageManager {
     public void autoSave() throws CEGStudyBuddyException {
         File saveFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".txt");
         try{
-        dumpToFile(saveFile, CEGStudyBuddy.courses.toStoreFormat());
+            dumpToFile(saveFile, CEGStudyBuddy.courses.toStoreFormat());
         } catch (Exception e){
             throw new CEGStudyBuddyException("Error in autosaving");
         }
