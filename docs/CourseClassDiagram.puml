@@ -2,6 +2,8 @@
 hide circle
 skinparam classAttributeIconSize 0
 class Course {
+    - static boolean[] dummies
+    - static final int DUMMYSIZE
     - String code
     - String title
     - int mc
@@ -9,12 +11,19 @@ class Course {
     - boolean offerInSem2
     - int takeInSem
     - int takeInYear
-    - String placeHolder = "To be confirmed"
 
     + Course(String code, String title, int mc, int takeInYear, int takeInSem)
-    + Course(int mc, int takeInYear, int takeInSem)
-
-    + String toString()
+    + Course(String code, int mc, int takeInYear, int takeInSem)
+    + static Course createDummyCourse(int mc, int takeInYear, int takeInSem)
     + String toStoreFormat()
+    + static boolean isDummyFull()
+    + static boolean isValidDummyIndex(int number)
+    + static int getAvailableDummyIndex()
+    + static void dummyInitialiseCheck(CourseList list)
 }
+
+class CourseList {
+    + List<Course> getCourses()
+}
+Course --> CourseList : uses
 @enduml
