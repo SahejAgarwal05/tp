@@ -235,7 +235,7 @@ public class Parser {
         }
 
         if (!Utils.isValidMC(mc)) {
-            throw new CEGStudyBuddyException("Invalid MC value. MC must be between 1 and 12.");
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be an even number between 0 and 12.");
         }
         if (!Utils.isValidYear(year)) {
             throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
@@ -248,7 +248,8 @@ public class Parser {
     }
 
 
-    private static Course parseDefinedCourse(Matcher predefinedCourseMatcher) {
+    private static Course parseDefinedCourse(Matcher predefinedCourseMatcher)
+            throws CEGStudyBuddyException {
         if (!predefinedCourseMatcher.find()) {
             return null;
         }
@@ -274,19 +275,20 @@ public class Parser {
             return null;
         }
         if (!Utils.isValidYear(year)) {
-            return null;
+            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
         }
         if (!Utils.isValidSem(sem)) {
-            return null;
+            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
         return getDefinedCourse(code, year, sem);
     }
 
     private static Course getDefinedCourse(String code, int year, int sem)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
-
+        assert (Utils.isValidYear(year) && Utils.isValidSem(sem));
         Course course = CourseManager.getCourse(code);
         if (course != null) {
+            // this course is defined
             course.setTakeInYear(year);
             course.setTakeInSem(sem);
             return course;
@@ -393,8 +395,14 @@ public class Parser {
             }
         }
 
-        if (!Utils.isValidMC(mc) || !Utils.isValidYear(y) || !Utils.isValidSem(s)) {
-            throw new CEGStudyBuddyException(ui.parseIntErrorMessage());
+        if (!Utils.isValidMC(mc)) {
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be an even number between 0 and 12.");
+        }
+        if (!Utils.isValidYear(y)) {
+            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
+        }
+        if (!Utils.isValidSem(s)) {
+            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
         }
 
         return Course.createDummyCourse(mc, y, s);
