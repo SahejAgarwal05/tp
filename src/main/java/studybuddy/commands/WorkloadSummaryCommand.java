@@ -57,7 +57,7 @@ public class WorkloadSummaryCommand extends Command {
                 .append(neededMCs)
                 .append(" MCs to reach the minimum graduation requirement of 160 MCs\n");
         if (neededMCs == 0) {
-            sb.append("🎓 Congratulations! You have met the graduation requirement!\n");
+            sb.append("Congratulations! You have met the graduation requirement!\n");
         }
 
 
