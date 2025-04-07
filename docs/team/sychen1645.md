@@ -75,7 +75,7 @@ Added documentation for the `edit` and `dummy` commands.
 
 Added documentation and class diagrams for class `Course`.
 
-[Class Course](docs/class_diagrams/CourseClassDiagram.png)
+[Class Course](https://github.com/syCHEN1645/tp/blob/02bfb034379e431551e4d81422947c0498dce93f/docs/class_diagrams/CourseClassDiagram.png)
 
 Added documentation for class `CourseManager`.
 
@@ -83,4 +83,4 @@ Added documentation for the feature *Predefined List of Courses*.
 
 Added sequential diagram for adding a course. 
 
-[Add a Course](docs/class_diagrams/CourseManagerClassDiagram.png)
+[Add a Course](https://github.com/syCHEN1645/tp/blob/02bfb034379e431551e4d81422947c0498dce93f/docs/sequence_diagrams/CourseManagerSequence.png)
