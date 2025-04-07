@@ -219,6 +219,7 @@ dummy mc/8 y/4 s/2
 ```
 
 **Example Output:**
+
 If this is the 3rd dummy added:
 ```
 Dummy course added: DUM02 - To be confirmed (8 MCs)
