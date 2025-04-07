@@ -291,7 +291,7 @@ When the user issues the undo command:
 - A confirmation message is returned to the user.
 
 **Example Flow:**
-Let's say the user executes:
+Let's say the user executes the following:
 add c/CS2103 t/Software Engineering mc/4 y/2 s/1
 This adds a course to the planner and internally records the action in UndoManager as an ADD type.
 When the user types undo, the UndoCommand triggers the removal of CS2103 by interpreting and reversing the stored action.
