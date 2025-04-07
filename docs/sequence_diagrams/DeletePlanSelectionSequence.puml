@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": deletePlanWithSelection()
+activate ":StorageManager"
+
+":StorageManager" -> ":StorageManager": listPlans()
+activate ":StorageManager"
+":StorageManager" --> ":StorageManager": plans
+deactivate ":StorageManager"
+
+":StorageManager" -> ":Ui": chooseDeletePlan(plans)
+activate ":Ui"
+":Ui" --> ":StorageManager": planNumber
+deactivate ":Ui"
+
+note left
+planNumber is parsed
+into an int here.
+end note
+
+":StorageManager" -> ":StorageManager": deletePlan(plans[planNo - 1])
+activate ":StorageManager"
+":StorageManager" --> ":StorageManager"
+deactivate ":StorageManager"
+
+[<-- ":StorageManager"
+deactivate ":StorageManager"
+
+@enduml
