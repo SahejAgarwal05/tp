@@ -25,7 +25,8 @@ public class WorkloadForCommand extends Command {
             throw new CEGStudyBuddyException("Invalid input. Year must be from 1 to 4 and sem must be either 1 or 2.");
         }
 
-        StringBuilder output = new StringBuilder("These are the courses you will be taking:");
+        StringBuilder output = new StringBuilder("These are the courses that you are currently taking in year "
+                + year + " semester " + sem + ":");
         int totalWorkLoad = 0;
         int index = 1;
 
@@ -41,7 +42,9 @@ public class WorkloadForCommand extends Command {
             return "You are not taking any courses yet.";
         }
 
-        output.append("\nTotal workload: ").append(totalWorkLoad);
+        output.append("\n\nYour total workload for year " + year + " semester " + sem + " is: ")
+                .append(totalWorkLoad).append("MCs\n")
+                .append(Utils.checkWorkload(totalWorkLoad, sem));
         return output.toString();
     }
 }
