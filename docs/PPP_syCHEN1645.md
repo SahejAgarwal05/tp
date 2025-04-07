@@ -16,6 +16,15 @@ Limited to 20 dummy courses in each course plan to keep trace and also prevent m
 ## New Feature: Simplified user inputs  a predefined list of courses
 ### What it does
 When adding a course, if the course code has a match in Defined_Courses, a text file containing predefined core CEG courses, the add command can skip course title and MC inputs. 
+From
+```
+add c/CODE t/TITLE mc/MC y/YEAR s/SEMESTER
+```
+To
+```
+add c/CODE y/YEAR s/SEMESTER
+```
+
 ### Justification
 Reduces user input length. Reduces false information from user inputs (e.g. wrong course titles, wrong MCs). 
 ### Highlights 
