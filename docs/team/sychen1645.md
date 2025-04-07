@@ -116,7 +116,7 @@ Added documentation for class `CourseManager`.
 
 Added documentation for the feature *Predefined List of Courses*.
 
-Added sequential diagram for adding a course. 
+Added sequential diagram for adding a predefined course. 
 
 [Add a Course](docs/class_diagrams/CourseManagerClassDiagram.png)
 
