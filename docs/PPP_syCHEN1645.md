@@ -4,6 +4,8 @@ CEGStudyBuddy is a desktop application that tracks and plans university courses 
 
 Given below are my contributions to the project.
 
+---
+
 ## New Feature: Added command for adding a dummy (placeholder) course
 
 ### What it does
@@ -18,6 +20,7 @@ This feature improves flexibility by allowing users to plan around modules that 
 
 Limited to 20 dummy courses in each course plan to keep trace and also prevent malicious inputs flooding the plan with dummies. Added input validation in Parser.parseCourse() to prevent adding dummies through command add. 
 
+---
 
 ## New Feature: Simplified user inputs  a predefined list of courses
 
@@ -43,13 +46,27 @@ Defined_Courses is managed by a new class CourseManager which specialises in rea
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
 
+---
+
 ## Enhancements
 
 ### High-Severity and High-Complexity Debug
 
-Debugged issue *Inputting Ctrl+Z on startup causes program to loop infinitely* [#110](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/110)
+Debugged issue *Inputting Ctrl+Z on startup causes program to loop infinitely* [issue #110](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/110) [PR #183](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/183)
 
-Debugged issue *List of defined courses not on JAR nor included in version release* [#113](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/113)
+Debugged issue *List of defined courses not on JAR nor included in version release* [issue #113](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/113) [PR 180](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/180)
+
+### Test Cases
+
+Wrote test cases for CourseManager *CourseManagerTest* [PR #77](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/77)
+
+Wrote test cases for PlaceHolderCommand *PlaceHolderTest* [PR #205](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/205)
+
+Wrote test cases for EditCommand *EditCommandTest* [PR #54](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/54)
+
+Wrote test cases for ReplaceCommand *ReplaceCommandTest* [PR #203](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/203)
+
+---
 
 ## Documentation
 
