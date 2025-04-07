@@ -2,6 +2,7 @@ package studybuddy;
 
 import java.util.Scanner;
 
+import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.commands.Command;
 import studybuddy.data.io.Parser;
@@ -19,6 +20,7 @@ public class CEGStudyBuddy {
     public static void main(String[] args) {
         ui.showWelcome();
         storage.initializePlan();
+        Course.dummyInitialiseCheck(courses);
         ui.showEnterCommand();
 
         while (isRunning && scanner.hasNextLine()) {

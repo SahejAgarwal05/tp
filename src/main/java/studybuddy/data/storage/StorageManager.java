@@ -21,7 +21,7 @@ public class StorageManager {
      * Constructs a StorageManager with a specified directory for storing plans.
      *
      * @param directory The directory path where plans will be stored.
-     * @param scanner   The scanner from main class.
+     * @param scanner The scanner from main class.
      */
     public StorageManager(String directory, Scanner scanner) {
         this.directory = directory;
@@ -126,7 +126,7 @@ public class StorageManager {
             String[] data = Files.readString(planFile.toPath()).split("\n");
             for (String line : data) {
                 if (!line.trim().isEmpty()) {
-                    courses.add(Parser.parseCourse(line));
+                    courses.add(Parser.parseCourse(line, true));
                 }
             }
             CEGStudyBuddy.courses = courses;

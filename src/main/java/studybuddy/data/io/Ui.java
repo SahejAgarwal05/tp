@@ -12,6 +12,7 @@ import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
 import studybuddy.commands.PrereqCommand;
 import studybuddy.commands.RenamePlanCommand;
 import studybuddy.commands.ReplaceCommand;
@@ -38,6 +39,10 @@ public class Ui {
 
     public String showCourseReplacedMessage(String oldCode, String newCode) {
         return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    }
+
+    public String showDummyFullMessage() {
+        return "Reached maximum number of dummies, please delete dummies before adding";
     }
 
     public String showCourseNotFoundInReplaceMessage(String code) {
@@ -129,6 +134,7 @@ public class Ui {
                 ListCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 EditCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ReplaceCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                PlaceHolderCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 FindCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadSummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadForCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
@@ -357,5 +363,13 @@ public class Ui {
 
     public void renameSuccessfulMessage() {
         System.out.println("Successfully renamed.");
+    }
+
+    public String extraInputErrorMessage() {
+        return "There is extra input, please check your input";
+    }
+
+    public String replaceDuplicateMessage() {
+        return "The same course already exists :)";
     }
 }
