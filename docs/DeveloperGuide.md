@@ -93,7 +93,7 @@ The studybuddy.data package not only contains the aforementioned io package, but
 #### 1. Course
 The Course class represents a single course.
 
-![CourseClassDiagram.png](class_diagrams/CourseClassDiagram.png)
+![CourseClassDiagram.png](CourseClassDiagram.png)
 
 **Attributes:**
 
@@ -119,8 +119,6 @@ The Course class represents a single course.
 - `static boolean isValidDummyIndex(int number)`: Checks if a dummy index is within valid bounds.
 - `static int getAvailableDummyIndex()`: Returns the next available dummy index or -1 if full.
 - `static void dummyInitialiseCheck(CourseList list)`: Re-initializes the dummy tracking based on existing courses in the current course list.
-
-![CourseClassDiagram.png](CourseClassDiagram.png)
 
 ---
 
