@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
