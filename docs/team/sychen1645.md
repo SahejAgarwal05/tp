@@ -6,22 +6,6 @@ Given below are my contributions to the project.
 
 ---
 
-## New Feature: Implemented customised course editing
-
-### What it does
-
-Allows the user to edit course information in a flexible way. They only need to key in the parameters they want to change, instead of all 4 parameters of the course (MC, title, year and semester taken). 
-
-### Justification
-
-It would be troublesome and unnecessary for users to key in entries for information they do not intend to change.
-
-### Highlights
-
-User does not need to follow any sequence or number of inputs (except to put c/CODE at first) for the `edit` command.
-
----
-
 ## New Feature: Added command for adding a dummy (placeholder) course
 
 ### What it does
@@ -35,8 +19,6 @@ This feature improves flexibility by allowing users to plan around modules that 
 ### Highlights
 
 Limited to 20 dummy courses in each course plan to keep trace and also prevent malicious inputs flooding the plan with dummies. Added input validation in Parser.parseCourse() to prevent adding dummies through command add. 
-
----
 
 ## New Feature: Simplified user inputs  a predefined list of courses
 
@@ -61,14 +43,6 @@ Defined_Courses is managed by a new class CourseManager which specialises in rea
 
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
-
----
-
-## Code Contributed
-
-[link to CS2113 course website](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=sychen1645&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
-
----
 
 ## Enhancements
 
@@ -116,7 +90,6 @@ Added documentation for class `CourseManager`.
 
 Added documentation for the feature *Predefined List of Courses*.
 
-Added sequential diagram for adding a predefined course. 
+Added sequential diagram for adding a course. 
 
 [Add a Course](docs/class_diagrams/CourseManagerClassDiagram.png)
-
