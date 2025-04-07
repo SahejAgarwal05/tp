@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+CourseList "courses" --> "*" Course
+
+class CourseList {
+-String planName
++add() : void
++deleteCourseByCode() : boolean
++setEditedParams() : Course
++getCourses() : ArrayList<Course>
++isEmpty() : boolean
++clear() : void
++toStoreFormat() : String
+}
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class Course {
+#String code
+#String title
+#int mc
+#boolean offerInSem1
+#boolean offerInSem2
+#int takeInSem
+#int takeInYear
++toString() : String
++toStoreFormat() : String
+}
+
+@enduml

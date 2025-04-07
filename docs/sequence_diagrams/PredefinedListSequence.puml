@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+
+User -> ":AddCommand": add course
+activate ":AddCommand"
+":AddCommand" -> ":CourseManager": ifDefined()
+activate ":CourseManager"
+":CourseManager" --> ":AddCommand": isDefined
+deactivate ":CourseManager"
+
+alt isDefined
+
+    ":AddCommand" -> ":CourseManager": getCourse()
+    activate ":CourseManager"
+    ":CourseManager" --> ":AddCommand": Course
+    deactivate ":CourseManager"
+
+else else
+
+    ":AddCommand" -> ":Course" **: new Course()
+    activate ":Course"
+    ":Course" --> ":AddCommand": Course
+    deactivate ":Course"
+
+end
+
+":AddCommand" --> User: Course
+
+@enduml

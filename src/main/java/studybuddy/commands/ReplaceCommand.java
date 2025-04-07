@@ -3,11 +3,11 @@ package studybuddy.commands;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.course.UndoManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.storage.UndoManager;
 
 /**
  * Replaces an existing course with a new one, preserving its time and MC attributes.
@@ -100,7 +100,7 @@ public class ReplaceCommand extends Command {
         }
 
         courses.deleteCourseByCode(oldCode);
-        courses.addCourse(newCourse);
+        courses.add(newCourse);
         UndoManager.recordReplace(oldCourse, newCourse);
 
         return ui.showCourseReplacedMessage(oldCode, newCode);

@@ -134,6 +134,7 @@ public class Ui {
                 ListCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 EditCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ReplaceCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                PlaceHolderCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 FindCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadSummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadForCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
@@ -147,8 +148,7 @@ public class Ui {
                 SummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 UndoCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 HelpCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
-                ExitCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
-                PlaceHolderCommand.COMMAND_DESCRIPTION;
+                ExitCommand.COMMAND_DESCRIPTION;
     }
 
     /**

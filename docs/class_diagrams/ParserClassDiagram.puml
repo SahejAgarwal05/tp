@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+Parser ..> Course
+Parser ..> CourseList
+
+class Parser {
+-getDefinedCourse() : Course
++parseCommand() : Command
++parseCourse() : Course
++parseDeleteReturnCourse() : Course
++parseReplace() : String[]
++parseEdit() : String[]
++parseFind() : String[]
++parseWorkloadFor() : int[]
+}
+
+@enduml

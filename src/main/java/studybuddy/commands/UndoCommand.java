@@ -2,7 +2,7 @@ package studybuddy.commands;
 
 import studybuddy.data.course.CourseList;
 import studybuddy.data.storage.StorageManager;
-import studybuddy.data.course.UndoManager;
+import studybuddy.data.storage.UndoManager;
 
 /**
  * Represents the undo command which reverts the most recent course-related action

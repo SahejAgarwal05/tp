@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+StorageManager "ui  " --> "1 " Ui
+
+class StorageManager {
+-String directory
+-dumpToFile() : void
++saveNewPlan() : void
++saveCurrentPlan() : String
++loadPlan() : void
++listPlans() : String[]
++newPlan() : void
++initializePlan() : void
++selectPlan() : void
++deletePlanWithSelection() : void
++deletePlan() : void
++renamePlan() : void
++autoSave() : void
+}
+
+@enduml
