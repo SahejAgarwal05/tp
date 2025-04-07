@@ -230,7 +230,7 @@ If this is the 21st dummy added:
 Reached maximum number of dummies, please delete dummies before adding
 ```
 
-The [dummy] command cannot be undone by [undo] command. To undo dummy, please use [delete].
+The `dummy` command cannot be undone by `undo`. To undo dummy, please use `delete`.
 
 ---
 
@@ -481,6 +481,13 @@ CEGStudyBuddy is a fully offline application. No internet required.
 
 **A:** Unfortunately, the app doesn’t support an undo feature (yet 😢).  
 Make sure to double-check before deleting. You can always re-add the course using the `add` command.
+
+---
+
+### ❓ Q: What happens if I have not decided on which exact course to take?
+
+**A:** You can add a placeholder course and replace/delete it later. 
+As long as you know how many MCs you plan to take, you can add the placeholder using `dummy`. 
 
 ---
 
