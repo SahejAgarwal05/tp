@@ -9,10 +9,10 @@ CourseManager ..> Course
 class CourseManager {
 -String FILEPATH
 -loadCourseFile() : InputStream
-+jsonToCourse() : Course
-+courseToJson() : String
-+ifDefined() : boolean
-+getCourse() : Course
++jsonToCourse(String jsonString) : Course
++courseToJson(Course course) : String
++ifDefined(String code) : boolean
++getCourse(String code) : Course
 }
 
 @enduml

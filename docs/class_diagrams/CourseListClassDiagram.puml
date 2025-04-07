@@ -3,16 +3,16 @@
 hide circle
 skinparam classAttributeIconSize 0
 
-CourseList "courses" --> "*" Course
+CourseList "courses " --> "*" Course
 
 class CourseList {
 -String planName
-+add() : void
-+deleteCourseByCode() : boolean
-+setEditedParams() : Course
++add(Course course)
++deleteCourseByCode(String code) : boolean
++setEditedParams(String[] editedParams, Course course) : Course
 +getCourses() : ArrayList<Course>
 +isEmpty() : boolean
-+clear() : void
++clear()
 +toStoreFormat() : String
 }
 

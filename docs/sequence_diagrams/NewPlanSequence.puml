@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": newPlan()
+activate ":StorageManager"
+
+loop planName.isEmpty()
+    ":StorageManager" -> ":Ui": newPlanInput()
+    activate ":Ui"
+    ":Ui" --> ":StorageManager": planName
+    deactivate ":Ui"
+    note right
+    If planName contains
+    characters other than
+    alphanumeric characters,
+    planName is set to ""
+    and loop continues.
+    end note
+end
+
+":StorageManager" -> ":StorageManager": saveNewPlan(planName)
+activate ":StorageManager"
+":StorageManager" --> ":StorageManager"
+deactivate ":StorageManager"
+
+[<-- ":StorageManager"
+deactivate ":StorageManager"
+
+@enduml

@@ -77,7 +77,7 @@ public class StorageManager {
         try {
             dumpToFile(planFile, CEGStudyBuddy.courses.toStoreFormat());
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error in making new plan");
+            throw new CEGStudyBuddyException("Error in making new plan.");
         }
     }
 
@@ -97,7 +97,7 @@ public class StorageManager {
         try {
             dumpToFile(planFile, CEGStudyBuddy.courses.toStoreFormat());
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error in saving");
+            throw new CEGStudyBuddyException("Error in saving.");
         }
         return "Plan saved successfully.";
     }
@@ -113,12 +113,12 @@ public class StorageManager {
         File dir = new File(directory);
         if (!dir.exists()) {
             dir.mkdirs();
-            throw new CEGStudyBuddyException("You have no plans saved");
+            throw new CEGStudyBuddyException("You have no plans saved.");
         }
 
         File planFile = new File(dir, planName + ".txt");
         if (!planFile.exists()) {
-            throw new CEGStudyBuddyException("Invalid Plan Name");
+            throw new CEGStudyBuddyException("Invalid Plan Name.");
         }
 
         try {
@@ -131,7 +131,7 @@ public class StorageManager {
             }
             CEGStudyBuddy.courses = courses;
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Data Source Corrupted");
+            throw new CEGStudyBuddyException("Data Source Corrupted.");
         }
     }
 
@@ -145,12 +145,12 @@ public class StorageManager {
         File dir = new File(directory);
         if (!dir.exists()) {
             dir.mkdirs();
-            throw new CEGStudyBuddyException("You have no plans saved");
+            throw new CEGStudyBuddyException("You have no plans saved.");
         }
 
         String[] plans = dir.list((d, name) -> name.endsWith(".txt"));
         if (plans == null || plans.length == 0) {
-            throw new CEGStudyBuddyException("You have no plans saved");
+            throw new CEGStudyBuddyException("You have no plans saved.");
         }
 
         // Remove ".txt" extension
@@ -222,19 +222,21 @@ public class StorageManager {
             this.newPlan();
             return;
         }
+
         int planNo = 0;
+
         try {
             planNo = Integer.parseInt(planNumber);
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Invalid plan number");
+            throw new CEGStudyBuddyException("Invalid plan number.");
         }
         if (planNo < 0 || planNo > plans.length) {
-            throw new CEGStudyBuddyException("plan number out of range");
+            throw new CEGStudyBuddyException("Plan number is  out of range.");
         }
         try {
             this.loadPlan(plans[planNo - 1]);
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error loading plan");
+            throw new CEGStudyBuddyException("Error in plan loading.");
         }
 
         ui.planSuccessfullyLoadedMessage();
@@ -243,7 +245,7 @@ public class StorageManager {
     /**
      * This method allows the user to select a plan and delete it.
      *
-     * @throws CEGStudyBuddyException
+     * @throws CEGStudyBuddyException If the plan number input is invalid or an error occurs when deleting the plan.
      */
     public void deletePlanWithSelection() throws CEGStudyBuddyException {
         String[] plans;
@@ -258,10 +260,10 @@ public class StorageManager {
         try {
             planNo = Integer.parseInt(planNumber);
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Invalid plan number");
+            throw new CEGStudyBuddyException("Invalid plan number.");
         }
         if (planNo < 0 || planNo > plans.length) {
-            throw new CEGStudyBuddyException("plan nnumber out of range");
+            throw new CEGStudyBuddyException("Plan nnumber out of range");
         }
         try {
             this.deletePlan(plans[planNo - 1]);
@@ -278,7 +280,7 @@ public class StorageManager {
      */
     public void deletePlan(String planName) throws CEGStudyBuddyException {
         // Get user confirmation to delete
-        if (!ui.isUserConfirm("Are you sure you want to delete " + planName)) {
+        if (!ui.isUserConfirm("Are you sure you want to delete " + planName + "?")) {
             ui.cancelMessage();
             return;
         }
@@ -291,7 +293,7 @@ public class StorageManager {
         if (planFile.exists()) {
             planFile.delete();
         } else {
-            throw new CEGStudyBuddyException("Plan does not exist");
+            throw new CEGStudyBuddyException("Plan does not exist.");
         }
         ui.displaySuccessfullyDeletedMessage();
         if (planName.equals(CEGStudyBuddy.courses.getPlanName())) {
@@ -308,11 +310,11 @@ public class StorageManager {
         String[] plans = this.listPlans();
         String planName = ui.getNewPlanName(plans);
         if (!planName.matches("[a-zA-Z0-9]*")) {
-            throw new CEGStudyBuddyException("Invalid Plan Name");
+            throw new CEGStudyBuddyException("Invalid Plan Name.");
         }
         File newPlanFile = new File(directory, planName + ".txt");
         if (newPlanFile.exists()) {
-            throw new CEGStudyBuddyException("Plan already exists");
+            throw new CEGStudyBuddyException("This plan already exists.");
         }
         File planFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".txt");
         CEGStudyBuddy.courses.setPlanName(planName);
@@ -333,7 +335,7 @@ public class StorageManager {
             fw.write(data);
             fw.close();
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error in saving to file");
+            throw new CEGStudyBuddyException("Error occured in saving to file.");
         }
     }
 
