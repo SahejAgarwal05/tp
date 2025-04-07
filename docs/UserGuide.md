@@ -498,8 +498,8 @@ CEGStudyBuddy is a fully offline application. No internet required.
 
 ### ❓ Q: What happens if I accidentally delete a course?
 
-**A:** Unfortunately, the app doesn’t support an undo feature (yet 😢).  
-Make sure to double-check before deleting. You can always re-add the course using the `add` command.
+**A:** You can use `undo` to undo this action. 
+In fact, you can undo `delete`, `add` and `replace`.
 
 ---
 
