@@ -121,11 +121,11 @@ public class StorageManager {
         }
 
         try  {
-            CourseList  courses = new CourseList(planName);
+            CourseList courses = new CourseList(planName);
             String[] data = Files.readString(planFile.toPath()).split("\n");
             for (String line : data) {
                 if (!line.trim().isEmpty()) {
-                    courses.add(Parser.parseCourse(line));
+                    courses.add(Parser.parseCourse(line, true));
                 }
             }
             CEGStudyBuddy.courses = courses;
