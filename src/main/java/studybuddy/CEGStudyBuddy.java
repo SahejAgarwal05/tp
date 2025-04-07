@@ -36,18 +36,22 @@ public class CEGStudyBuddy {
                 String output = c.execute(courses, storage);
                 ui.showMessage(output);
                 storage.autoSave();
+
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
                 }
+
                 isRunning = c.isRunning();
                 if (isRunning) {
                     ui.showEnterCommand();
                 }
+
             } catch (Exception e) {
                 if (!isSummary) {
                     CommandHistoryManager.record(fullCommand);
                 }
                 ui.showMessage(e.getMessage());
+                ui.showEnterCommand();
             }
         }
         scanner.close();

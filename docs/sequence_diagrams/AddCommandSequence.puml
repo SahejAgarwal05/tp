@@ -1,16 +1,7 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-":CEGStudyBuddy" -> ":Parser": parseCommand
-activate ":Parser"
-":Parser" -> "c:AddCommand" **
-activate "c:AddCommand"
-"c:AddCommand" --> ":Parser" : c
-deactivate "c:AddCommand"
-":Parser" --> ":CEGStudyBuddy" : c
-deactivate ":Parser"
-
-":CEGStudyBuddy" -> "c:AddCommand" : execute(courses, parser)
+[-> "c:AddCommand" : execute(courses, parser)
 activate "c:AddCommand"
 
 "c:AddCommand" -> ":Parser": parseCourse(param)
@@ -34,7 +25,7 @@ activate ":UndoManager"
 ":UndoManager" --> "c:AddCommand"
 deactivate ":UndoManager"
 
-":CEGStudyBuddy" <-- "c:AddCommand" : output
+[<-- "c:AddCommand" : output
 deactivate "c:AddCommand"
 
 @enduml

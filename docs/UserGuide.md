@@ -1,4 +1,4 @@
-# CEG StudyBuddy User Guide
+# CEGStudyBuddy User Guide
 
 ## Introduction
 
