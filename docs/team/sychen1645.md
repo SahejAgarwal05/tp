@@ -6,19 +6,19 @@ Given below are my contributions to the project.
 
 ---
 
-## New Feature: Added command for editing a course
+## New Feature: Implemented customised course editing
 
 ### What it does
 
-Allows the user to edit course information such as MC, title, year/semester taken.
+Allows the user to edit course information such as MC, title, year/semester taken in a flexible way. They only need to key in the information they want to change, instead of all information about the course. 
 
 ### Justification
 
-This is a basic feature.
+It would be troublesome and unnecessary for users to key in entries for information they do not intend to change.
 
 ### Highlights
 
-User does not need to follow any sequence or number of inputs (except to put c/CODE at first).
+User does not need to follow any sequence or number of inputs (except to put c/CODE at first) for the `edit` command.
 
 ---
 
@@ -61,6 +61,12 @@ Defined_Courses is managed by a new class CourseManager which specialises in rea
 
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
+
+---
+
+## Code Contributed
+
+[link to 2113 course website](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=sychen1645&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 
 ---
 
