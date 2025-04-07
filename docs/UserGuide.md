@@ -230,6 +230,8 @@ If this is the 21st dummy added:
 Reached maximum number of dummies, please delete dummies before adding
 ```
 
+The [dummy] command cannot be undone by [undo] command. To undo dummy, please use [delete].
+
 ---
 
 ### Finding a Course: `find`
