@@ -487,7 +487,7 @@ Make sure to double-check before deleting. You can always re-add the course usin
 
 ### ❓ Q: What happens if I have not decided on which exact course to take?
 
-**A:** You can add a placeholder course and replace/delete it later. 
+**A:** You can add a placeholder course and delete/replace it later. 
 As long as you know how many MCs you plan to take, you can add the placeholder using `dummy`. 
 
 ---

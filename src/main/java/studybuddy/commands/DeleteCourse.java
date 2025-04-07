@@ -37,7 +37,7 @@ public class DeleteCourse extends Command {
             String code = trimmedParam.substring(2).trim().toUpperCase();
 
             // Validate course code format using regex
-            if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
                 throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A, etc.");
             }
 
