@@ -361,4 +361,8 @@ public class Ui {
     public String extraInputErrorMessage() {
         return "There is extra input, please check your input";
     }
+
+    public String replaceDuplicateMessage() {
+        return "The same course already exists :)";
+    }
 }

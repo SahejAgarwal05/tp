@@ -2,6 +2,7 @@ package studybuddy.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,8 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommandTest {
-    private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData");
+    private static CourseList courses = new CourseList("test");
+    private static StorageManager storage = new StorageManager("./PlanData");
     private Ui ui = new Ui();
 
     @BeforeEach
