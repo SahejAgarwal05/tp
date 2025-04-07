@@ -22,10 +22,9 @@ public class AddCommand extends Command {
 
         // Check for duplicate course (same code in same year and semester)
         for (Course course : courses.getCourses()) {
-            if (course.getCode().equalsIgnoreCase(newCourse.getCode())
-                    && course.getTakeInYear() == newCourse.getTakeInYear()
-                    && course.getTakeInSem() == newCourse.getTakeInSem()) {
-                throw new CEGStudyBuddyException("This course is already added for the same year and semester.");
+            if (course.getCode().equalsIgnoreCase(newCourse.getCode())) {
+                throw new CEGStudyBuddyException("This course is already added in year " +
+                        course.getTakeInYear() + " semester " + course.getTakeInSem());
             }
         }
 

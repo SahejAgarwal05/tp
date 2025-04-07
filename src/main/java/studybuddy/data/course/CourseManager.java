@@ -118,7 +118,7 @@ public class CourseManager {
                 return jsonToCourse(line);
             }
         }
-        ui.showUndefinedCourseMessage();
+        // ui.showUndefinedCourseMessage();
         return null;
     }
 }

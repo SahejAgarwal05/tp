@@ -97,7 +97,11 @@ The Course class represents a single course.
 
 **Attributes:**
 
-- `String code`: Course Code, e.g. CS2113.
+- `static boolean[] dummies`: A fixed-size array (size 20) tracking the usage of dummy courses. `true` means the dummy index is in use.
+- `static final int DUMMYSIZE`: The maximum number of dummy courses allowed (20).
+- `static final String DUMMYWORD`: The prefix used in dummy course codes ("DUM").
+- `final String DUMMYTITLE`: Default title used for dummy courses ("To be confirmed").
+- `String code`: Course Code, e.g. CS2113 or DUM3 for a dummy.
 - `String title`: Course Title/Name, e.g. Software Engineering & Object-Oriented Programming.
 - `int mc`: Number of modular credits.
 - `boolean offerInSem1`: Whether the course is offered in semester 1.
@@ -107,8 +111,16 @@ The Course class represents a single course.
 
 **Methods:**
 
-- `String toString()`: Returns a string representing the course.
-- `String toStoreFormat()`: Return a string representing the course in a format meant for storage.
+- `Course(String code, String title, int mc, int takeInYear, int takeInSem)`: Constructs a new course with specified details.
+- `Course(String code, int mc, int takeInYear, int takeInSem)`: Constructs a dummy course with a code and default title.
+- `static Course createDummyCourse(int mc, int takeInYear, int takeInSem)`: Creates a dummy course and reserves its index.
+- `String toStoreFormat()`: Returns a string in storage-friendly format.
+- `static boolean isDummyFull()`: Checks whether all dummy slots are used.
+- `static boolean isValidDummyIndex(int number)`: Checks if a dummy index is within valid bounds.
+- `static int getAvailableDummyIndex()`: Returns the next available dummy index or -1 if full.
+- `static void dummyInitialiseCheck(CourseList list)`: Re-initializes the dummy tracking based on existing courses in the current course list.
+
+![CourseClassDiagram.png](CourseClassDiagram.png)
 
 ---
 
@@ -617,6 +629,18 @@ gradreq
 - 160 MCs or more → celebratory message + graduation ASCII/emoji
 
 ---
+
+### Adding a Dummy Course
+
+Command:
+```
+dummy mc/4 y/2 s/1
+```
+
+**Test Cases:**
+- Extra input parameters (e.g., `dummy t/Dummy mc/4 y/2 s/1`)
+- Fail to add a dummy after dummy number reaches 20
+- Valid case: Adding a new dummy course with correct parameters (e.g., `dummy mc/4 y/2 s/1`)
 ```
 
 
