@@ -75,7 +75,7 @@ Added documentation for the `edit` and `dummy` commands.
 
 Added documentation and class diagrams for class `Course`.
 
-![Class Course](docs/class_diagrams/CourseClassDiagram.png)
+![Class Course](class_diagrams/CourseClassDiagram.png)
 
 Added documentation for class `CourseManager`.
 
@@ -83,4 +83,4 @@ Added documentation for the feature *Predefined List of Courses*.
 
 Added sequential diagram for adding a course. 
 
-![Add a Course](docs/sequence_diagrams/CourseManagerSequence.png)
+![Add a Course](sequence_diagrams/CourseManagerSequence.png)
