@@ -12,7 +12,7 @@ import studybuddy.data.course.CourseList;
 public class UndoManager {
 
     // Stack to store the history of user actions for undo
-    private static final Stack<Action> actionHistory = new Stack<>();
+    private static Stack<Action> actionHistory = new Stack<>();
 
     /**
      * Records an ADD action when a course is added.

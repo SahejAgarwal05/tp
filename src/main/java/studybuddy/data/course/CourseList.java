@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CourseList implements Serializable {
-    private final ArrayList<Course> courses; // List to store all courses
+    private ArrayList<Course> courses; // List to store all courses
     private String planName;
 
     public CourseList(String planName) {
