@@ -17,8 +17,8 @@ public class WorkloadBalanceCommand extends Command {
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         int[] mCs = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
         for (Course course : courses.getCourses()) {
-            int index = course.getTakeInYear() * 2 + course.getTakeInSem();
-            mCs[index] += course.getTakeInSem();
+            int index = (course.getTakeInYear()-1) * 2 + course.getTakeInSem() - 1;
+            mCs[index] += course.getMc();
         }
         int max = 0;
         int min = 1000000;
