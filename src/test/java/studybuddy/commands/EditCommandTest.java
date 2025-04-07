@@ -12,8 +12,8 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommandTest {
-    private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData");
+    private static CourseList courses = new CourseList("test");
+    private static StorageManager storage = new StorageManager("./PlanData");
     private Ui ui = new Ui();
 
     @BeforeEach

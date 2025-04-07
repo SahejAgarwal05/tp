@@ -5,7 +5,7 @@ public class Utils {
     public static final int NUM_OF_SEMESTERS = 8;
 
     public static boolean isValidMC(int mc) {
-        return mc >= 1 && mc <= 12;
+        return (mc == 0 || mc == 2 || mc == 4 || mc == 6 || mc == 8 || mc == 10 || mc == 12);
     }
 
     public static boolean isValidYear(int year) {
@@ -30,7 +30,7 @@ public class Utils {
             return "(Too high, please appeal for waiver! Maximum workload: 23 MCs)";
         }
         if (mc > 27) {
-            return "(Too high, please appeal for waiver! Maximum workload: 27 MCs)";
+            return "(Too high, please appeal for waiver! Maximum workload: 28 MCs)";
         }
         return "";
     }
