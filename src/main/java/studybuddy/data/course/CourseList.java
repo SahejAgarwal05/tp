@@ -6,10 +6,19 @@ import java.util.ArrayList;
 public class CourseList implements Serializable {
     private ArrayList<Course> courses; // List to store all courses
     private String planName;
+
     public CourseList(String planName) {
         this.courses = new ArrayList<Course>();
         this.planName = planName;
     }
+
+    /**
+     * Edits the parameters of a course.
+     *
+     * @param editedParams The String array containing the new parameters.
+     * @param course The Course object to be edited.
+     * @return The newly edited Course object.
+     */
     public Course setEditedParams(String[] editedParams, Course course) {
         if (editedParams.length != 5) {
             return course;
@@ -37,12 +46,21 @@ public class CourseList implements Serializable {
         this.planName = planName;
     }
 
-    // Add a course to the list
-    public void addCourse(Course course) {
+    /**
+     * Add a course to the list
+     *
+     * @param course The Course object to be added
+     */
+    public void add(Course course) {
         courses.add(course);
     }
 
-    // Delete a course by matching the full code (e.g., CS2040)
+    /**
+     * Deletes a course matching the full code (e.g., CS2040)
+     *
+     * @param code The course code to be deleted
+     * @return True if the deletion is successful
+     */
     public boolean deleteCourseByCode(String code) {
         String formattedCode = code.trim().toUpperCase(); // Uniform formatting
         return courses.removeIf(course ->
@@ -50,42 +68,29 @@ public class CourseList implements Serializable {
         );
     }
 
-    // Return the list of all courses
+    /**
+     * Return the list of all courses
+     *
+     * @return ArrayList of courses
+     */
     public ArrayList<Course> getCourses() {
         return courses;
     }
 
-    // Return a formatted string listing all courses
-    public String listCourses() {
-        if (courses.isEmpty()) {
-            return "No courses added yet!"; // Display message if empty
-        }
-        StringBuilder sb = new StringBuilder();
-        int count = 1; // Numbering each course
-        for (Course course : courses) {
-            sb.append(count).append(". ")
-                    .append(course.getCode()) // Course code (e.g., CS2040)
-                    .append(" - ").append(course.getTitle())
-                    .append(" (").append(course.getMc()).append(" MCs)").append("\n");
-            count++;
-        }
-        return sb.toString().trim(); // Return formatted string
-    }
     public boolean isEmpty() {
         return courses.isEmpty();
     }
-    public void add(Course course) {
-        courses.add(course);
-    }
-    public void clear(){
+
+    public void clear() {
         courses.clear();
     }
 
     /**
      * Function to get the storage format string for the course list
-     * @return Sstorage format Sting
+     *
+     * @return Storage format String
      */
-    public String toStoreFormat(){
+    public String toStoreFormat() {
         StringBuilder sb = new StringBuilder();
         for (Course course : courses) {
             sb.append(course.toStoreFormat()).append("\n");

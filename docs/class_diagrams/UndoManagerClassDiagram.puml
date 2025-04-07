@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+UndoManager .> Course
+UndoManager .> CourseList
+UndoManager "actionHistory" --> "*" Action
+Action --> ActionType
+
+class UndoManager {
++recordAdd() : void
++recordReplace() : void
++undo() : String
+}
+
+class Action {
+-Course course
+-Course newCourse
+}
+
+enum ActionType <<enumeration>> {
+ADD
+DELETE
+REPLACE
+}
+
+@enduml

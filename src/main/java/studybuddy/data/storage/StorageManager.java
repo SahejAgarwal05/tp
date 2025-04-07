@@ -125,7 +125,7 @@ public class StorageManager {
             String[] data = Files.readString(planFile.toPath()).split("\n");
             for (String line : data) {
                 if (!line.trim().isEmpty()) {
-                    courses.addCourse(Parser.parseCourse(line));
+                    courses.add(Parser.parseCourse(line));
                 }
             }
             CEGStudyBuddy.courses = courses;
