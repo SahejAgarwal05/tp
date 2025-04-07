@@ -179,30 +179,30 @@ public class Ui {
     public void showWelcome() {
         String banner =
                 """             
-                        __________  ___________ ________
-                        \\_   ___ \\\\_   _____//  _____/
-                        /    \\  \\/ |    __)_/   \\  ___
-                        \\     \\____|        \\    \\_\\  \\
-                         \\______  /_______  /\\______  /
-                                \\/        \\/        \\/
-                
-                          ________________________ ___________ _____.___. 
-                         /   _____/\\__    ___/    |   \\______ \\\\__  |   | 
-                         \\_____  \\   |    |  |    |   /|    |  \\/   |   | 
-                         /        \\  |    |  |    |  / |    `   \\____   | 
-                        /_______  /  |____|  |______/ /_______  / ______| 
-                                \\/                            \\/\\/        
-                
-                        __________ ____ ___________  ________ _____.___.  
-                        \\______   \\    |   \\______ \\ \\______ \\\\__  |   |  
-                         |    |  _/    |   /|    |  \\ |    |  \\/   |   |  
-                         |    |   \\    |  / |    `   \\|    `   \\____   |  
-                         |______  /______/ /_______  /_______  / ______|  
-                                \\/                 \\/        \\/\\/        
-                
-                                      Welcome to CEGStudyBuddy!
-                            Type 'help' to see a list of available commands.
-                """;
+                                __________  ___________ ________
+                                \\_   ___ \\\\_   _____//  _____/
+                                /    \\  \\/ |    __)_/   \\  ___
+                                \\     \\____|        \\    \\_\\  \\
+                                 \\______  /_______  /\\______  /
+                                        \\/        \\/        \\/
+                        
+                                  ________________________ ___________ _____.___. 
+                                 /   _____/\\__    ___/    |   \\______ \\\\__  |   | 
+                                 \\_____  \\   |    |  |    |   /|    |  \\/   |   | 
+                                 /        \\  |    |  |    |  / |    `   \\____   | 
+                                /_______  /  |____|  |______/ /_______  / ______| 
+                                        \\/                            \\/\\/        
+                        
+                                __________ ____ ___________  ________ _____.___.  
+                                \\______   \\    |   \\______ \\ \\______ \\\\__  |   |  
+                                 |    |  _/    |   /|    |  \\ |    |  \\/   |   |  
+                                 |    |   \\    |  / |    `   \\|    `   \\____   |  
+                                 |______  /______/ /_______  /_______  / ______|  
+                                        \\/                 \\/        \\/\\/        
+                        
+                                              Welcome to CEGStudyBuddy!
+                                    Type 'help' to see a list of available commands.
+                        """;
 
         System.out.println(banner);
     }
@@ -222,6 +222,7 @@ public class Ui {
     public void showError(String error) {
         System.out.println(error);
     }
+
     public void showEnterCommand() {
         System.out.print("Enter command: ");
     }
@@ -231,7 +232,7 @@ public class Ui {
     }
 
     public String newPlanInput() {
-        System.out.print("Please enter a plan name \nNo special characters are allowed, only alphanumeric input: ");
+        System.out.print("Please enter a plan name.\nNo special characters are allowed, only alphanumeric input: ");
         return robustNextLine();
     }
 
@@ -239,7 +240,7 @@ public class Ui {
      * Method to print plan creation message
      */
     public void createNewPlanMessage() {
-        System.out.println("New plan has been created");
+        System.out.println("New plan has been created.");
     }
 
     /**
@@ -247,11 +248,12 @@ public class Ui {
      */
 
     public void noPreviousPlansMessage() {
-        System.out.println("You have no previous plans");
+        System.out.println("You have no previous plans.");
     }
 
     /**
-     *  Method to help user choose a plan or choose creating a new one
+     * Method to help user choose a plan or choose creating a new one
+     *
      * @param plans list of string of plan names
      * @return
      */
@@ -264,7 +266,7 @@ public class Ui {
     }
 
     public void planSuccessfullyLoadedMessage() {
-        System.out.println("Plan loaded successfully");
+        System.out.println("Plan loaded successfully.");
     }
 
     public void printCourse(Course c) {
@@ -273,6 +275,7 @@ public class Ui {
 
     /**
      * Method to allow user to choose a plan to delete
+     *
      * @param plans list of string of plan names
      * @return
      */
@@ -288,67 +291,71 @@ public class Ui {
      * Method to print plan deletion message
      */
     public void displaySuccessfullyDeletedMessage() {
-        System.out.println("Plan deleted successfully");
+        System.out.println("Plan deleted successfully.");
     }
 
     public String editSuccessMessage() {
-        return "Course is successfully edited";
+        return "Course is successfully edited.";
     }
 
     public String courseNotInPlannerMessage() {
-        return "This course cannot be found inside the planner";
+        return "This course cannot be found in this plan.";
     }
 
     public String indexOutOfBoundErrorMessage() {
-        return "Input is not a valid index, please check your input";
+        return "Input is not a valid index. Please check your input.";
     }
 
     public String parseIntErrorMessage() {
-        return "Input cannot be converted to an valid number, please input a correct year, sem, or mc";
+        return "Input cannot be converted to an valid number. Please input a correct year, sem, or mc.";
     }
 
     public String missingCodeErrorMessage() {
-        return "Course code is missing, please ensure there is a course code in your input";
+        return "Course code is missing. Please ensure there is a course code in your input.";
     }
 
     public void showMissingDefinedListMessage() {
-        System.out.println("The list of defined courses cannot be found");
+        System.out.println("The list of defined courses cannot be found.");
     }
 
     public String missingDefinedListMessage() {
-        return "The list of defined courses cannot be found";
+        return "The list of defined courses cannot be found.";
     }
 
     public void showUndefinedCourseMessage() {
-        System.out.println("This course is not defined in the list of defined courses");
+        System.out.println("This course is not defined in the list of defined courses.");
     }
 
     public String missingInputErrorMessage() {
-        return "Input is incomplete and information is missing, please check your input";
+        return "Input is incomplete and information is missing, please check your input.";
     }
 
     /**
-     * Askes for user confirmation for an action. Returns true if user input Y or y
-     * @param confirmationMessgae
+     * Asks for user confirmation for an action. Returns true if user input Y or y
+     *
+     * @param confirmationMessage
      * @return
      */
-    public boolean isUserConfirm(String confirmationMessgae) {
-        System.out.println(confirmationMessgae);
+    public boolean isUserConfirm(String confirmationMessage) {
+        System.out.println(confirmationMessage);
         System.out.print("Please enter a Y/y to confirm: ");
         String userInput = scanner.nextLine().trim();
         return userInput.equalsIgnoreCase("y");
     }
+
     public void cancelMessage() {
-        System.out.println("Cancelled");
+        System.out.println("Cancelled.");
     }
+
     public String getNewPlanName(String[] plans) {
         for (int i = 0; i < plans.length; i++) {
             System.out.println((i + 1) + ". " + plans[i]);
         }
-        System.out.println("These are your existing plans");
+        System.out.println("These are your existing plans:");
         return this.newPlanInput();
     }
-    public void renameSuccessfulMessage(){
-        System.out.println("Successfully renamed");
+
+    public void renameSuccessfulMessage() {
+        System.out.println("Successfully renamed.");
     }
 }
