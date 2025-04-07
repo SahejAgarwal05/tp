@@ -68,7 +68,7 @@ public class AddCommandTest {
     @Test
     public void testOutOfRangeValues() {
         AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/20 y/6 s/3");
-        assertEquals("Invalid MC value. MC must be between 1 and 12.", execute(cmd));
+        assertEquals("Invalid MC value. MC must be an even number between 0 and 12.", execute(cmd));
     }
 
     private String formatInput(String code, String title, String mc, String year, String sem) {

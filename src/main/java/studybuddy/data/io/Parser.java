@@ -274,21 +274,21 @@ public class Parser {
         } catch (NumberFormatException e) {
             return null;
         }
-        if (!Utils.isValidYear(year)) {
-            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
-        }
-        if (!Utils.isValidSem(sem)) {
-            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
-        }
+
         return getDefinedCourse(code, year, sem);
     }
 
     private static Course getDefinedCourse(String code, int year, int sem)
-            throws ArrayIndexOutOfBoundsException, NumberFormatException {
-        assert (Utils.isValidYear(year) && Utils.isValidSem(sem));
+            throws CEGStudyBuddyException {
         Course course = CourseManager.getCourse(code);
         if (course != null) {
             // this course is defined
+            if (!Utils.isValidYear(year)) {
+                throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
+            }
+            if (!Utils.isValidSem(sem)) {
+                throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
+            }
             course.setTakeInYear(year);
             course.setTakeInSem(sem);
             return course;
