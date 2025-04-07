@@ -12,7 +12,7 @@ import studybuddy.data.storage.UndoManager;
  * It validates the input format, ensures proper course code formatting,
  * and utilizes the Parser and UndoManager to perform deletion and support undo functionality.
  */
-public class DeleteCourse extends Command {
+public class DeleteCourseCommand extends Command {
 
     // Description shown to the user when help or command summary is requested
     public static final String COMMAND_DESCRIPTION = """
@@ -20,38 +20,32 @@ public class DeleteCourse extends Command {
                 Deletes a course from your plan.""";
 
     // Constructor takes the user input parameter
-    public DeleteCourse(String param) {
+    public DeleteCourseCommand(String param) {
         super(param);
     }
 
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
         try {
-            // Ensure the parameter starts with the required prefix
-            String trimmedParam = param.trim();
-            if (!trimmedParam.startsWith("c/")) {
-                throw new CEGStudyBuddyException("Invalid format. Use: delete c/CODE");
+            // Parse input parameters to a valid course code
+            String code = Parser.parseDelete(param);
+            Course deletedCourse;
+
+            for (Course course : courses.getCourses()) {
+                if (course.getCode().equalsIgnoreCase(code)) {
+                    courses.getCourses().remove(course);
+                    deletedCourse = course;
+
+                    // Record the action for undo functionality
+                    UndoManager.recordDelete(deletedCourse);
+
+                    // Return confirmation message
+                    return "Course with code " + deletedCourse.getCode() + " has been deleted.";
+                }
             }
-
-            // Extract and normalize course code (convert to uppercase)
-            String code = trimmedParam.substring(2).trim().toUpperCase();
-
-            // Validate course code format using regex
-            if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
-                throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A, etc.");
-            }
-
-            // Use parser to locate and remove course from course list
-            Course deletedCourse = Parser.parseDeleteReturnCourse(courses, param);
-
-            // Record the action for undo functionality
-            UndoManager.recordDelete(deletedCourse);
-
-            // Return confirmation message
-            return "Course with code " + deletedCourse.getCode() + " has been deleted.";
-
+            throw new CEGStudyBuddyException("Course with code " + code + " not found.");
         } catch (CEGStudyBuddyException e) {
-            // Re-throw expected exceptions to maintain message
+            // Throw CEGStudyBuddyException again to maintain error message
             throw e;
         } catch (Exception e) {
             // Catch-all for unexpected runtime issues

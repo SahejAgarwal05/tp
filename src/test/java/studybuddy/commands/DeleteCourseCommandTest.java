@@ -10,7 +10,7 @@ import studybuddy.data.storage.StorageManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class DeleteCourseTest {
+public class DeleteCourseCommandTest {
     private CourseList courses;
     private final StorageManager storage = new StorageManager("./PlanData");
 
@@ -25,7 +25,7 @@ public class DeleteCourseTest {
     @Test
     public void testDeleteExistingCourse() {
         try {
-            DeleteCourse deleteCommand = new DeleteCourse("c/CS2113");
+            DeleteCourseCommand deleteCommand = new DeleteCourseCommand("c/CS2113");
             String output = deleteCommand.execute(courses, storage);
             assertEquals("Course with code CS2113 has been deleted.", output);
 
@@ -42,7 +42,7 @@ public class DeleteCourseTest {
     public void testDeleteNonExistingCourse() {
         String output;
         try {
-            DeleteCourse deleteCommand = new DeleteCourse("c/CS9999");
+            DeleteCourseCommand deleteCommand = new DeleteCourseCommand("c/CS9999");
             output = deleteCommand.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             output = e.getMessage();
@@ -55,7 +55,7 @@ public class DeleteCourseTest {
     public void testInvalidFormatMissingPrefix() {
         String output;
         try {
-            DeleteCourse deleteCommand = new DeleteCourse("CS2040");
+            DeleteCourseCommand deleteCommand = new DeleteCourseCommand("CS2040");
             output = deleteCommand.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             output = e.getMessage();
@@ -67,7 +67,7 @@ public class DeleteCourseTest {
     public void testInvalidCourseCodeFormat() {
         String output;
         try {
-            DeleteCourse deleteCommand = new DeleteCourse("c/1234CS");
+            DeleteCourseCommand deleteCommand = new DeleteCourseCommand("c/1234CS");
             output = deleteCommand.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             output = e.getMessage();
