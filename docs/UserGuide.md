@@ -476,7 +476,7 @@ summary
 | **Switch Plan**      | `switch_plan`                                                                                                              |
 | **Delete Plan**      | `delete_plan`                                                                                                              |
 | **Replace a Course** | `replace c/OLDCODE c/NEWCODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                 |
-| **Pre Req**          | `prereq c/CODE`                                                                                                            |
+| **Pre Requisite**    | `prereq c/CODE`                                                                                                            |
 | **Summary**          | `summary`                                                                                                                  |
 | **Undo**             | `undo`                                                                                                                     |
 ---
