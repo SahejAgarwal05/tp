@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DeleteCourseTest {
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData");
+    private final StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {

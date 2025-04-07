@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class CommandHistoryManager {
     // List to store the full text of executed commands
-    private static ArrayList<String> commandHistory = new ArrayList<>();
+    private static final ArrayList<String> commandHistory = new ArrayList<>();
 
     /**
      * Records a command entered by the user, unless it's the 'summary' command.

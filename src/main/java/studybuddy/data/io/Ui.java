@@ -27,7 +27,7 @@ import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 
 public class Ui {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Ui() {
         this.scanner = new Scanner(System.in);

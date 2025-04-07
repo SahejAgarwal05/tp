@@ -11,8 +11,8 @@ import studybuddy.data.course.CourseList;
 import studybuddy.data.storage.StorageManager;
 
 public class ListCommandTest {
-    private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData");
+    private final CourseList courses = new CourseList("test");
+    private final StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {
