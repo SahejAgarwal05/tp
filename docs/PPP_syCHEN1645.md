@@ -43,12 +43,24 @@ Defined_Courses is managed by a new class CourseManager which specialises in rea
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
 
+## Enhancements
+
+### High-Severity and High-Complexity Debug
+
+Debugged issue *Inputting Ctrl+Z on startup causes program to loop infinitely* [#110](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/110)
+
+Debugged issue *List of defined courses not on JAR nor included in version release* [#113](https://github.com/AY2425S2-CS2113-F14-2/tp/issues/113)
+
 ## Documentation
+
 ### User Guide
+
 Added documentation for the `add`, `edit`, `list` and `dummy` commands.
+
 Added *Introduction* section.
 
 ### Developer Guide
+
 Added documentation for the `edit` and `dummy` commands.
 
 Added documentation and class diagrams for the classes `Course` and `CourseManager`.
