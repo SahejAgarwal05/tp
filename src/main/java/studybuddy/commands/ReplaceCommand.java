@@ -3,11 +3,11 @@ package studybuddy.commands;
 import studybuddy.common.Utils;
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.course.UndoManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.storage.UndoManager;
 
 /**
  * Replaces an existing course with a new one, preserving its time and MC attributes.
@@ -15,7 +15,7 @@ import studybuddy.data.storage.StorageManager;
  */
 public class ReplaceCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
-        replace c/OLD_CODE NEW_CODE mc/MODULAR_CREDITS y/YEAR s/SEMESTER t/TITLE
+        replace c/OLD_CODE c/NEW_CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER
             Replaces an existing course with a new one.""";
 
     private final Ui ui = new Ui();
@@ -94,16 +94,13 @@ public class ReplaceCommand extends Command {
 
         Course newCourse = new Course(newCode, title, mc, year, sem);
 
-        if (oldCourse.getCode().equalsIgnoreCase(newCourse.getCode()) &&
-                oldCourse.getTitle().equalsIgnoreCase(newCourse.getTitle()) &&
-                oldCourse.getMc() == newCourse.getMc() &&
-                oldCourse.getTakeInYear() == newCourse.getTakeInYear() &&
-                oldCourse.getTakeInSem() == newCourse.getTakeInSem()) {
-            return "The course already exists :)";
+        // Disallow replace the same course with the same title
+        if (oldCourse.getCode().equalsIgnoreCase(newCourse.getCode())) {
+            return ui.replaceDuplicateMessage();
         }
 
         courses.deleteCourseByCode(oldCode);
-        courses.addCourse(newCourse);
+        courses.add(newCourse);
         UndoManager.recordReplace(oldCourse, newCourse);
 
         return ui.showCourseReplacedMessage(oldCode, newCode);

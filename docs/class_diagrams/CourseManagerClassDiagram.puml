@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+skinparam classAttributeIconSize 0
+
+CourseManager "ui  " --> "1 " Ui
+CourseManager ..> Course
+
+class CourseManager {
+-String FILEPATH
+-loadCourseFile() : InputStream
++jsonToCourse() : Course
++courseToJson() : String
++ifDefined() : boolean
++getCourse() : Course
+}
+
+@enduml

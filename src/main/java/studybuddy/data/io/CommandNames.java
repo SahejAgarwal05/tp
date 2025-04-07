@@ -20,4 +20,5 @@ public class CommandNames {
     public static final String UNDO = "undo";
     public static final String SUMMARY = "summary";
     public static final String PREREQ = "prereq";
+    public static final String PLACEHOLDER = "dummy";
 }

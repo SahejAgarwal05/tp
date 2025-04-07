@@ -36,9 +36,25 @@ public class AddCommandTest {
     @Test
     public void testDuplicateCourse() {
         String input = formatInput(TEST_CODE, TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
-        execute(new AddCommand(input)); // Add once
-        String output = execute(new AddCommand(input)); // Try duplicate
-        assertEquals("This course is already added for the same year and semester.", output);
+        execute(new AddCommand(input));
+        String output = execute(new AddCommand(input));
+        assertEquals("This course is already added in year " +
+                TEST_YEAR + " semester " + TEST_SEM, output);
+        input = "add c/CG1111A y/1 s/1";
+        AddCommand command = new AddCommand(input);
+        String expected = "Course added: " + "CG1111A" + " - " +
+                "Engineering Principles and Practice I" + " (" + 4 + " MCs)";
+        assertEquals(expected, execute(command));
+        input = "add c/CG1111A y/1 s/1";
+        command = new AddCommand(input);
+        expected = "This course is already added in year " +
+                1 + " semester " + 1;
+        assertEquals(expected, execute(command));
+        input = "add c/CG1111A t/EPP1 mc/4 y/1 s/1";
+        command = new AddCommand(input);
+        expected = "This course is already added in year " +
+                1 + " semester " + 1;
+        assertEquals(expected, execute(command));
     }
 
     @Test
@@ -54,33 +70,27 @@ public class AddCommandTest {
     public void testInvalidCourseCodeFormat() {
         String input = formatInput("1234CS", TEST_TITLE, TEST_MC, TEST_YEAR, TEST_SEM);
         AddCommand cmd = new AddCommand(input);
-        assertEquals(
-                "Invalid course code format.Expected: CS2040, EE2026, CG2111A etc.",
-                execute(cmd)
-        );
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc."
+                , execute(cmd));
     }
 
     @Test
-    public void testInvalidNumberFormat() {
-        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/four y/two s/one");
-        assertEquals(
-                "Missing fields. Please follow the format:\nadd c/CODE t/TITLE mc/VALUE y/YEAR s/SEM",
-                execute(cmd)
-        );
+    public void testDecimalInputs() {
+        AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/3.5 y/2.5 s/1.5");
+        assertEquals("Invalid input: MC, year, and semester must be whole numbers, not decimals."
+                , execute(cmd));
     }
 
     @Test
     public void testOutOfRangeValues() {
         AddCommand cmd = new AddCommand("c/CS2040 t/Title mc/20 y/6 s/3");
-        assertEquals("Invalid MC value. MC must be between 1 and 12.", execute(cmd));
+        assertEquals("Invalid MC value. MC must be an even number between 0 and 12.", execute(cmd));
     }
 
-    // Helper to format course input string
     private String formatInput(String code, String title, String mc, String year, String sem) {
         return "c/" + code + " t/" + title + " mc/" + mc + " y/" + year + " s/" + sem;
     }
 
-    // Helper to execute command and return output
     private String execute(AddCommand cmd) {
         try {
             return cmd.execute(courses, storage);
@@ -89,12 +99,47 @@ public class AddCommandTest {
         }
     }
 
-    // Unified expected message for missing fields
     private String getMissingFieldsMsg() {
-        return "Missing fields. Please follow the format:\n"
-                + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM";
+        return """
+            Missing or disordered fields. Please follow the format:
+            add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM""";
+    }
+
+    @Test
+    public void testAddDuplicateCourse() {
+        String input = "add c/CG1111A y/1 s/1";
+        AddCommand command = new AddCommand(input);
+        String expected = "Course added: " + "CG1111A" + " - " +
+                "Engineering Principles and Practice I" + " (" + 4 + " MCs)";
+        assertEquals(expected, execute(command));
+        input = "add c/CG1111A y/1 s/1";
+        command = new AddCommand(input);
+        expected = "This course is already added in year " +
+                1 + " semester " + 1;
+        assertEquals(expected, execute(command));
+        input = "add c/CG1111A t/EPP1 mc/4 y/1 s/1";
+        command = new AddCommand(input);
+        expected = "This course is already added in year " +
+                1 + " semester " + 1;
+        assertEquals(expected, execute(command));
+    }
+
+    @Test
+    public void testAddDummy() {
+        AddCommand cmd = new AddCommand("c/DUM01 t/Title mc/2 y/2 s/1");
+        assertEquals("Invalid course code format. Course code cannot contain \"DUM\"."
+                , execute(cmd));
+        cmd = new AddCommand("c/DUM900 t/Title mc/0 y/2 s/1");
+        assertEquals("Invalid course code format. Course code cannot contain \"DUM\"."
+                , execute(cmd));
+        cmd = new AddCommand("c/DUM10000 t/Title mc/4 y/2 s/1");
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc."
+                , execute(cmd));
     }
 }
+
+
+
 
 
 

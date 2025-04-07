@@ -2,10 +2,10 @@ package studybuddy.commands;
 
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.course.UndoManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.storage.UndoManager;
 
 public class AddCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """
@@ -18,14 +18,13 @@ public class AddCommand extends Command {
 
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
-        Course newCourse = Parser.parseCourse(param);
+        Course newCourse = Parser.parseCourse(param, false);
 
         // Check for duplicate course (same code in same year and semester)
         for (Course course : courses.getCourses()) {
-            if (course.getCode().equalsIgnoreCase(newCourse.getCode())
-                    && course.getTakeInYear() == newCourse.getTakeInYear()
-                    && course.getTakeInSem() == newCourse.getTakeInSem()) {
-                throw new CEGStudyBuddyException("This course is already added for the same year and semester.");
+            if (course.getCode().equalsIgnoreCase(newCourse.getCode())) {
+                throw new CEGStudyBuddyException("This course is already added in year " +
+                        course.getTakeInYear() + " semester " + course.getTakeInSem());
             }
         }
 
@@ -36,9 +35,7 @@ public class AddCommand extends Command {
         UndoManager.recordAdd(newCourse);
 
         // Return confirmation message
-        return "Course added: " + newCourse.getCode()
-                + " - " + newCourse.getTitle()
-                + " (" + newCourse.getMc() + " MCs)";
+        return "Course added: " + newCourse;
     }
 }
 

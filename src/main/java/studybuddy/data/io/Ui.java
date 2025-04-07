@@ -5,14 +5,21 @@ import java.util.Scanner;
 
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
 import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
+import studybuddy.commands.PrereqCommand;
+import studybuddy.commands.RenamePlanCommand;
+import studybuddy.commands.ReplaceCommand;
 import studybuddy.commands.SavePlanCommand;
+import studybuddy.commands.SummaryCommand;
 import studybuddy.commands.SwitchPlanCommand;
+import studybuddy.commands.UndoCommand;
 import studybuddy.commands.WorkloadBalanceCommand;
 import studybuddy.commands.WorkloadForCommand;
 import studybuddy.commands.WorkloadSummaryCommand;
@@ -32,6 +39,10 @@ public class Ui {
 
     public String showCourseReplacedMessage(String oldCode, String newCode) {
         return "Course \"" + oldCode + "\" has been successfully replaced with \"" + newCode + "\".";
+    }
+
+    public String showDummyFullMessage() {
+        return "Reached maximum number of dummies, please delete dummies before adding";
     }
 
     public String showCourseNotFoundInReplaceMessage(String code) {
@@ -122,6 +133,8 @@ public class Ui {
                 DeleteCourse.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ListCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 EditCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                ReplaceCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                PlaceHolderCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 FindCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadSummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 WorkloadForCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
@@ -129,6 +142,11 @@ public class Ui {
                 GradRequirementCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 SavePlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 SwitchPlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                DeletePlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                RenamePlanCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                PrereqCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                SummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                UndoCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 HelpCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ExitCommand.COMMAND_DESCRIPTION;
     }
@@ -339,9 +357,12 @@ public class Ui {
     public void renameSuccessfulMessage(){
         System.out.println("Successfully renamed");
     }
+
+    public String extraInputErrorMessage() {
+        return "There is extra input, please check your input";
+    }
+
+    public String replaceDuplicateMessage() {
+        return "The same course already exists :)";
+    }
 }
-
-
-
-
-

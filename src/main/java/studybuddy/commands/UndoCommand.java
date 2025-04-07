@@ -2,7 +2,7 @@ package studybuddy.commands;
 
 import studybuddy.data.course.CourseList;
 import studybuddy.data.storage.StorageManager;
-import studybuddy.data.course.UndoManager;
+import studybuddy.data.storage.UndoManager;
 
 /**
  * Represents the undo command which reverts the most recent course-related action
@@ -13,7 +13,8 @@ public class UndoCommand extends Command {
     // Description used for help message or command listings
     public static final String COMMAND_DESCRIPTION = """
             undo
-                Undoes the most recent course-related command (add, delete, replace).""";
+                Undoes the most recent course-related command (add, delete, replace).
+                Note: dummy cannot be undone, please use delete command""";
 
     /**
      * Constructs an UndoCommand.

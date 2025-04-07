@@ -22,7 +22,7 @@ public class GradRequirementCommandTest {
     public void testMeetsGraduationRequirement() {
         // Add courses totaling exactly 160 MCs
         for (int i = 0; i < 40; i++) {
-            courses.addCourse(new Course("CS" + i, "Sample Course " + i, 4, 1, 1));
+            courses.add(new Course("CS" + i, "Sample Course " + i, 4, 1, 1));
         }
 
         GradRequirementCommand gradCommand = new GradRequirementCommand();
@@ -37,7 +37,7 @@ public class GradRequirementCommandTest {
     public void testDoesNotMeetGraduationRequirement() {
         // Add courses totaling 100 MCs
         for (int i = 0; i < 25; i++) {
-            courses.addCourse(new Course("CS" + i, "Sample Course " + i, 4, 2, 1));
+            courses.add(new Course("CS" + i, "Sample Course " + i, 4, 2, 1));
         }
 
         GradRequirementCommand gradCommand = new GradRequirementCommand();

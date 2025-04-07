@@ -1,4 +1,5 @@
 package studybuddy.data.io;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +14,7 @@ import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.InvalidCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
 import studybuddy.commands.RenamePlanCommand;
 import studybuddy.commands.ReplaceCommand;
 import studybuddy.commands.SavePlanCommand;
@@ -44,40 +46,40 @@ public class Parser {
             String command = inputParts[0].toLowerCase();
             switch (command) {
             case CommandNames.ADD:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!"
-                    + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
+                            + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!" +
                             "Format: edit c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new EditCommand(inputParts[1]);
 
             case CommandNames.REPLACE:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters!" +
                             "Format: replace c/OLD CODE c/NEW CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new ReplaceCommand(inputParts[1]);
 
             case CommandNames.DELETE:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
                 }
                 return new DeleteCourse(inputParts[1]);
 
             case CommandNames.FIND:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: find c/CODE");
                 }
                 return new FindCommand(inputParts[1]);
 
             case CommandNames.PREREQ:
-                if (inputParts.length < 2){
+                if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: prereq c/CODE");
                 }
                 return new PrereqCommand(inputParts[1]);
@@ -87,6 +89,12 @@ public class Parser {
                     throw new CEGStudyBuddyException("Missing parameters! Format: workload_for y/YEAR s/SEM");
                 }
                 return new WorkloadForCommand(inputParts[1]);
+
+            case CommandNames.PLACEHOLDER:
+                if (inputParts.length < 2) {
+                    throw new CEGStudyBuddyException("Missing parameters! Format: dummy mc/MCs y/YEAR s/SEM");
+                }
+                return new PlaceHolderCommand(inputParts[1]);
 
             case CommandNames.LIST:
                 return new ListCommand();
@@ -167,12 +175,25 @@ public class Parser {
         return new String[]{oldCode, newCode};
     }
 
-    public static Course parseCourse(String param) throws CEGStudyBuddyException {
+    public static Course parseCourse(String param, boolean admin) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
 
-        // Define a regex pattern to extract all fields safely
+        // Early check for decimals using regex
+        if (param.matches(".*(mc/\\d+\\.\\d+|y/\\d+\\.\\d+|s/\\d+\\.\\d+).*")) {
+            throw new CEGStudyBuddyException("Invalid input: MC, year, and semester"
+                    + " must be whole numbers, not decimals.");
+        }
+
+        Pattern predefinedCoursePattern = Pattern.compile(
+                "c/(?<code>[^\\s]+).*?y/(?<year>\\d+).*?s/(?<sem>\\d+)");
+        Matcher predefinedCourseMatcher = predefinedCoursePattern.matcher(param);
+        Course c = parseDefinedCourse(predefinedCourseMatcher);
+        if (c != null) {
+            return c;
+        }
+
         Pattern pattern = Pattern.compile(
-                "c/(?<code>[^\\s]+)\\s+" +
+                "c/(?<code>\\S+)\\s+" +
                         "t/(?<title>.*?)\\s+" +
                         "mc/(?<mc>\\d+)\\s+" +
                         "y/(?<year>\\d+)\\s+" +
@@ -181,9 +202,9 @@ public class Parser {
         Matcher matcher = pattern.matcher(param);
 
         if (!matcher.find()) {
-            throw new CEGStudyBuddyException("Missing fields. Please follow the format:\n"
-                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM \n"
-                    + "or the input is decimal :(");
+            throw new CEGStudyBuddyException("""
+                    Missing or disordered fields. Please follow the format:
+                    add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM""");
         }
 
         String code = matcher.group("code").trim();
@@ -192,19 +213,19 @@ public class Parser {
         String yearStr = matcher.group("year").trim();
         String semStr = matcher.group("sem").trim();
 
-        // Validate required fields
         if (code.isEmpty() || title.isEmpty() || mcStr.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
-            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n"
-                    + "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
+            throw new CEGStudyBuddyException("One or more fields are empty. Please provide all fields:\n" +
+                    "add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM");
         }
 
-        // Validate course code format (CS2040, CG2111A etc.)
-        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
-            throw new CEGStudyBuddyException("Invalid course code format."
-                    + "Expected: CS2040, EE2026, CG2111A etc.");
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.");
+        }
+        // Disallow user input containing "DUM"
+        if (!admin && code.contains("DUM")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Course code cannot contain \"DUM\".");
         }
 
-        // Parse and validate numbers
         int mc;
         int year;
         int sem;
@@ -213,12 +234,11 @@ public class Parser {
             year = Integer.parseInt(yearStr);
             sem = Integer.parseInt(semStr);
         } catch (NumberFormatException e) {
-            throw new CEGStudyBuddyException("Invalid number format." +
-                    "MC, year, and semester must be integers.");
+            throw new CEGStudyBuddyException("Invalid number format. MC, year, and semester must be integers.");
         }
 
         if (!Utils.isValidMC(mc)) {
-            throw new CEGStudyBuddyException("Invalid MC value. MC must be between 1 and 12.");
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be an even number between 0 and 12.");
         }
         if (!Utils.isValidYear(year)) {
             throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
@@ -231,24 +251,49 @@ public class Parser {
     }
 
 
-    private static Course getDefinedCourse(String code, String param)
-            throws ArrayIndexOutOfBoundsException, NumberFormatException {
-        String[] parts = param.split(" ");
-        Integer y = null;
-        Integer s = null;
-
-        for (String part : parts) {
-            if (part.startsWith("y/")) {
-                y = Integer.parseInt(part.substring(2));
-            } else if (part.startsWith("s/")) {
-                s = Integer.parseInt(part.substring(2));
-            }
+    private static Course parseDefinedCourse(Matcher predefinedCourseMatcher)
+            throws CEGStudyBuddyException {
+        if (!predefinedCourseMatcher.find()) {
+            return null;
         }
+
+        String code = predefinedCourseMatcher.group("code").trim();
+        String yearStr = predefinedCourseMatcher.group("year").trim();
+        String semStr = predefinedCourseMatcher.group("sem").trim();
+
+        if (code.isEmpty() || yearStr.isEmpty() || semStr.isEmpty()) {
+            return null;
+        }
+
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+            return null;
+        }
+
+        int year;
+        int sem;
+        try {
+            year = Integer.parseInt(yearStr);
+            sem = Integer.parseInt(semStr);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        return getDefinedCourse(code, year, sem);
+    }
+
+    private static Course getDefinedCourse(String code, int year, int sem)
+            throws CEGStudyBuddyException {
         Course course = CourseManager.getCourse(code);
-        if (y != null && s != null) {
-            assert course != null;
-            course.setTakeInYear(y);
-            course.setTakeInSem(s);
+        if (course != null) {
+            // this course is defined
+            if (!Utils.isValidYear(year)) {
+                throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
+            }
+            if (!Utils.isValidSem(sem)) {
+                throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
+            }
+            course.setTakeInYear(year);
+            course.setTakeInSem(sem);
             return course;
         }
         return null;
@@ -299,6 +344,7 @@ public class Parser {
         if (!param.trim().toLowerCase().startsWith("c/")) {
             throw new CEGStudyBuddyException("Invalid find format! Use: find c/CODE");
         }
+
         // Extract course code
         String[] parts = param.trim().split("c/", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
@@ -317,6 +363,51 @@ public class Parser {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid year and/or sem");
         }
+
         return output;
+    }
+
+    public static Course parseDummy(String param, CourseList courses) throws CEGStudyBuddyException {
+        assert (!param.isEmpty());
+
+        String[] parts = param.split(" ");
+        if (parts.length < 3) {
+            throw new CEGStudyBuddyException(ui.missingInputErrorMessage());
+        }
+        if (parts.length > 3) {
+            throw new CEGStudyBuddyException(ui.extraInputErrorMessage());
+        }
+
+        Course.dummyInitialiseCheck(courses);
+        int codeNumber = Course.getAvailableDummyIndex();
+        // reach max number of dummies, no more dummy to be added
+        if (!Course.isValidDummyIndex(codeNumber)) {
+            throw new CEGStudyBuddyException(ui.showDummyFullMessage());
+        }
+
+        Integer mc = null;
+        Integer y = null;
+        Integer s = null;
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].startsWith("mc/")) {
+                mc = Integer.parseInt(parts[i].substring(3));
+            } else if (parts[i].startsWith("y/")) {
+                y = Integer.parseInt(parts[i].substring(2));
+            } else if (parts[i].startsWith("s/")) {
+                s = Integer.parseInt(parts[i].substring(2));
+            }
+        }
+
+        if (!Utils.isValidMC(mc)) {
+            throw new CEGStudyBuddyException("Invalid MC value. MC must be an even number between 0 and 12.");
+        }
+        if (!Utils.isValidYear(y)) {
+            throw new CEGStudyBuddyException("Invalid year. Must be between 1 and 4.");
+        }
+        if (!Utils.isValidSem(s)) {
+            throw new CEGStudyBuddyException("Invalid semester. Must be either 1 or 2.");
+        }
+
+        return Course.createDummyCourse(mc, y, s);
     }
 }

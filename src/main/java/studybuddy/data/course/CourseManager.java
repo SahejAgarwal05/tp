@@ -37,6 +37,12 @@ public class CourseManager {
         System.out.println(c1);
     }
 
+    /**
+     * Loads the defined courses file.
+     *
+     * @return The InputStream file representing the defined courses list.
+     * @throws CEGStudyBuddyException If the defined courses list is missing.
+     */
     private static InputStream loadCourseFile() throws CEGStudyBuddyException {
         InputStream file = CourseManager.class.getClassLoader().getResourceAsStream(FILEPATH);
         if (file == null) {
@@ -112,7 +118,7 @@ public class CourseManager {
                 return jsonToCourse(line);
             }
         }
-        ui.showUndefinedCourseMessage();
+        // ui.showUndefinedCourseMessage();
         return null;
     }
 }
