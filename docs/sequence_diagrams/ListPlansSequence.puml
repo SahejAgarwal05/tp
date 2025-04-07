@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": listPlans()
+activate ":StorageManager"
+
+":StorageManager" -> "dir:File" **: new File(directory)
+activate "dir:File"
+"dir:File" --> ":StorageManager": dir
+deactivate "dir:File"
+
+alt !dir.exists()
+    ":StorageManager" -> "dir:File": mkdirs()
+    activate "dir:File"
+    "dir:File" --> ":StorageManager"
+    deactivate "dir:File"
+end
+
+":StorageManager" -> "dir:File": list((d, name), endsWith(".txt"))
+activate "dir:File"
+"dir:File" --> ":StorageManager": plans
+deactivate "dir:File"
+
+note left
+A loop here removes
+the .txt suffix on
+the plan names before
+returning the array.
+end note
+
+[<-- ":StorageManager": plans
+deactivate ":StorageManager"
+
+@enduml

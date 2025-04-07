@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": selectPlan()
+activate ":StorageManager"
+
+":StorageManager" -> ":StorageManager": listPlans()
+activate ":StorageManager"
+
+alt plans == null || plans.length == 0
+":StorageManager" -> ":StorageManager": newPlan()
+activate ":StorageManager"
+":StorageManager" <-- ":StorageManager": plans
+deactivate ":StorageManager"
+
+else else
+":StorageManager" <-- ":StorageManager": plans
+deactivate ":StorageManager"
+end
+
+alt planNumber.equals("0")
+":StorageManager" -> ":StorageManager": newPlan()
+activate ":StorageManager"
+":StorageManager" <-- ":StorageManager"
+deactivate ":StorageManager"
+
+else else
+":StorageManager" -> ":StorageManager": loadPlan(plans[planNo - 1])
+note left
+planNumber is parsed
+into an int here.
+end note
+activate ":StorageManager"
+":StorageManager" <-- ":StorageManager"
+deactivate ":StorageManager"
+
+end
+
+[<-- ":StorageManager"
+deactivate ":StorageManager"
+
+@enduml

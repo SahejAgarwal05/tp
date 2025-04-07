@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": initializePlan()
+activate ":StorageManager"
+
+loop initRun
+    ":StorageManager" -> ":StorageManager": selectPlan()
+    activate ":StorageManager"
+    ":StorageManager" --> ":StorageManager"
+    deactivate ":StorageManager"
+end
+
+[<-- ":StorageManager"
+deactivate ":StorageManager"
+
+
+@enduml

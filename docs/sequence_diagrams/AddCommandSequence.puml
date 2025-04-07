@@ -10,9 +10,31 @@ deactivate "c:AddCommand"
 ":Parser" --> ":CEGStudyBuddy" : c
 deactivate ":Parser"
 
-":CEGStudyBuddy" -> "c:AddCommand" : execute
+":CEGStudyBuddy" -> "c:AddCommand" : execute(courses, parser)
 activate "c:AddCommand"
-"c:AddCommand" --> ":CEGStudyBuddy" : output
+
+"c:AddCommand" -> ":Parser": parseCourse(param)
+activate ":Parser"
+":Parser" --> "c:AddCommand": newCourse
+deactivate ":Parser"
+
+note left
+    A loop here throws
+    CEGStudyBuddyException
+    if the course is a duplicate.
+end note
+
+"c:AddCommand" -> "courses:CourseList": add(newCourse)
+activate "courses:CourseList"
+"courses:CourseList" --> "c:AddCommand"
+deactivate "courses:CourseList"
+
+"c:AddCommand" -> ":UndoManager": recordAdd(newCourse)
+activate ":UndoManager"
+":UndoManager" --> "c:AddCommand"
+deactivate ":UndoManager"
+
+":CEGStudyBuddy" <-- "c:AddCommand" : output
 deactivate "c:AddCommand"
 
 @enduml

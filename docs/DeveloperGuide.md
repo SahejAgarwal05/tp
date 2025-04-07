@@ -266,7 +266,9 @@ Details of the implementation of a few noteworthy features of CEGStudyBuddy is l
 ---
 
 ### Adding a Course
-A simplified sequence diagram of the AddCommand class implementation:
+**Overview**
+
+An AddCommand class is created when the user inputs the add command. When executed, this parses the parameters into a Course object. It checks if the course input is a duplicate and returns an error message if so. Otherwise, it adds the new Course into the CourseList, logs the action in UndoManager and returns the success message to be printed.
 
 ![AddCommandSequence.png](sequence_diagrams/AddCommandSequence.png)
 
@@ -291,7 +293,7 @@ When the user issues the undo command:
 - A confirmation message is returned to the user.
 
 **Example Flow:**
-Let's say the user executes:
+Let's say the user executes the following:
 add c/CS2103 t/Software Engineering mc/4 y/2 s/1
 This adds a course to the planner and internally records the action in UndoManager as an ADD type.
 When the user types undo, the UndoCommand triggers the removal of CS2103 by interpreting and reversing the stored action.
@@ -309,6 +311,8 @@ The implementation of the StorageManager class:
 **`initializePlan()` Method Overview**
 
 The `initializePlan()` method guarantees that a valid study plan is loaded before the application continues. It repeatedly prompts the user to select or create a plan until a successful selection is made.
+
+![InitializePlanSequence](sequence_diagrams/InitializePlanSequence.png)
 
 ***Detailed Process***
 
@@ -332,6 +336,8 @@ The `initializePlan()` method guarantees that a valid study plan is loaded befor
 **`selectPlan()` Method Overview**
 
 The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
+
+![SelectPlansSequence.png](sequence_diagrams/SelectPlanSequence.png)
 
 ***Detailed Overview***
 
@@ -361,6 +367,8 @@ The `selectPlan()` method enables the user to choose an existing study plan or c
 
 The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
 
+![LoadPlanSequence](sequence_diagrams/LoadPlanSequence.png)
+
 ***Detailed Overview***
 
 1. **Directory Verification:**
@@ -387,6 +395,8 @@ The `loadPlan()` method is responsible for loading a saved study plan by its nam
 
 The `listPlans()` method retrieves all saved study plans from the designated storage directory and returns an array of plan names without their file extensions.
 
+![ListPlansSequence](sequence_diagrams/ListPlansSequence.png)
+
 ***Detailed Overview***
 
 1. **Directory Verification:**
@@ -410,6 +420,8 @@ The `listPlans()` method retrieves all saved study plans from the designated sto
 
 The `newPlan()` method facilitates the creation of a new study plan by prompting the user to input a valid, alphanumeric plan name and then saving the plan.
 
+![NewPlanSequence](sequence_diagrams/NewPlanSequence.png)
+
 ***Detailed Overview***
 
 1. **User Input for New Plan:**
@@ -429,37 +441,11 @@ The `newPlan()` method facilitates the creation of a new study plan by prompting
 
 ---
 
-**`selectPlan()` Method Overview**
-
-The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
-
-***Detailed Overview***
-
-1. **Retrieve Existing Plans:**
-   - Attempts to list saved plans using `listPlans()`.
-   - If no plans are available, it displays a message via `ui.noPreviousPlansMessage()` and then calls `newPlan()` to create a new plan.
-
-2. **User Prompt for Selection:**
-   - Presents the available plans as a numbered list through `ui.chooseOrCreateNewPlans(plans)`.
-   - The user can select an existing plan by its number or opt to create a new plan by entering "0".
-
-3. **Input Validation and Processing:**
-   - If the user enters "0", the `newPlan()` method is invoked to create a new plan.
-   - Otherwise, the input is parsed as an integer to identify the selected plan.
-   - If the input is non-numeric or falls outside the valid range, an exception is thrown.
-
-4. **Plan Loading:**
-   - Loads the chosen plan by calling `loadPlan()` with the corresponding plan name.
-   - If an error occurs during loading (e.g., due to corrupted data), an exception is thrown.
-
-5. **Confirmation:**
-   - Once the plan is successfully loaded, a confirmation message is displayed via `ui.planSuccessfullyLoadedMessage()`.
-
----
-
 **`deletePlanWithSelection()` Method Overview**
 
 The `deletePlanWithSelection()` method allows the user to select and delete an existing study plan. It handles the process of listing available plans, validating the user's selection, and delegating the deletion to the appropriate method.
+
+![DeletePlanSelectionSequence.png](sequence_diagrams/DeletePlanSelectionSequence.png)
 
 ***Detailed Overview***
 
@@ -484,6 +470,8 @@ The `deletePlanWithSelection()` method allows the user to select and delete an e
 **`deletePlan(String planName)` Method Overview**
 
 The `deletePlan(String planName)` method is responsible for deleting a specified study plan from storage. It ensures that the deletion is intentional by prompting the user for confirmation and handles file removal safely.
+
+![DeletePlanSequence.png](sequence_diagrams/DeletePlanSequence.png)
 
 ***Detailed Overview***
 
