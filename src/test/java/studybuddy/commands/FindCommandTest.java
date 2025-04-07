@@ -8,14 +8,14 @@ import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.storage.StorageManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FindCommandTest {
     private CourseList courses;
     private StorageManager storage;
-    //testing input FIX
+
     @BeforeEach
     public void setup() {
         courses = new CourseList("test");
@@ -46,7 +46,6 @@ public class FindCommandTest {
         try {
             FindCommand findCommand = new FindCommand("c/CS9999");
             String output = findCommand.execute(courses, storage);
-
             assertEquals("Course CS9999 not found in your course list.", output);
         } catch (CEGStudyBuddyException e) {
             fail("Exception should not be thrown for non-existent course");
@@ -54,14 +53,24 @@ public class FindCommandTest {
     }
 
     @Test
-    public void testInvalidFindFormat() {
+    public void testInvalidFindFormat_missingTag() {
         CEGStudyBuddyException exception = assertThrows(CEGStudyBuddyException.class, () -> {
-            FindCommand findCommand = new FindCommand("missingTag"); // no c/
+            FindCommand findCommand = new FindCommand("missingTag");
             findCommand.execute(courses, storage);
         });
 
         assertEquals("Invalid find format! Use: find c/CODE", exception.getMessage());
     }
 
+    @Test
+    public void testInvalidCourseCodeFormat() {
+        CEGStudyBuddyException exception = assertThrows(CEGStudyBuddyException.class, () -> {
+            FindCommand findCommand = new FindCommand("c/1234CS"); // invalid format
+            findCommand.execute(courses, storage);
+        });
+
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A, etc.", exception.getMessage());
+    }
 }
+
 
