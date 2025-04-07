@@ -93,7 +93,7 @@ The studybuddy.data package not only contains the aforementioned io package, but
 #### 1. Course
 The Course class represents a single course.
 
-![CourseClassDiagram.png](CourseClassDiagram.png)
+![CourseClassDiagram.png](class_diagrams/CourseClassDiagram.png)
 
 **Attributes:**
 
