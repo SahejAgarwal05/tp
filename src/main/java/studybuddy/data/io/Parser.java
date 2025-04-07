@@ -32,7 +32,7 @@ import studybuddy.data.course.CourseManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 
 public class Parser {
-    private static Ui ui = new Ui();
+    private static final Ui ui = new Ui();
     /**
      * Parses the input into a command and returns the Command object for the command.
      *
