@@ -14,14 +14,14 @@ import java.nio.file.Files;
 
 
 public class StorageManager {
+    private final Ui ui;
     private String directory;
-    private Ui ui;
 
     /**
      * Constructs a StorageManager with a specified directory for storing plans.
      *
      * @param directory The directory path where plans will be stored.
-     * @param scanner The scanner from main class.
+     * @param scanner   The scanner from main class.
      */
     public StorageManager(String directory, Scanner scanner) {
         this.directory = directory;
@@ -159,7 +159,6 @@ public class StorageManager {
                 plans[i] = plans[i].substring(0, plans[i].length() - 4);
             }
         }
-
         return plans;
     }
 
@@ -231,15 +230,13 @@ public class StorageManager {
         } catch (Exception e) {
             throw new CEGStudyBuddyException("Invalid plan number.");
         }
-
         if (planNo < 0 || planNo > plans.length) {
-            throw new CEGStudyBuddyException("Plan number out of range.");
+            throw new CEGStudyBuddyException("Plan number is  out of range.");
         }
-
         try {
             this.loadPlan(plans[planNo - 1]);
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error loading plan.");
+            throw new CEGStudyBuddyException("Error in plan loading.");
         }
 
         ui.planSuccessfullyLoadedMessage();
@@ -266,20 +263,20 @@ public class StorageManager {
             throw new CEGStudyBuddyException("Invalid plan number.");
         }
         if (planNo < 0 || planNo > plans.length) {
-            throw new CEGStudyBuddyException("Plan number out of range.");
+            throw new CEGStudyBuddyException("Plan nnumber out of range");
         }
         try {
             this.deletePlan(plans[planNo - 1]);
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error deleting plan.");
+            throw new CEGStudyBuddyException("Error deleting plan");
         }
     }
 
     /**
-     * This method deletes the plan specified.
+     * This method delets the plan
      *
-     * @param planName The name of the plan to be deleted.
-     * @throws CEGStudyBuddyException If an error occurs while deleting the plan.
+     * @param planName
+     * @throws CEGStudyBuddyException
      */
     public void deletePlan(String planName) throws CEGStudyBuddyException {
         // Get user confirmation to delete
@@ -317,7 +314,7 @@ public class StorageManager {
         }
         File newPlanFile = new File(directory, planName + ".txt");
         if (newPlanFile.exists()) {
-            throw new CEGStudyBuddyException("Plan already exists.");
+            throw new CEGStudyBuddyException("This plan already exists.");
         }
         File planFile = new File(directory, CEGStudyBuddy.courses.getPlanName() + ".txt");
         CEGStudyBuddy.courses.setPlanName(planName);
@@ -338,7 +335,7 @@ public class StorageManager {
             fw.write(data);
             fw.close();
         } catch (Exception e) {
-            throw new CEGStudyBuddyException("Error in saving to file.");
+            throw new CEGStudyBuddyException("Error occured in saving to file.");
         }
     }
 

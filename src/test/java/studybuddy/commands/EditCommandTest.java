@@ -12,9 +12,9 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class EditCommandTest {
-    private static CourseList courses = new CourseList("test");
-    private static StorageManager storage = new StorageManager("./PlanData");
-    private Ui ui = new Ui();
+    private static final CourseList courses = new CourseList("test");
+    private static final StorageManager storage = new StorageManager("./PlanData");
+    private final Ui ui = new Ui();
 
     @BeforeEach
     public void setup() {
