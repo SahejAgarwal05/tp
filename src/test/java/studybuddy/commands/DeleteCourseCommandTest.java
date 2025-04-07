@@ -60,7 +60,7 @@ public class DeleteCourseCommandTest {
         } catch (CEGStudyBuddyException e) {
             output = e.getMessage();
         }
-        assertEquals("Invalid format. Use: delete c/CODE", output);
+        assertEquals("Invalid format! Use: delete c/CODE", output);
     }
 
     @Test

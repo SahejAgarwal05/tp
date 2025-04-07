@@ -9,6 +9,7 @@ This project builds upon the work of:
 - [syCHEN1645/ip](https://github.com/syCHEN1645/ip)
 - [HightechTR/ip](https://github.com/HightechTR/ip)
 - [SahejAgarwal05/ip](https://github.com/SahejAgarwal05/ip)
+- [JinbaoAlex/ip](https://github.com/JinbaoAlex/ip)
 
 ---
 
