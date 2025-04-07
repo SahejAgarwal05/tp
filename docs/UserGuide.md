@@ -447,6 +447,16 @@ exit
 
 ---
 
+### Summary Command: `summary`
+Outputs the summary of all the commands executed both valid and error commands
+
+It does not take any parameters.
+
+**Format:**
+```
+summary
+```
+
 ## Command Summary
 
 | **Action**           | **Format**                                                                                                                 |
@@ -465,7 +475,10 @@ exit
 | **Save Plan**        | `save`                                                                                                                     |
 | **Switch Plan**      | `switch_plan`                                                                                                              |
 | **Delete Plan**      | `delete_plan`                                                                                                              |
-
+| **Replace a Course** | `replace c/OLDCODE c/NEWCODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                 |
+| **Pre Req**          | `prereq c/CODE`                                                                                                            |
+| **Summary**          | `summary`                                                                                                                  |
+| **Undo**             | `undo`                                                                                                                     |
 ---
 
 ## FAQ
