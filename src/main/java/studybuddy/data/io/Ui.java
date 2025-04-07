@@ -12,6 +12,7 @@ import studybuddy.commands.FindCommand;
 import studybuddy.commands.GradRequirementCommand;
 import studybuddy.commands.HelpCommand;
 import studybuddy.commands.ListCommand;
+import studybuddy.commands.PlaceHolderCommand;
 import studybuddy.commands.PrereqCommand;
 import studybuddy.commands.RenamePlanCommand;
 import studybuddy.commands.ReplaceCommand;
@@ -146,7 +147,8 @@ public class Ui {
                 SummaryCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 UndoCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 HelpCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
-                ExitCommand.COMMAND_DESCRIPTION;
+                ExitCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
+                PlaceHolderCommand.COMMAND_DESCRIPTION;
     }
 
     /**
