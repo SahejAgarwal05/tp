@@ -66,6 +66,12 @@ Wrote test cases for EditCommand *EditCommandTest* [PR #54](https://github.com/A
 
 Wrote test cases for ReplaceCommand *ReplaceCommandTest* [PR #203](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/203)
 
+### Improve Existing Features
+
+Improved overall code quality by contributing to OOP transformation. Example: [PR #82](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/82) [PR #45](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/45/files)
+
+Improved user interation by updating accurate error output messages. Example: [PR #203](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/203) [PR #206](https://github.com/AY2425S2-CS2113-F14-2/tp/pull/206)
+
 ---
 
 ## Documentation
