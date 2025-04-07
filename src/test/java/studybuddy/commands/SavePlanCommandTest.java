@@ -23,7 +23,7 @@ public class SavePlanCommandTest {
     @BeforeEach
     public void setup() throws Exception {
         System.setOut(new PrintStream(outContent));
-        storage = new StorageManager(TEST_DIR);;
+        storage = new StorageManager(TEST_DIR);
         File dir = new File(TEST_DIR);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -39,7 +39,7 @@ public class SavePlanCommandTest {
         Command command = new SavePlanCommand();
         CEGStudyBuddy.courses = new CourseList("MyPlan");
         String output = command.execute(CEGStudyBuddy.courses, storage);
-        assertTrue(output.contains("Plan saved successfully"));
+        assertTrue(output.contains("Plan saved successfully."));
         File file = new File(TEST_DIR + "MyPlan.txt");
         assertTrue(file.exists());
     }
@@ -51,7 +51,7 @@ public class SavePlanCommandTest {
         CEGStudyBuddy.courses.add(new Course("CS2113", "Software Engineering", 4,2,2));
         CEGStudyBuddy.courses.add(new Course("EE2026", "Digital Design", 4,2,1));
         String output = command.execute(CEGStudyBuddy.courses, storage);
-        assertTrue(output.contains("Plan saved successfully"));
+        assertTrue(output.contains("Plan saved successfully."));
         File file = new File(TEST_DIR + "MyPlan2.txt");
         assertTrue(file.exists());
     }

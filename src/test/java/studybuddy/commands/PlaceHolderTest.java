@@ -11,7 +11,7 @@ import studybuddy.data.storage.StorageManager;
 
 public class PlaceHolderTest {
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData");
+    private final StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {

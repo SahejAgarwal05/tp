@@ -12,9 +12,9 @@ import studybuddy.data.io.Ui;
 import studybuddy.data.storage.StorageManager;
 
 public class ReplaceCommandTest {
-    private CourseList courses = new CourseList("test");
-    private StorageManager storage = new StorageManager("./PlanData");
-    private Ui ui = new Ui();
+    private final CourseList courses = new CourseList("test");
+    private final StorageManager storage = new StorageManager("./PlanData");
+    private final Ui ui = new Ui();
 
     @BeforeEach
     public void setup() {

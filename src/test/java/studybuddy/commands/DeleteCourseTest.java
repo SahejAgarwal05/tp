@@ -2,7 +2,6 @@ package studybuddy.commands;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DeleteCourseTest {
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData");
+    private final StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {
@@ -53,18 +52,29 @@ public class DeleteCourseTest {
     }
 
     @Test
-    public void testInvalidDeleteFormat() {
+    public void testInvalidFormatMissingPrefix() {
         String output;
-
         try {
-            DeleteCourse deleteCommand = new DeleteCourse("invalidFormat");
+            DeleteCourse deleteCommand = new DeleteCourse("CS2040");
             output = deleteCommand.execute(courses, storage);
         } catch (CEGStudyBuddyException e) {
             output = e.getMessage();
         }
+        assertEquals("Invalid format. Use: delete c/CODE", output);
+    }
 
-        assertEquals("Invalid format! Please use: delete c/CODE", output);
+    @Test
+    public void testInvalidCourseCodeFormat() {
+        String output;
+        try {
+            DeleteCourse deleteCommand = new DeleteCourse("c/1234CS");
+            output = deleteCommand.execute(courses, storage);
+        } catch (CEGStudyBuddyException e) {
+            output = e.getMessage();
+        }
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A, etc.", output);
     }
 }
+
 
 

@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> ":StorageManager": listPlans()
+activate ":StorageManager"
+
+note right
+User is prompted
+to confirm here via
+Ui.isUserConfirm().
+end note
+
+":StorageManager" -> "dir:File" **: new File(directory)
+activate "dir:File"
+"dir:File" --> ":StorageManager": dir
+deactivate "dir:File"
+
+alt !dir.exists()
+    ":StorageManager" -> "dir:File": mkdirs()
+    activate "dir:File"
+    "dir:File" --> ":StorageManager"
+    deactivate "dir:File"
+end
+
+":StorageManager" -> "planFile:File" **: new File(dir, planName + ".txt")
+activate "planFile:File"
+"planFile:File" --> ":StorageManager": planFile
+deactivate "planFile:File"
+
+alt planFile.exists()
+    ":StorageManager" -> "planFile:File" !!: delete()
+end
+
+alt planName.equals(CEGStudyBuddy.courses.getPlanName())
+    ":StorageManager" -> ":StorageManager": initializePlan()
+    activate ":StorageManager"
+    ":StorageManager" --> ":StorageManager"
+    deactivate ":StorageManager"
+end
+
+[<-- ":StorageManager"
+deactivate ":StorageManager"
+
+@enduml

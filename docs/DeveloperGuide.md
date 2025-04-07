@@ -120,8 +120,6 @@ The Course class represents a single course.
 - `static int getAvailableDummyIndex()`: Returns the next available dummy index or -1 if full.
 - `static void dummyInitialiseCheck(CourseList list)`: Re-initializes the dummy tracking based on existing courses in the current course list.
 
-![CourseClassDiagram.png](CourseClassDiagram.png)
-
 ---
 
 #### 2. CourseList
@@ -218,14 +216,39 @@ The StorageManager class handles storage related tasks like creating new plans, 
 ---
 
 #### 2. CommandHistoryManager
-insert description
+CommandHistoryManager is a session-based tracker that logs all commands executed during a single run of the application. It supports the summary command, which displays a chronological list of both successful and failed command inputs.
+This class serves two purposes:
+- It acts as a basic session logger, allowing users to view a history of commands they've executed, helping them track progress or review past changes.
+- It provides future extensibility for more advanced features like redo, persistent command logging, or analytics on user behavior.
+
+Each command input (valid or invalid) is added via CommandHistoryManager.addCommand(String input). Internally, this class maintains an ArrayList<String> called history that stores all added commands.
+
+**From a Developer StandPoint:**
+CommandHistoryManager is used statically, and all commands should call addCommand() before or after execution, depending on whether the command should be logged regardless of success.
+The SummaryCommand then accesses this list and formats the results using CommandHistoryManager.getCommandHistory().
+
+This centralized design makes it easier for future developers to manipulate or extend command tracking behavior without modifying individual commands, keeping concerns well-separated and the architecture clean.
+
 
 ![CommandHistoryClassDiagram.png](class_diagrams/CommandHistoryClassDiagram.png)
 
 ---
 
 #### 3. UndoManager
-insert description
+The UndoManager is a utility class responsible for enabling the undo functionality across the application. It ensures that users can safely revert actions such as add, delete, edit, and replace, thereby increasing user confidence and usability, especially when dealing with mistakes or unintentional changes.
+When a command is executed and alters the internal state of the course plan, it can optionally record the operation into UndoManager using one of the following static methods:
+- recordAdd(Course course)
+- recordDelete(Course course)
+- recordReplace(Course oldCourse, Course newCourse)
+
+Internally, UndoManager uses a stack to keep track of actions in reverse chronological order. Every record is wrapped into an UndoableAction object, which stores all necessary data to restore the previous state. When the user executes the undo command, the last action is popped from the stack and its reversal logic is executed.
+From a developer's perspective, UndoManager is essential in preserving state changes and centralizing the logic required to revert operations. It also decouples the command logic from the undo logic, improving code maintainability and allowing future extensibility (e.g. implementing redo).
+
+**To Support this Functionality:**
+- Each mutating command (such as AddCommand, DeleteCourse, or ReplaceCommand) must invoke the appropriate UndoManager.record...() method upon successful execution.
+- The UndoCommand then calls UndoManager.undo(courses) to perform the reversal.
+
+This design adheres to the Command Pattern, treating each operation as an object and enabling rollback actions without tightly coupling components.
 
 ![UndoManagerClassDiagram.png](class_diagrams/UndoManagerClassDiagram.png)
 
@@ -243,11 +266,43 @@ Details of the implementation of a few noteworthy features of CEGStudyBuddy is l
 ---
 
 ### Adding a Course
-A simplified sequence diagram of the AddCommand class implementation:
+**Overview**
+
+An AddCommand class is created when the user inputs the add command. When executed, this parses the parameters into a Course object. It checks if the course input is a duplicate and returns an error message if so. Otherwise, it adds the new Course into the CourseList, logs the action in UndoManager and returns the success message to be printed.
 
 ![AddCommandSequence.png](sequence_diagrams/AddCommandSequence.png)
 
 ---
+### Undo a Command
+The undo feature allows users to reverse their most recent operation, thereby preventing accidental changes to their course plan. This improves both user experience and reliability, as users can experiment or correct mistakes without fear of irreversible data loss.
+
+How It Works: The undo system is implemented using a Command Pattern in combination with a stack-based reversal mechanism. Every time a command that modifies data (such as add, delete, or replace) is successfully executed, it records its action into the UndoManager class.
+Each record is stored as an UndoableAction object, which encapsulates:
+- The type of command (e.g. ADD, DELETE, REPLACE)
+- The course(s) involved in the operation
+- Any additional metadata required to reverse the action
+
+When the user issues the undo command:
+- The UndoCommand invokes UndoManager.undo(CourseList courses)
+- UndoManager pops the most recent action from its internal stack.
+- It reverses the action by applying the inverse operation:
+
+- If the action was DELETE, it re-adds the deleted course.
+- If the action was ADD, it removes the added course.
+- If the action was REPLACE, it removes the new course and restores the old one.
+- A confirmation message is returned to the user.
+
+**Example Flow:**
+Let's say the user executes the following:
+add c/CS2103 t/Software Engineering mc/4 y/2 s/1
+This adds a course to the planner and internally records the action in UndoManager as an ADD type.
+When the user types undo, the UndoCommand triggers the removal of CS2103 by interpreting and reversing the stored action.
+
+**Limitations:**
+- Only the last action can be undone at a time.
+- Non-mutating commands (like list, find, or gradreq) are not tracked, since they do not change data.
+- Undo state is not persisted between sessions; once the program closes, the undo stack resets.
+
 
 ### Saving Course Plans
 
@@ -256,6 +311,8 @@ The implementation of the StorageManager class:
 **`initializePlan()` Method Overview**
 
 The `initializePlan()` method guarantees that a valid study plan is loaded before the application continues. It repeatedly prompts the user to select or create a plan until a successful selection is made.
+
+![InitializePlanSequence](sequence_diagrams/InitializePlanSequence.png)
 
 ***Detailed Process***
 
@@ -279,6 +336,8 @@ The `initializePlan()` method guarantees that a valid study plan is loaded befor
 **`selectPlan()` Method Overview**
 
 The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
+
+![SelectPlansSequence.png](sequence_diagrams/SelectPlanSequence.png)
 
 ***Detailed Overview***
 
@@ -308,6 +367,8 @@ The `selectPlan()` method enables the user to choose an existing study plan or c
 
 The `loadPlan()` method is responsible for loading a saved study plan by its name and setting it as the current plan in the application.
 
+![LoadPlanSequence](sequence_diagrams/LoadPlanSequence.png)
+
 ***Detailed Overview***
 
 1. **Directory Verification:**
@@ -334,6 +395,8 @@ The `loadPlan()` method is responsible for loading a saved study plan by its nam
 
 The `listPlans()` method retrieves all saved study plans from the designated storage directory and returns an array of plan names without their file extensions.
 
+![ListPlansSequence](sequence_diagrams/ListPlansSequence.png)
+
 ***Detailed Overview***
 
 1. **Directory Verification:**
@@ -357,6 +420,8 @@ The `listPlans()` method retrieves all saved study plans from the designated sto
 
 The `newPlan()` method facilitates the creation of a new study plan by prompting the user to input a valid, alphanumeric plan name and then saving the plan.
 
+![NewPlanSequence](sequence_diagrams/NewPlanSequence.png)
+
 ***Detailed Overview***
 
 1. **User Input for New Plan:**
@@ -376,37 +441,11 @@ The `newPlan()` method facilitates the creation of a new study plan by prompting
 
 ---
 
-**`selectPlan()` Method Overview**
-
-The `selectPlan()` method enables the user to choose an existing study plan or create a new one. It retrieves available plans, validates user input, and loads the selected plan accordingly.
-
-***Detailed Overview***
-
-1. **Retrieve Existing Plans:**
-   - Attempts to list saved plans using `listPlans()`.
-   - If no plans are available, it displays a message via `ui.noPreviousPlansMessage()` and then calls `newPlan()` to create a new plan.
-
-2. **User Prompt for Selection:**
-   - Presents the available plans as a numbered list through `ui.chooseOrCreateNewPlans(plans)`.
-   - The user can select an existing plan by its number or opt to create a new plan by entering "0".
-
-3. **Input Validation and Processing:**
-   - If the user enters "0", the `newPlan()` method is invoked to create a new plan.
-   - Otherwise, the input is parsed as an integer to identify the selected plan.
-   - If the input is non-numeric or falls outside the valid range, an exception is thrown.
-
-4. **Plan Loading:**
-   - Loads the chosen plan by calling `loadPlan()` with the corresponding plan name.
-   - If an error occurs during loading (e.g., due to corrupted data), an exception is thrown.
-
-5. **Confirmation:**
-   - Once the plan is successfully loaded, a confirmation message is displayed via `ui.planSuccessfullyLoadedMessage()`.
-
----
-
 **`deletePlanWithSelection()` Method Overview**
 
 The `deletePlanWithSelection()` method allows the user to select and delete an existing study plan. It handles the process of listing available plans, validating the user's selection, and delegating the deletion to the appropriate method.
+
+![DeletePlanSelectionSequence.png](sequence_diagrams/DeletePlanSelectionSequence.png)
 
 ***Detailed Overview***
 
@@ -431,6 +470,8 @@ The `deletePlanWithSelection()` method allows the user to select and delete an e
 **`deletePlan(String planName)` Method Overview**
 
 The `deletePlan(String planName)` method is responsible for deleting a specified study plan from storage. It ensures that the deletion is intentional by prompting the user for confirmation and handles file removal safely.
+
+![DeletePlanSequence.png](sequence_diagrams/DeletePlanSequence.png)
 
 ***Detailed Overview***
 
@@ -641,6 +682,51 @@ dummy mc/4 y/2 s/1
 - Extra input parameters (e.g., `dummy t/Dummy mc/4 y/2 s/1`)
 - Fail to add a dummy after dummy number reaches 20
 - Valid case: Adding a new dummy course with correct parameters (e.g., `dummy mc/4 y/2 s/1`)
+
+
+### Pre-requisite Checker
+
+Command:
+```
+prereq c/CODE
+```
+**Test Cases:**
+- Invalid Course input format like (C9999, CSERT etc.)
+- Input without any course
+- Input without c/ 
+
+### Replacing a Course
+
+Command:
+```
+replace c/OLD CODE c/NEW CODE t/Title mc/Modular Credits y/Year s/Semester
 ```
 
+**Test Cases:**
+- Input without any Course inputs
+- Input without any title, mc, year or sem
+- Input with a decimal or floating parameter for year, sem and mc
+- Input with an invalid course format like CS999 etc.
+
+### Summary Command
+
+Command:
+```
+summary
+```
+
+**Test Cases:**
+- Run a set of both valid and error commands and execute "summary"
+
+### Undo Command
+
+Command:
+```
+undo
+```
+
+**Test Cases:**
+- Execute the operations like (ADD, DELETE, EDIT, REPLACE)
+- Run the "undo" command
+- The undo command only works for the operations (ADD, DELETE, EDIT, REPLACE)
 

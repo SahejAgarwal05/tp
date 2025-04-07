@@ -39,7 +39,7 @@ public class WorkloadForCommand extends Command {
         }
 
         if (index == 1) {
-            return "You are not taking any courses yet.";
+            return "You are not taking any courses in this semester yet.";
         }
 
         output.append("\n\nYour total workload for year " + year + " semester " + sem + " is: ")
