@@ -1,4 +1,4 @@
-# Project Portfolio Page
+# syCHEN1645's Project Portfolio Page
 
 CEGStudyBuddy is a desktop application that tracks and plans university courses efficiently for NUS Computer Engineering students who want a structured academic roadmap.
 
@@ -6,11 +6,27 @@ Given below are my contributions to the project.
 
 ---
 
+## New Feature: Added command for editing a course
+
+### What it does
+
+Allows the user to edit course information such as MC, title, year/semester taken.
+
+### Justification
+
+This is a basic feature.
+
+### Highlights
+
+User does not need to follow any sequence or number of inputs (except to put c/CODE at first).
+
+---
+
 ## New Feature: Added command for adding a dummy (placeholder) course
 
 ### What it does
 
-Dummy courses are auto-assigned unique course codes (e.g., DUM0, DUM1) with user assigned MCs.
+Adds dummy courses that are auto-assigned unique course codes (e.g., DUM0, DUM1) with user assigned MCs.
 
 ### Justification
 
@@ -86,9 +102,15 @@ Added *Introduction* section.
 
 Added documentation for the `edit` and `dummy` commands.
 
-Added documentation and class diagrams for the classes `Course` and `CourseManager`.
+Added documentation and class diagrams for class `Course`.
+
+[Class Course](docs/class_diagrams/CourseClassDiagram.png)
+
+Added documentation for class `CourseManager`.
 
 Added documentation for the feature *Predefined List of Courses*.
 
 Added sequential diagram for adding a course. 
+
+[Add a Course](docs/class_diagrams/CourseManagerClassDiagram.png)
 
