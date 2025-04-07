@@ -16,6 +16,7 @@ Limited to 20 dummy courses in each course plan to keep trace and also prevent m
 ## New Feature: Simplified user inputs  a predefined list of courses
 ### What it does
 When adding a course, if the course code has a match in Defined_Courses, a text file containing predefined core CEG courses, the add command can skip course title and MC inputs. 
+
 From
 ```
 add c/CODE t/TITLE mc/MC y/YEAR s/SEMESTER
@@ -31,3 +32,15 @@ Reduces user input length. Reduces false information from user inputs (e.g. wron
 Defined_Courses is managed by a new class CourseManager which specialises in reading and searching in the text file. It also provides static methods to convert between Course objects and JSON strings. 
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
+
+## Documentation
+### User Guide
+Added documentation for the `add`, `edit`, `list` and `dummy` commands.
+Added *Introduction* section.
+
+### Developer Guide
+Added documentation for the `edit` and `dummy` commands.
+Added documentation and class diagrams for the classes `Course` and `CourseManager`.
+Added documentation for the feature *Predefined List of Courses*.
+Added sequential diagram for adding a course. 
+
