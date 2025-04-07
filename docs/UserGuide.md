@@ -202,6 +202,35 @@ This command does not use the pre-defined list of CEG required courses. You must
 
 ---
 
+### Add a Placeholder Course: `dummy`
+
+Adds a dummy course in the planner to hold some MCs.\
+This may be helpful if you want to take courses worth of some MCs but have not decided on the exact courses to take.\
+A maximum of 20 dummy courses can exist in the same planner at the same time. 
+
+**Format:**
+```
+dummy mc/MODULAR_CREDITS y/YEAR s/SEMESTER
+```
+
+**Example:**
+```
+dummy mc/8 y/4 s/2
+```
+
+**Example Output:**
+If this is the 3rd dummy added:
+```
+Dummy course added: DUM02 - To be confirmed (8 MCs)
+```
+
+If this is the 21st dummy added:
+```
+Reached maximum number of dummies, please delete dummies before adding
+```
+
+---
+
 ### Finding a Course: `find`
 
 Searches for a course by its code.
