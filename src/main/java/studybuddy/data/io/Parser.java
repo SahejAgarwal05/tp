@@ -204,8 +204,7 @@ public class Parser {
         if (!matcher.find()) {
             throw new CEGStudyBuddyException("""
                     Missing or disordered fields. Please follow the format:
-                    add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM
-                    OR: the input is decimal""");
+                    add c/CODE t/TITLE mc/VALUE y/YEAR s/SEM""");
         }
 
         String code = matcher.group("code").trim();
