@@ -175,7 +175,7 @@ public class Parser {
         return new String[]{oldCode, newCode};
     }
 
-    public static Course parseCourse(String param) throws CEGStudyBuddyException {
+    public static Course parseCourse(String param, boolean admin) throws CEGStudyBuddyException {
         assert (!param.isEmpty());
 
         // Early check for decimals using regex
@@ -221,6 +221,10 @@ public class Parser {
 
         if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
             throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc.");
+        }
+        // Disallow user input containing "DUM"
+        if (!admin && code.contains("DUM")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Course code cannot contain \"DUM\".");
         }
 
         int mc;

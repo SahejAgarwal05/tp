@@ -18,7 +18,7 @@ public class AddCommand extends Command {
 
     @Override
     public String execute(CourseList courses, StorageManager storage) throws CEGStudyBuddyException {
-        Course newCourse = Parser.parseCourse(param);
+        Course newCourse = Parser.parseCourse(param, false);
 
         // Check for duplicate course (same code in same year and semester)
         for (Course course : courses.getCourses()) {

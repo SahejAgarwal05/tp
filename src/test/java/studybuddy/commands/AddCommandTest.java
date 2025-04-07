@@ -124,6 +124,19 @@ public class AddCommandTest {
                 1 + " semester " + 1;
         assertEquals(expected, execute(command));
     }
+
+    @Test
+    public void testAddDummy() {
+        AddCommand cmd = new AddCommand("c/DUM01 t/Title mc/2 y/2 s/1");
+        assertEquals("Invalid course code format. Course code cannot contain \"DUM\"."
+                , execute(cmd));
+        cmd = new AddCommand("c/DUM900 t/Title mc/0 y/2 s/1");
+        assertEquals("Invalid course code format. Course code cannot contain \"DUM\"."
+                , execute(cmd));
+        cmd = new AddCommand("c/DUM10000 t/Title mc/4 y/2 s/1");
+        assertEquals("Invalid course code format. Expected: CS2040, EE2026, CG2111A etc."
+                , execute(cmd));
+    }
 }
 
 
