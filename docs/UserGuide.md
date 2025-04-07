@@ -457,6 +457,7 @@ exit
 | **List**             | `list`                                                                                                                     |
 | **Edit**             | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`<br>E.g. `edit c/CS2040 t/Advanced Data Structures mc/5` |
 | **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                     |
+| **Placeholder**      | `dummy mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                                               |
 | **Help**             | `help`                                                                                                                     |
 | **Workload Summary** | `workload_summary`                                                                                                         |
 | **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                           |
