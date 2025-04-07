@@ -392,6 +392,11 @@ help
 ### Undo Last Command: `undo`
 
 If you accidentally run a command that you would like to undo, you may run this command.
+The undo command works for the following operations (Undo the following):
+- Add
+- Delete
+- Edit
+- Replace
 
 **Format:**
 ```
