@@ -2,10 +2,10 @@ package studybuddy.commands;
 
 import studybuddy.data.course.Course;
 import studybuddy.data.course.CourseList;
-import studybuddy.data.course.UndoManager;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
+import studybuddy.data.storage.UndoManager;
 
 public class AddCommand extends Command {
     public static final String COMMAND_DESCRIPTION = """

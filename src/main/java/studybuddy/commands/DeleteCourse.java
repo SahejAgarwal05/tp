@@ -5,7 +5,7 @@ import studybuddy.data.course.CourseList;
 import studybuddy.data.exception.CEGStudyBuddyException;
 import studybuddy.data.io.Parser;
 import studybuddy.data.storage.StorageManager;
-import studybuddy.data.course.UndoManager;
+import studybuddy.data.storage.UndoManager;
 
 public class DeleteCourse extends Command {
     public static final String COMMAND_DESCRIPTION = """
