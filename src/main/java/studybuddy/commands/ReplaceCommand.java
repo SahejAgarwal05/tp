@@ -35,7 +35,9 @@ public class ReplaceCommand extends Command {
             throw new CEGStudyBuddyException("Course code(s) cannot be empty."
                     + "Please use format: c/OLD_CODE c/NEW_CODE");
         }
-        if (!oldCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") || !newCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
+        if ((!oldCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") &&
+                !oldCode.matches("DUM\\d{1,4}?$")) ||
+                !newCode.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$")) {
             throw new CEGStudyBuddyException("Invalid course code format. Expected format: CS2040, EE2026, CG2111A");
         }
 

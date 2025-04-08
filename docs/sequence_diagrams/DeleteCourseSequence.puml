@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> "c:DeleteCourseCommand" : execute(courses, parser)
+activate "c:DeleteCourseCommand"
+
+"c:DeleteCourseCommand" -> ":Parser": parseDelete(param)
+activate ":Parser"
+":Parser" --> "c:DeleteCourseCommand": code
+deactivate ":Parser"
+
+loop Course course : courses.getCourses()
+    alt course.getCode().equalsIgnoreCase(code)
+        "c:DeleteCourseCommand" -> "courses:CourseList": getCourses()
+        activate "courses:CourseList"
+        "courses:CourseList" --> "c:DeleteCourseCommand": courseList
+        deactivate "courses:CourseList"
+
+        "c:DeleteCourseCommand" -> "courseList:ArrayList": remove(course)
+        activate "courseList:ArrayList"
+        "courseList:ArrayList" --> "c:DeleteCourseCommand"
+        deactivate "courseList:ArrayList"
+
+        "c:DeleteCourseCommand" -> ":UndoManager": recordDelete(deletedCourse)
+        activate ":UndoManager"
+        ":UndoManager" --> "c:DeleteCourseCommand"
+        deactivate ":UndoManager"
+
+        note left
+            Throw
+            CEGStudyBuddyException
+            if course not found
+        end note
+
+        [<-- "c:DeleteCourseCommand": output
+        deactivate "c:DeleteCourseCommand"
+
+    end
+end
+
+@enduml

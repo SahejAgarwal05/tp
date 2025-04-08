@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+[-> "c:UndoCommand" : execute(courses, parser)
+activate "c:UndoCommand"
+"c:UndoCommand" -> ":UndoManager": undo(courses)
+activate ":UndoManager"
+
+alt actionHistory.isEmpty()
+    ":UndoManager" --> "c:UndoCommand": output
+    note right: There were no commands run.
+else else
+    ":UndoManager" -> "actionHistory:Stack": pop()
+    activate "actionHistory:Stack"
+    "actionHistory:Stack" --> ":UndoManager": lastAction
+    deactivate "actionHistory:Stack"
+
+    alt lastAction.getType() == ADD
+        ":UndoManager" -> "courses:CourseList": deleteCourseByCode(lastAction.getCourse().getCode())
+        activate "courses:CourseList"
+        "courses:CourseList" --> ":UndoManager"
+        deactivate "courses:CourseList"
+        ":UndoManager" --> "c:UndoCommand": output
+    else lastAction.getType() == DELETE
+        ":UndoManager" -> "courses:CourseList": add(lastAction.getCourse())
+        activate "courses:CourseList"
+        "courses:CourseList" --> ":UndoManager"
+        deactivate "courses:CourseList"
+        ":UndoManager" --> "c:UndoCommand": output
+    else lastAction.getType() == REPLACE
+        ":UndoManager" -> "courses:CourseList": deleteCourseByCode(lastAction.getNewCourse().getCode())
+        activate "courses:CourseList"
+        "courses:CourseList" --> ":UndoManager"
+        deactivate "courses:CourseList"
+
+        ":UndoManager" -> "courses:CourseList": add(lastAction.getCourse())
+        activate "courses:CourseList"
+        "courses:CourseList" --> ":UndoManager"
+        deactivate "courses:CourseList"
+        ":UndoManager" --> "c:UndoCommand": output
+
+    else else
+        ":UndoManager" --> "c:UndoCommand": output
+        note right: There were no add/delete/replace commands run.
+        deactivate ":UndoManager"
+    end
+end
+
+[<-- "c:UndoCommand": output
+deactivate "c:UndoCommand"
+
+@enduml
