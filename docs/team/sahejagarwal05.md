@@ -4,8 +4,6 @@
 
 CEGStudyBuddy is a desktop application designed specifically for NUS Computer Engineering students to efficiently track and plan their university courses. The application helps students optimize their workloads, manage multiple course-planning scenarios, ensure graduation requirements, and maintain organization throughout their academic journey.
 
-Given below are my contributions to the project.
-
 ### New Feature: Storage Manager
 - **What it does:** Manages all aspects of data storage, ensuring reliable saving, loading, and management of multiple course plans.
 - **Initialization:** Allows users to select an existing course plan from saved options or create a new plan when the application is first started, offering an intuitive starting point.
