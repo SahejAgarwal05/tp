@@ -1,4 +1,4 @@
-# CEG StudyBuddy User Guide
+# CEGStudyBuddy User Guide
 
 ## Introduction
 
@@ -230,7 +230,7 @@ If this is the 21st dummy added:
 Reached maximum number of dummies, please delete dummies before adding
 ```
 
-The [dummy] command cannot be undone by [undo] command. To undo dummy, please use [delete].
+The `dummy` command cannot be undone by `undo`. To undo dummy, please use `delete`.
 
 ---
 
@@ -392,6 +392,11 @@ help
 ### Undo Last Command: `undo`
 
 If you accidentally run a command that you would like to undo, you may run this command.
+The undo command works for the following operations (Undo the following):
+- Add
+- Delete
+- Edit
+- Replace
 
 **Format:**
 ```
@@ -447,6 +452,16 @@ exit
 
 ---
 
+### Summary Command: `summary`
+Outputs the summary of all the commands executed both valid and error commands
+
+It does not take any parameters.
+
+**Format:**
+```
+summary
+```
+
 ## Command Summary
 
 | **Action**           | **Format**                                                                                                                 |
@@ -457,6 +472,7 @@ exit
 | **List**             | `list`                                                                                                                     |
 | **Edit**             | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`<br>E.g. `edit c/CS2040 t/Advanced Data Structures mc/5` |
 | **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                     |
+| **Placeholder**      | `dummy mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                                               |
 | **Help**             | `help`                                                                                                                     |
 | **Workload Summary** | `workload_summary`                                                                                                         |
 | **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                           |
@@ -465,7 +481,10 @@ exit
 | **Save Plan**        | `save`                                                                                                                     |
 | **Switch Plan**      | `switch_plan`                                                                                                              |
 | **Delete Plan**      | `delete_plan`                                                                                                              |
-
+| **Replace a Course** | `replace c/OLDCODE c/NEWCODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                 |
+| **Pre Requisite**    | `prereq c/CODE`                                                                                                            |
+| **Summary**          | `summary`                                                                                                                  |
+| **Undo**             | `undo`                                                                                                                     |
 ---
 
 ## FAQ
@@ -479,8 +498,15 @@ CEGStudyBuddy is a fully offline application. No internet required.
 
 ### ❓ Q: What happens if I accidentally delete a course?
 
-**A:** Unfortunately, the app doesn’t support an undo feature (yet 😢).  
-Make sure to double-check before deleting. You can always re-add the course using the `add` command.
+**A:** You can use `undo` to undo this action. 
+In fact, you can undo `delete`, `add` and `replace`.
+
+---
+
+### ❓ Q: What happens if I have not decided on which exact course to take?
+
+**A:** You can add a placeholder course and delete/replace it later. 
+As long as you know how many MCs you plan to take, you can add the placeholder using `dummy`. 
 
 ---
 

@@ -18,7 +18,7 @@ public class AddCommandTest {
     private static final String TEST_SEM = "1";
 
     private CourseList courses;
-    private StorageManager storage = new StorageManager("./PlanData");
+    private final StorageManager storage = new StorageManager("./PlanData");
 
     @BeforeEach
     public void setup() {

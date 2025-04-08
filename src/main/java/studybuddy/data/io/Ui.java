@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import studybuddy.commands.AddCommand;
-import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.DeleteCourseCommand;
 import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
@@ -130,7 +130,7 @@ public class Ui {
     public String printCommandList() {
         return "List of Commands:" + System.lineSeparator() +
                 AddCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
-                DeleteCourse.COMMAND_DESCRIPTION + System.lineSeparator() +
+                DeleteCourseCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ListCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 EditCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
                 ReplaceCommand.COMMAND_DESCRIPTION + System.lineSeparator() +
@@ -339,8 +339,8 @@ public class Ui {
     /**
      * Asks for user confirmation for an action. Returns true if user input Y or y
      *
-     * @param confirmationMessage
-     * @return
+     * @param confirmationMessage The confirmation message to print to the output.
+     * @return True if the user confirms yes.
      */
     public boolean isUserConfirm(String confirmationMessage) {
         System.out.println(confirmationMessage);

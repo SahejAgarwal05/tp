@@ -88,9 +88,9 @@ public class UndoManager {
      * Represents a user action that can be undone.
      */
     private static class Action {
-        private ActionType type;
-        private Course course;      // For ADD and DELETE actions
-        private Course newCourse;   // Only used for REPLACE actions
+        private final ActionType type;
+        private final Course course;      // For ADD and DELETE actions
+        private final Course newCourse;   // Only used for REPLACE actions
 
         // Constructor for ADD and DELETE actions
         public Action(ActionType type, Course course) {
