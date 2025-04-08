@@ -461,7 +461,11 @@ It does not take any parameters.
 ```
 summary
 ```
+### Manual Data Editing
 
+This is only recommended for advanced users. All data is stored in the PlanData folder in .txt files of the format - `PLANNAME.txt`. Each file has lines in the format `course c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`. you can change any of the parameters as long as the changes comply. Rest assured, if your changes are incompatible, they can still be manually reverted and the the program will not delete the plan unless asked to do so.
+
+At the same time, it is advised to take caution while changing data manually.
 ## Command Summary
 
 | **Action**           | **Format**                                                                                                                 |
@@ -529,5 +533,5 @@ Check out the [GitHub repository](http://link.to/cegstudybuddy) for more.
 
 ### ❓ Q: Is there autosave?
 
-**A:** Yes, after each and every command your progress in the current plan is backedup.
+**A:** Yes, after each and every command your progress in the current plan is backed up. But, manually saving the progress is still recommended.
 

@@ -60,7 +60,7 @@ public class StorageManager {
      * Saves a new plan to storage. If a plan with the same name already exists, an exception is thrown.
      *
      * @param plan The name of the new plan.
-     * @throws CEGStudyBuddyException If a plan with the same name exists or if an error occurs during saving.
+     * @throws CEGStudyBuddyException If there is a pre-existing plan with the same name or there is an error in saving
      */
     public void saveNewPlan(String plan) throws CEGStudyBuddyException {
         File dir = new File(directory);
@@ -84,7 +84,7 @@ public class StorageManager {
     /**
      * Saves the currently loaded plan to storage.
      *
-     * @throws CEGStudyBuddyException If an error occurs during saving.
+     * @throws CEGStudyBuddyException if unable to save
      */
     public String saveCurrentPlan() throws CEGStudyBuddyException {
         File dir = new File(directory);
@@ -105,8 +105,8 @@ public class StorageManager {
     /**
      * Loads a saved plan by name and sets it as the current plan.
      *
-     * @param planName The name of the plan to load.
-     * @throws CEGStudyBuddyException If the plan does not exist or the data is corrupted.
+     * @param planName The name of the plan to be loaded.
+     * @throws CEGStudyBuddyException if there is data corruption or plan does nto exist
      */
 
     public void loadPlan(String planName) throws CEGStudyBuddyException {
@@ -138,8 +138,8 @@ public class StorageManager {
     /**
      * Lists all saved plan names in the storage directory.
      *
-     * @return An array of plan names without file extensions.
-     * @throws CEGStudyBuddyException If no plans are found.
+     * @return arrays of string of plan names
+     * @throws CEGStudyBuddyException if there are no pre-exixting plans
      */
     public String[] listPlans() throws CEGStudyBuddyException {
         File dir = new File(directory);
@@ -163,16 +163,16 @@ public class StorageManager {
     }
 
     /**
-     * Prompts the user to create a new plan by entering a valid alphanumeric plan name.
+     * Asks user to create a new plan
      *
-     * @throws CEGStudyBuddyException If saving the new plan fails.
+     * @throws CEGStudyBuddyException unable to save the new plan
      */
     public void newPlan() throws CEGStudyBuddyException {
         String planName = "";
         while (planName.isEmpty()) {
             planName = ui.newPlanInput();
             // check that name does not have any special characters
-            if (!planName.matches("[a-zA-Z0-9]*")) {
+            if (!planName.matches("[a-zA-Z0-9]*") ) {
                 planName = "";
             }
         }
@@ -204,7 +204,7 @@ public class StorageManager {
     /**
      * Allows the user to select an existing plan or create a new one.
      *
-     * @throws CEGStudyBuddyException If the selected plan number is invalid.
+     * @throws CEGStudyBuddyException If the selected plan number is invalid or out of range.
      */
     public void selectPlan() throws CEGStudyBuddyException {
         String[] plans;
@@ -245,7 +245,7 @@ public class StorageManager {
     /**
      * This method allows the user to select a plan and delete it.
      *
-     * @throws CEGStudyBuddyException If the plan number input is invalid or an error occurs when deleting the plan.
+     * @throws CEGStudyBuddyException If the plan number input is invalid or an error occurs during  the deletion.
      */
     public void deletePlanWithSelection() throws CEGStudyBuddyException {
         String[] plans;
@@ -275,8 +275,8 @@ public class StorageManager {
     /**
      * This method delets the plan
      *
-     * @param planName
-     * @throws CEGStudyBuddyException
+     * @param planName name of plan to be deleted
+     * @throws CEGStudyBuddyException if there is an error
      */
     public void deletePlan(String planName) throws CEGStudyBuddyException {
         // Get user confirmation to delete
@@ -304,7 +304,7 @@ public class StorageManager {
     /**
      * This function starts the input sequence to rename the current plan
      *
-     * @throws CEGStudyBuddyException
+     * @throws CEGStudyBuddyException if the user inout is invalid or
      */
     public void renamePlan() throws CEGStudyBuddyException {
         String[] plans = this.listPlans();
@@ -327,7 +327,7 @@ public class StorageManager {
      *
      * @param file File the data has to be stored in
      * @param data data that has to be stored
-     * @throws CEGStudyBuddyException
+     * @throws CEGStudyBuddyException if there is an eeor
      */
     private void dumpToFile(File file, String data) throws CEGStudyBuddyException {
         try {
