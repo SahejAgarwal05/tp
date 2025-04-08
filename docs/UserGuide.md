@@ -291,14 +291,19 @@ workload_summary
 
 **Example Output:**
 ```
-Year 1 Semester 1: 16 MCs (Too low! Minimum workload: 18 MCs)
-Year 1 Semester 2: 18 MCs  
-Year 2 Semester 1: 20 MCs  
-Year 2 Semester 2: 16 MCs (Too low! Minimum workload: 18 MCs)
-Year 3 Semester 1: 18 MCs  
-Year 3 Semester 2: 16 MCs (Too low! Minimum workload: 18 MCs)
-Year 4 Semester 1: 14 MCs (Too low! Minimum workload: 18 MCs)
-Year 4 Semester 2: 12 MCs (Too low! Minimum workload: 18 MCs)
+---- Workload Summary ----
+Here is a summary of your workload for all the semesters.
+Year 1 Semester 1: 20MCs 
+Year 1 Semester 2: 18MCs 
+Year 2 Semester 1: 30MCs (Too high, please appeal for waiver! Maximum workload: 28 MCs)
+Year 2 Semester 2: 8MCs (Too low! Minimum workload: 18 MCs)
+Year 3 Semester 1: 0MCs (Too low! Minimum workload: 18 MCs)
+Year 3 Semester 2: 0MCs (Too low! Minimum workload: 18 MCs)
+Year 4 Semester 1: 0MCs (Too low! Minimum workload: 18 MCs)
+Year 4 Semester 2: 0MCs (Too low! Minimum workload: 18 MCs)
+
+You currently have 76 MCs in total
+You still need 84 MCs to reach the minimum graduation requirement of 160 MCs
 
 ```
 ---
@@ -312,14 +317,15 @@ workload_for y/YEAR s/SEMESTER
 
 Example Output:
 ```
-These are the courses you will be taking:
-1.(c/CS1010 t/Programming Methodology mc/4 y/1 s/1)
-2.(c/EG1311 t/Design and Make mc/4 y/1 s/1)
-3.(c/CDE2501 t/Liveable Cities mc/4 y/1 s/1)
-4.(c/MA1511 t/Engineering Calculus mc/2 y/1 s/1)
-5.(c/MA1512 t/Differential Equations for Engineering mc/2 y/1 s/1)
-6.(c/CG1111A t/Engineering Principles and Practice I mc/4 y/1 s/1)
-Total workload: 20
+These are the courses that you are currently taking in year 1 semester 2:
+1. CS2113 - Software Engineering & Object-Oriented Programming (4 MCs)
+2. ES2631 - Critique and Communication of Thinking and Design (4 MCs)
+3. CG2023 - Signals & Systems (4 MCs)
+4. CS1231 - Discrete Structures (4 MCs)
+5. CDE2501 - Liveable Cities (4 MCs)
+6. MA1511 - Engineering Calculus (2 MCs)
+
+Your total workload for year 1 semester 2 is: 22MCs
 ```
 
 ---
@@ -440,6 +446,16 @@ delete_plan
 
 ---
 
+### Rename Plan: `rename_plan`
+Allows you to rename the currently accessed plan
+
+**Format:**
+```
+rename_plan
+```
+
+---
+
 ### Exit Program: `exit`
 Exits the program after asking for confirmation. This also automatically saves your changes made to the plan. Still, it is recommended to save manually before exit.
 
@@ -462,29 +478,38 @@ It does not take any parameters.
 summary
 ```
 
+**Example Output:**
+```
+---- Command Summary ----
+1. add c/EE2211 y/1 s/1
+2. list
+3. delete c/EE2211
+```
+
 ## Command Summary
 
-| **Action**           | **Format**                                                                                                                 |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **Add**              | `add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`<br>E.g. `add c/CS2040 t/Data Structures mc/4 y/2 s/1`            |
-| **Delete**           | `delete c/CODE`                                                                                                            |
-|                      | E.g., `delete c/CS2040`                                                                                                    |
-| **List**             | `list`                                                                                                                     |
-| **Edit**             | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`<br>E.g. `edit c/CS2040 t/Advanced Data Structures mc/5` |
-| **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                     |
-| **Placeholder**      | `dummy mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                                               |
-| **Help**             | `help`                                                                                                                     |
-| **Workload Summary** | `workload_summary`                                                                                                         |
-| **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                           |
-| **Workload Balance** | `workload_balance`                                                                                                         |
-| **Grad Req**         | `gradreq`                                                                                                                  |
-| **Save Plan**        | `save`                                                                                                                     |
-| **Switch Plan**      | `switch_plan`                                                                                                              |
-| **Delete Plan**      | `delete_plan`                                                                                                              |
-| **Replace a Course** | `replace c/OLDCODE c/NEWCODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`                                                 |
-| **Pre Requisite**    | `prereq c/CODE`                                                                                                            |
-| **Summary**          | `summary`                                                                                                                  |
-| **Undo**             | `undo`                                                                                                                     |
+| **Action**           | **Format**                                                                                                                                    |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**              | `add c/CODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`<br>E.g. `add c/CS2040 t/Data Structures mc/4 y/2 s/1`                               |
+| **Delete**           | `delete c/CODE`<br>E.g. `delete c/CS2040`                                                                                                     |
+| **List**             | `list`                                                                                                                                        |
+| **Edit**             | `edit c/CODE [t/TITLE] [mc/MODULAR_CREDITS] [y/YEAR] [s/SEMESTER]`<br>E.g. `edit c/CS2040 t/Advanced Data Structures mc/5`                    |
+| **Find**             | `find c/CODE`<br>E.g., `find c/CS2113`                                                                                                        |
+| **Placeholder**      | `dummy mc/MODULAR_CREDITS y/YEAR s/SEMESTER`<br>E.g. `dummy mc/4 y/2 s/1`                                                                     |
+| **Help**             | `help`                                                                                                                                        |
+| **Workload Summary** | `workload_summary`                                                                                                                            |
+| **Workload For**     | `workload_for y/YEAR s/SEMESTER`                                                                                                              |
+| **Workload Balance** | `workload_balance`                                                                                                                            |
+| **Grad Req**         | `gradreq`                                                                                                                                     |
+| **Save Plan**        | `save`                                                                                                                                        |
+| **Switch Plan**      | `switch_plan`                                                                                                                                 |
+| **Delete Plan**      | `delete_plan`                                                                                                                                 |
+| **Rename Plan**      | `rename_plan`                                                                                                                                 |
+| **Replace a Course** | `replace c/OLDCODE c/NEWCODE t/TITLE mc/MODULAR_CREDITS y/YEAR s/SEMESTER`<br>E.g. `replace c/CS2040 c/EE2026 t/Digital Design mc/4 y/2 s/1`  |
+| **Pre Requisite**    | `prereq c/CODE`<br>E.g. `prereq c/CS2113`                                                                                                     |
+| **Summary**          | `summary`                                                                                                                                     |
+| **Undo**             | `undo`                                                                                                                                        |
+| **Exit**             | `exit`                                                                                                                                        |
 ---
 
 ## FAQ
