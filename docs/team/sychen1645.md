@@ -6,22 +6,6 @@ Given below are my contributions to the project.
 
 ---
 
-## New Feature: Added command for editing a course
-
-### What it does
-
-Allows the user to edit course information such as MC, title, year/semester taken.
-
-### Justification
-
-This is a basic feature.
-
-### Highlights
-
-User does not need to follow any sequence or number of inputs (except to put c/CODE at first).
-
----
-
 ## New Feature: Added command for adding a dummy (placeholder) course
 
 ### What it does
@@ -36,22 +20,11 @@ This feature improves flexibility by allowing users to plan around modules that 
 
 Limited to 20 dummy courses in each course plan to keep trace and also prevent malicious inputs flooding the plan with dummies. Added input validation in Parser.parseCourse() to prevent adding dummies through command add. 
 
----
-
 ## New Feature: Simplified user inputs  a predefined list of courses
 
 ### What it does
 
 When adding a course, if the course code has a match in Defined_Courses, a text file containing predefined core CEG courses, the add command can skip course title and MC inputs. 
-
-From
-```
-add c/CODE t/TITLE mc/MC y/YEAR s/SEMESTER
-```
-To
-```
-add c/CODE y/YEAR s/SEMESTER
-```
 
 ### Justification
 Reduces user input length. Reduces false information from user inputs (e.g. wrong course titles, wrong MCs). 
@@ -61,8 +34,6 @@ Defined_Courses is managed by a new class CourseManager which specialises in rea
 
 ### Credits
 This function implements Gson dependency 'com.google.code.gson:gson:2.10.1'. 
-
----
 
 ## Enhancements
 
@@ -104,7 +75,7 @@ Added documentation for the `edit` and `dummy` commands.
 
 Added documentation and class diagrams for class `Course`.
 
-[Class Course](docs/class_diagrams/CourseClassDiagram.png)
+![Class Course](../class_diagrams/CourseClassDiagram.png)
 
 Added documentation for class `CourseManager`.
 
@@ -112,5 +83,4 @@ Added documentation for the feature *Predefined List of Courses*.
 
 Added sequential diagram for adding a course. 
 
-[Add a Course](docs/class_diagrams/CourseManagerClassDiagram.png)
-
+![Add a Course](../sequence_diagrams/CourseManagerSequence.png)

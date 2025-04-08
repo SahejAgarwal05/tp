@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import studybuddy.commands.AddCommand;
 import studybuddy.commands.Command;
-import studybuddy.commands.DeleteCourse;
+import studybuddy.commands.DeleteCourseCommand;
 import studybuddy.commands.DeletePlanCommand;
 import studybuddy.commands.EditCommand;
 import studybuddy.commands.ExitCommand;
@@ -47,14 +47,14 @@ public class Parser {
             switch (command) {
             case CommandNames.ADD:
                 if (inputParts.length < 2) {
-                    throw new CEGStudyBuddyException("Missing parameters!"
+                    throw new CEGStudyBuddyException("Missing parameters! "
                             + "Format: add c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new AddCommand(inputParts[1]);
 
             case CommandNames.EDIT:
                 if (inputParts.length < 2) {
-                    throw new CEGStudyBuddyException("Missing parameters!" +
+                    throw new CEGStudyBuddyException("Missing parameters! " +
                             "Format: edit c/CODE t/Title mc/MCs y/Year s/Sem");
                 }
                 return new EditCommand(inputParts[1]);
@@ -70,7 +70,7 @@ public class Parser {
                 if (inputParts.length < 2) {
                     throw new CEGStudyBuddyException("Missing parameters! Format: delete c/CODE");
                 }
-                return new DeleteCourse(inputParts[1]);
+                return new DeleteCourseCommand(inputParts[1]);
 
             case CommandNames.FIND:
                 if (inputParts.length < 2) {
@@ -143,22 +143,21 @@ public class Parser {
         }
     }
 
-    public static Course parseDeleteReturnCourse(CourseList courses, String param) throws CEGStudyBuddyException {
-        String[] parts = param.trim().split("c/", 2);
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new CEGStudyBuddyException("Invalid format! Please use: delete c/CODE");
+    public static String parseDelete(String param) throws CEGStudyBuddyException {
+        // Ensure the parameter starts with the required prefix
+        String trimmedParam = param.trim();
+        if (!trimmedParam.startsWith("c/")) {
+            throw new CEGStudyBuddyException("Invalid format! Use: delete c/CODE");
         }
 
-        String code = parts[1].trim().toUpperCase();
+        // Extract and normalize course code (convert to uppercase)
+        String code = trimmedParam.substring(2).trim().toUpperCase();
 
-        for (Course course : courses.getCourses()) {
-            if (course.getCode().equalsIgnoreCase(code)) {
-                courses.getCourses().remove(course);
-                return course; // Return the deleted course for undo
-            }
+        // Validate course code format using regex
+        if (!code.matches("^[A-Z]{2,3}\\d{4}[A-Z]?$") && !code.matches("DUM\\d{1,4}?$")) {
+            throw new CEGStudyBuddyException("Invalid course code format. Expected: CS2040, EE2026, CG2111A, etc.");
         }
-
-        throw new CEGStudyBuddyException("Course with code " + code + " not found.");
+        return code;
     }
 
     public static String[] parseReplace(String param) {

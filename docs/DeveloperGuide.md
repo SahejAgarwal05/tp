@@ -9,6 +9,7 @@ This project builds upon the work of:
 - [syCHEN1645/ip](https://github.com/syCHEN1645/ip)
 - [HightechTR/ip](https://github.com/HightechTR/ip)
 - [SahejAgarwal05/ip](https://github.com/SahejAgarwal05/ip)
+- [JinbaoAlex/ip](https://github.com/JinbaoAlex/ip)
 
 ---
 
@@ -31,7 +32,7 @@ Run the tests to ensure they all pass.
 ## Design
 
 ### Command Component
-The classes in the studybuddy.command package handle commands.\
+The classes in the `studybuddy.command` package handle commands.\
 All of CEGStudyBuddy’s commands have their own command class, which are subclasses of an abstract Command class.
 
 ![CommandClassDiagram.png](class_diagrams/CommandClassDiagram.png)
@@ -42,10 +43,15 @@ All of CEGStudyBuddy’s commands have their own command class, which are subcla
 - The `execute()` method is then run to perform the tasks of the command given.
 - The `isRunning()` method is asserted true for all commands except for `ExitCommand`, where it is asserted false.
 
+**To Support This Functionality:**
+
+- Create a class that extends the Command class.
+- Implement the execute method, ensuring that it returns the desired output string.
+
 ---
 
 ### IO Components
-The classes in the studybuddy.data.io package handle input/output functions.
+The classes in the `studybuddy.data.io` package handle input/output functions.
 
 ---
 
@@ -81,12 +87,12 @@ The UI class is a utility class containing methods that print or return a string
 ---
 
 #### 3. CommandNames
-The CommandNames class contains constants holding the command strings that are checked in the input. These are used in the parseCommand method in Parser.
+The CommandNames class contains constants holding the command strings that are checked in the input. These are used in the `parseCommand()` method in Parser.
 
 ---
 
 ### Course Component
-The studybuddy.data package not only contains the aforementioned io package, but also the course package, which contains the classes for storing and handling courses.
+The `studybuddy.data` package not only contains the aforementioned io package, but also the course package, which contains the classes for storing and handling courses.
 
 ---
 
@@ -182,7 +188,7 @@ For the developers, this list is essential for other enhancement functions such 
 ---
 
 ### Storage Component
-The studybuddy.data.storage package contains the StorageManager class and the CommandHistoryManager class.
+The `studybuddy.data.storage` package contains the StorageManager class, CommandHistoryManager class and the UndoManager class.
 
 ---
 
@@ -221,41 +227,46 @@ This class serves two purposes:
 - It acts as a basic session logger, allowing users to view a history of commands they've executed, helping them track progress or review past changes.
 - It provides future extensibility for more advanced features like redo, persistent command logging, or analytics on user behavior.
 
-Each command input (valid or invalid) is added via CommandHistoryManager.addCommand(String input). Internally, this class maintains an ArrayList<String> called history that stores all added commands.
+![CommandHistoryClassDiagram.png](class_diagrams/CommandHistoryClassDiagram.png)
 
-**From a Developer StandPoint:**
-CommandHistoryManager is used statically, and all commands should call addCommand() before or after execution, depending on whether the command should be logged regardless of success.
-The SummaryCommand then accesses this list and formats the results using CommandHistoryManager.getCommandHistory().
+**How it Works:**
+
+Each command input (valid or invalid) is added via `CommandHistoryManager.addCommand(String input)`. Internally, this class maintains an `ArrayList<String>` called history that stores all added commands.
+
+**From a Developer Standpoint:**
+
+CommandHistoryManager is used statically, and all commands should call `addCommand()` before or after execution, depending on whether the command should be logged regardless of success.
+The SummaryCommand then accesses this list and formats the results using `CommandHistoryManager.getCommandHistory()`.
 
 This centralized design makes it easier for future developers to manipulate or extend command tracking behavior without modifying individual commands, keeping concerns well-separated and the architecture clean.
-
-
-![CommandHistoryClassDiagram.png](class_diagrams/CommandHistoryClassDiagram.png)
 
 ---
 
 #### 3. UndoManager
 The UndoManager is a utility class responsible for enabling the undo functionality across the application. It ensures that users can safely revert actions such as add, delete, edit, and replace, thereby increasing user confidence and usability, especially when dealing with mistakes or unintentional changes.
 When a command is executed and alters the internal state of the course plan, it can optionally record the operation into UndoManager using one of the following static methods:
-- recordAdd(Course course)
-- recordDelete(Course course)
-- recordReplace(Course oldCourse, Course newCourse)
+- `recordAdd(Course course)`
+- `recordDelete(Course course)`
+- `recordReplace(Course oldCourse, Course newCourse)`
+
+![UndoManagerClassDiagram.png](class_diagrams/UndoManagerClassDiagram.png)
+
+**How it Works:**
 
 Internally, UndoManager uses a stack to keep track of actions in reverse chronological order. Every record is wrapped into an UndoableAction object, which stores all necessary data to restore the previous state. When the user executes the undo command, the last action is popped from the stack and its reversal logic is executed.
 From a developer's perspective, UndoManager is essential in preserving state changes and centralizing the logic required to revert operations. It also decouples the command logic from the undo logic, improving code maintainability and allowing future extensibility (e.g. implementing redo).
 
 **To Support this Functionality:**
+
 - Each mutating command (such as AddCommand, DeleteCourse, or ReplaceCommand) must invoke the appropriate UndoManager.record...() method upon successful execution.
 - The UndoCommand then calls UndoManager.undo(courses) to perform the reversal.
 
 This design adheres to the Command Pattern, treating each operation as an object and enabling rollback actions without tightly coupling components.
 
-![UndoManagerClassDiagram.png](class_diagrams/UndoManagerClassDiagram.png)
-
 ---
 
 ### Exceptions
-The studybuddy.data.exception package contains the CEGStudyBuddyException class. It handles exceptions that are special to CEGStudyBuddy and cannot be categorised by the exception classes in Java’s own packages, e.g. having no saved course plan at all, having a semester number greater than 2, etc. It is also used to print out a customised error message on screen.
+The `studybuddy.data.exception` package contains the CEGStudyBuddyException class. It handles exceptions that are special to CEGStudyBuddy and cannot be categorised by the exception classes in Java’s own packages, e.g. having no saved course plan at all, having a semester number greater than 2, etc. It is also used to print out a customised error message on screen.
 
 ---
 
@@ -266,47 +277,61 @@ Details of the implementation of a few noteworthy features of CEGStudyBuddy is l
 ---
 
 ### Adding a Course
-**Overview**
 
 An AddCommand class is created when the user inputs the add command. When executed, this parses the parameters into a Course object. It checks if the course input is a duplicate and returns an error message if so. Otherwise, it adds the new Course into the CourseList, logs the action in UndoManager and returns the success message to be printed.
 
 ![AddCommandSequence.png](sequence_diagrams/AddCommandSequence.png)
 
 ---
-### Undo a Command
+
+### Deleting a Course
+
+A DeleteCourseCommand class is created when the user inputs the delete command. When executed, it first parses the parameters into a valid course code. Then, it loops through the entire course list for a matching course code. If found, it removes that course from the list, logs the action in UndoManager and returns the success message to be printed. If no such course is found, it throws a CEGStudyBuddyException with the error message.
+
+![DeleteCourseSequence.png](sequence_diagrams/DeleteCourseSequence.png)
+
+---
+
+### Undoing a Command
 The undo feature allows users to reverse their most recent operation, thereby preventing accidental changes to their course plan. This improves both user experience and reliability, as users can experiment or correct mistakes without fear of irreversible data loss.
 
-How It Works: The undo system is implemented using a Command Pattern in combination with a stack-based reversal mechanism. Every time a command that modifies data (such as add, delete, or replace) is successfully executed, it records its action into the UndoManager class.
+![UndoCommandSequence.png](sequence_diagrams/UndoCommandSequence.png)
+
+**How It Works:**
+
+The undo system is implemented using a Command Pattern in combination with a stack-based reversal mechanism. Every time a command that modifies data (such as add, delete, or replace) is successfully executed, it records its action into the UndoManager class.
 Each record is stored as an UndoableAction object, which encapsulates:
-- The type of command (e.g. ADD, DELETE, REPLACE)
+- The type of command (e.g. `ADD`, `DELETE`, `REPLACE`)
 - The course(s) involved in the operation
 - Any additional metadata required to reverse the action
 
 When the user issues the undo command:
-- The UndoCommand invokes UndoManager.undo(CourseList courses)
+- The UndoCommand invokes `UndoManager.undo(CourseList courses)`
 - UndoManager pops the most recent action from its internal stack.
 - It reverses the action by applying the inverse operation:
 
-- If the action was DELETE, it re-adds the deleted course.
-- If the action was ADD, it removes the added course.
-- If the action was REPLACE, it removes the new course and restores the old one.
+- If the action was `DELETE`, it re-adds the deleted course.
+- If the action was `ADD`, it removes the added course.
+- If the action was `REPLACE`, it removes the new course and restores the old one.
 - A confirmation message is returned to the user.
 
 **Example Flow:**
 Let's say the user executes the following:
+```
 add c/CS2103 t/Software Engineering mc/4 y/2 s/1
-This adds a course to the planner and internally records the action in UndoManager as an ADD type.
-When the user types undo, the UndoCommand triggers the removal of CS2103 by interpreting and reversing the stored action.
+```
+This adds a course to the planner and internally records the action in UndoManager as an `ADD` type.
+
+When the user types `undo`, the UndoCommand triggers the removal of CS2103 by interpreting and reversing the stored action.
 
 **Limitations:**
 - Only the last action can be undone at a time.
-- Non-mutating commands (like list, find, or gradreq) are not tracked, since they do not change data.
+- Non-mutating commands (like `list`, `find`, or `gradreq`) are not tracked, since they do not change data.
 - Undo state is not persisted between sessions; once the program closes, the undo stack resets.
 
 
 ### Saving Course Plans
-
-The implementation of the StorageManager class:
+The StorageManager class and its methods handle all functions related to saving the course plans.
 
 **`initializePlan()` Method Overview**
 
@@ -589,6 +614,13 @@ add c/CS2040 t/Data Structures mc/4 y/2 s/1
 - Negative MCs (e.g., `mc/-4`)
 - Using letters in year or semester fields
 
+### Adding a Defined Course
+
+Command:
+```
+add c/CS2113 y/2 s/2
+```
+
 ---
 
 ### Deleting a Course
@@ -646,15 +678,40 @@ find c/CS2040
 
 ---
 
-### Viewing Workload
+### Viewing Workload Summary
 
 Command:
 ```
-workload
+workload_summary
 ```
 
 **Test Cases:**
-- After adding 6+ courses, check that MCs are grouped by semester correctly
+- Check response with 160 MCs in total, less than 160 MCs, and more than 160 MCs
+
+---
+
+### Viewing Workload for Semester
+
+Command:
+```
+workload_for y/1 s/1
+```
+
+**Test Cases:**
+- Check response with 20 MCs, less than 18 MCs, and more than 27 MCs
+
+---
+
+### Viewing Workload balance
+
+Command:
+```
+workload_balance
+```
+
+**Test Cases:**
+- Check response with all semesters having similar number of MCs
+- Check response when the difference in MCs between 2 semesters is large (more than 8)
 
 ---
 
@@ -683,17 +740,20 @@ dummy mc/4 y/2 s/1
 - Fail to add a dummy after dummy number reaches 20
 - Valid case: Adding a new dummy course with correct parameters (e.g., `dummy mc/4 y/2 s/1`)
 
+---
 
 ### Pre-requisite Checker
 
 Command:
 ```
-prereq c/CODE
+prereq c/CS2113
 ```
 **Test Cases:**
 - Invalid Course input format like (C9999, CSERT etc.)
 - Input without any course
 - Input without c/ 
+
+---
 
 ### Replacing a Course
 
@@ -708,6 +768,8 @@ replace c/OLD CODE c/NEW CODE t/Title mc/Modular Credits y/Year s/Semester
 - Input with a decimal or floating parameter for year, sem and mc
 - Input with an invalid course format like CS999 etc.
 
+---
+
 ### Summary Command
 
 Command:
@@ -717,6 +779,8 @@ summary
 
 **Test Cases:**
 - Run a set of both valid and error commands and execute "summary"
+
+---
 
 ### Undo Command
 
@@ -729,4 +793,67 @@ undo
 - Execute the operations like (ADD, DELETE, EDIT, REPLACE)
 - Run the "undo" command
 - The undo command only works for the operations (ADD, DELETE, EDIT, REPLACE)
+
+---
+
+### Save Plan Command
+
+Command:
+```
+save
+```
+
+---
+
+### Switch Plan Command
+
+Command:
+```
+switch_plan
+```
+
+**Test Cases:**
+- Try switching to plans that do not exist
+
+---
+
+### Rename Plan Command
+
+Command:
+```
+rename_plan
+```
+
+---
+
+### Delete Plan Command
+
+Command:
+```
+delete_plan
+```
+
+**Test Cases:**
+- Try deleting a plan that does not exist
+
+---
+
+### Help Command
+
+Command:
+```
+help
+```
+
+**Test Cases:**
+- Check if all commands' help messages are shown
+
+---
+
+### Exit Command
+
+Command:
+```
+exit
+```
 
