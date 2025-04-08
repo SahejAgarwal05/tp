@@ -614,7 +614,7 @@ add c/CS2040 t/Data Structures mc/4 y/2 s/1
 - Negative MCs (e.g., `mc/-4`)
 - Using letters in year or semester fields
 
-### **Adding a Defined Course**
+### Adding a Defined Course
 
 Command:
 ```
@@ -856,3 +856,4 @@ Command:
 ```
 exit
 ```
+
