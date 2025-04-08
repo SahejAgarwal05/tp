@@ -15,33 +15,20 @@ Below are my contributions to the project.
 
 - **Workload**: Created the initial workload command before it was changed to the different workload commands
 - **Ui**: Created the Ui class that handles user interactions
-- **Exit**: Abstracted exit command into its own class
+- **Exit**: Abstracted the exit functionality into its own dedicated class
 - **Help**: Implemented the help function in Ui that the help command calls
-- **Parser**: Implemented parseDefinedCourse to support parseCourse in parsing preDefined Courses
-- **WorkloadFor**: Helped in improving on the formatting of the list
-- **WorkloadSummary**: Helped in improving on the formatting of the list as well as showing the number of MCs that have been completed and the remaining number needed for graduation 
+- **Parser**: Implemented parseDefinedCourse to enhance parseCourse in handling preDefined Courses
+- **WorkloadFor**: Improved formatting for better clarity and usability of the output.
+- **WorkloadSummary**: Improved formatting of the list as well as showing the number of MCs that have been completed and the remaining number needed for graduation 
 ---
 
 ## Team Contributions
 
 ###
 - Review teammates’ PRs 
-- Actively bug testing the team's product and help in fixing the bugs
-
----
-
-## Project Management
-
-### Timely Task Completion
-- Handled and resolved all assigned issues for releases **V1.0**, **V2.0**, and **V2.1** promptly—never submitted last minute.
-
-### Team Collaboration
-- Supported the team actively for all milestone releases by:
-    - Coordinating work in GitHub projects
-    - Resolving blockers and merge conflicts
-    - Helping in code integration and testing
-- Regularly checked on teammates’ progress and assisted them in bug-fixing and refining features.
-- Initiated Issue on the Github Issue Tracker and took responsibility and completed them on time
+- Actively bug tested the team's product and helped in fixing bugs
+- Assisted in managing Git workflow — resolving merge conflicts
+- Provided assistance in improving on some team members' implemented functions and documentation
 
 ---
 
